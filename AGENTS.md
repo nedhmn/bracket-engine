@@ -2,9 +2,7 @@
 
 | Working on                               | Read first                |
 | ---------------------------------------- | ------------------------- |
-| A package                                | `docs/architecture.md`    |
-| `apps/web`                               | `docs/architecture.md`    |
-| `apps/tournament-engine`                 | `docs/architecture.md`    |
+| A package or app                         | Its own `README.md`       |
 | Running it                               | `docs/getting-started.md` |
 | Workflows, versions, changelog, releases | `CONTRIBUTING.md`         |
 

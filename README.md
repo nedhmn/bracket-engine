@@ -5,7 +5,6 @@
 <p align="center">
   <a href="https://nedhmn.github.io/bracket-engine"><strong>Demo</strong></a> ·
   <a href="./docs/getting-started.md"><strong>Getting started</strong></a> ·
-  <a href="./docs/architecture.md"><strong>Architecture</strong></a> ·
   <a href="./CONTRIBUTING.md"><strong>Contributing</strong></a>
 </p>
 
@@ -16,17 +15,12 @@
 
 ## What this is
 
-Pure functions for running a tournament. Seed a field, generate a single or double
-elimination bracket with byes and a grand final, advance winners, reopen a reported match
-and cascade the reset, pair a Swiss round with maximum-weight matching, and rank the
-field with standard competition ranking. Nothing here knows about a database, a user, or
-a network. Input is plain data, output is plain data.
+Pure functions for running a tournament: seeding, single and double elimination with
+byes and grand finals, advancing and reopening matches, Swiss pairing, standings. Plain
+data in, plain data out.
 
-The example app turns that into a tournament service on Postgres. It stores
-participants, phases and matches, locks a phase while it writes, forfeits a dropped
-player's open matches, cuts a Swiss field to a top-N elimination bracket, and settles
-final standings across phases. It runs from a CLI and its tests run against a real
-database in CI.
+The example app runs those on Postgres: participants, phases, matches, drops, top cuts
+and final standings, driven by a CLI and tested against a real database in CI.
 
 ## Packages
 
