@@ -1,0 +1,11 @@
+{
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/.turbo/**",
+    "**/drizzle/**",
+    "CHANGELOG.md",
+    "pnpm-lock.yaml"
+  ],
+  "sortImports": true
+}

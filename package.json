@@ -1,0 +1,30 @@
+{
+  "name": "bracket-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "knip": "knip",
+    "gate": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm knip && pnpm test && pnpm build",
+    "prepare": "git config core.hooksPath .githooks"
+  },
+  "devDependencies": {
+    "@oxlint/plugins": "1.81.0",
+    "knip": "6.34.0",
+    "oxfmt": "0.66.0",
+    "oxlint": "1.81.0",
+    "turbo": "2.10.12",
+    "typescript": "7.0.2"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@11.1.2"
+}

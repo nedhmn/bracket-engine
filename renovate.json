@@ -1,0 +1,37 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices", ":semanticCommits", ":semanticCommitTypeAll(deps)"],
+  "rangeStrategy": "pin",
+  "timezone": "America/New_York",
+  "schedule": ["before 6am on monday"],
+  "lockFileMaintenance": { "enabled": true, "automerge": true },
+  "packageRules": [
+    {
+      "description": "Non-major updates merge on a green gate",
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
+    },
+    {
+      "description": "Patch updates to 0.x merge on a green gate",
+      "matchUpdateTypes": ["patch"],
+      "matchCurrentVersion": "/^0/",
+      "automerge": true
+    },
+    {
+      "description": "oxlint and its plugin API move together",
+      "groupName": "oxlint",
+      "matchPackageNames": ["oxlint", "@oxlint/plugins"]
+    },
+    {
+      "description": "vitest and vite move together",
+      "groupName": "vite",
+      "matchPackageNames": ["vite", "vitest", "@vitest/**"]
+    },
+    {
+      "description": "drizzle moves together",
+      "groupName": "drizzle",
+      "matchPackageNames": ["drizzle-orm", "drizzle-kit"]
+    }
+  ]
+}

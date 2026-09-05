@@ -1,0 +1,1693 @@
+{
+  "se_4": {
+    "participantCount": 4,
+    "totalMatches": 3,
+    "roundCount": 2,
+    "matches": [
+      {
+        "matchId": 0,
+        "matchNumber": 1,
+        "roundInGroup": 1,
+        "opponent1Position": 1,
+        "opponent2Position": 4
+      },
+      {
+        "matchId": 1,
+        "matchNumber": 2,
+        "roundInGroup": 1,
+        "opponent1Position": 2,
+        "opponent2Position": 3
+      },
+      {
+        "matchId": 2,
+        "matchNumber": 1,
+        "roundInGroup": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      }
+    ]
+  },
+  "se_8": {
+    "participantCount": 8,
+    "totalMatches": 7,
+    "roundCount": 3,
+    "matches": [
+      {
+        "matchId": 0,
+        "matchNumber": 1,
+        "roundInGroup": 1,
+        "opponent1Position": 1,
+        "opponent2Position": 8
+      },
+      {
+        "matchId": 1,
+        "matchNumber": 2,
+        "roundInGroup": 1,
+        "opponent1Position": 4,
+        "opponent2Position": 5
+      },
+      {
+        "matchId": 2,
+        "matchNumber": 3,
+        "roundInGroup": 1,
+        "opponent1Position": 2,
+        "opponent2Position": 7
+      },
+      {
+        "matchId": 3,
+        "matchNumber": 4,
+        "roundInGroup": 1,
+        "opponent1Position": 3,
+        "opponent2Position": 6
+      },
+      {
+        "matchId": 4,
+        "matchNumber": 1,
+        "roundInGroup": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 5,
+        "matchNumber": 2,
+        "roundInGroup": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 6,
+        "matchNumber": 1,
+        "roundInGroup": 3,
+        "opponent1Position": null,
+        "opponent2Position": null
+      }
+    ]
+  },
+  "se_16": {
+    "participantCount": 16,
+    "totalMatches": 15,
+    "roundCount": 4,
+    "matches": [
+      {
+        "matchId": 0,
+        "matchNumber": 1,
+        "roundInGroup": 1,
+        "opponent1Position": 1,
+        "opponent2Position": 16
+      },
+      {
+        "matchId": 1,
+        "matchNumber": 2,
+        "roundInGroup": 1,
+        "opponent1Position": 8,
+        "opponent2Position": 9
+      },
+      {
+        "matchId": 2,
+        "matchNumber": 3,
+        "roundInGroup": 1,
+        "opponent1Position": 4,
+        "opponent2Position": 13
+      },
+      {
+        "matchId": 3,
+        "matchNumber": 4,
+        "roundInGroup": 1,
+        "opponent1Position": 5,
+        "opponent2Position": 12
+      },
+      {
+        "matchId": 4,
+        "matchNumber": 5,
+        "roundInGroup": 1,
+        "opponent1Position": 2,
+        "opponent2Position": 15
+      },
+      {
+        "matchId": 5,
+        "matchNumber": 6,
+        "roundInGroup": 1,
+        "opponent1Position": 7,
+        "opponent2Position": 10
+      },
+      {
+        "matchId": 6,
+        "matchNumber": 7,
+        "roundInGroup": 1,
+        "opponent1Position": 3,
+        "opponent2Position": 14
+      },
+      {
+        "matchId": 7,
+        "matchNumber": 8,
+        "roundInGroup": 1,
+        "opponent1Position": 6,
+        "opponent2Position": 11
+      },
+      {
+        "matchId": 8,
+        "matchNumber": 1,
+        "roundInGroup": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 9,
+        "matchNumber": 2,
+        "roundInGroup": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 10,
+        "matchNumber": 3,
+        "roundInGroup": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 11,
+        "matchNumber": 4,
+        "roundInGroup": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 12,
+        "matchNumber": 1,
+        "roundInGroup": 3,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 13,
+        "matchNumber": 2,
+        "roundInGroup": 3,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 14,
+        "matchNumber": 1,
+        "roundInGroup": 4,
+        "opponent1Position": null,
+        "opponent2Position": null
+      }
+    ]
+  },
+  "de_4": {
+    "participantCount": 4,
+    "grandFinal": "simple",
+    "totalMatches": 6,
+    "wbRoundCount": 2,
+    "lbRoundCount": 2,
+    "gfRoundCount": 1,
+    "wbMatches": 3,
+    "lbMatches": 2,
+    "gfMatches": 1,
+    "matches": [
+      {
+        "matchId": 0,
+        "matchNumber": 1,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 1,
+        "opponent2Position": 4
+      },
+      {
+        "matchId": 1,
+        "matchNumber": 2,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 2,
+        "opponent2Position": 3
+      },
+      {
+        "matchId": 2,
+        "matchNumber": 1,
+        "section": "winners",
+        "roundInSection": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 3,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 1,
+        "opponent1Position": 1,
+        "opponent2Position": 2
+      },
+      {
+        "matchId": 4,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 2,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 5,
+        "matchNumber": 1,
+        "section": "grand_final",
+        "roundInSection": 1,
+        "opponent1Position": null,
+        "opponent2Position": 1
+      }
+    ]
+  },
+  "de_8": {
+    "participantCount": 8,
+    "grandFinal": "simple",
+    "totalMatches": 14,
+    "wbRoundCount": 3,
+    "lbRoundCount": 4,
+    "gfRoundCount": 1,
+    "wbMatches": 7,
+    "lbMatches": 6,
+    "gfMatches": 1,
+    "matches": [
+      {
+        "matchId": 0,
+        "matchNumber": 1,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 1,
+        "opponent2Position": 8
+      },
+      {
+        "matchId": 1,
+        "matchNumber": 2,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 4,
+        "opponent2Position": 5
+      },
+      {
+        "matchId": 2,
+        "matchNumber": 3,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 2,
+        "opponent2Position": 7
+      },
+      {
+        "matchId": 3,
+        "matchNumber": 4,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 3,
+        "opponent2Position": 6
+      },
+      {
+        "matchId": 4,
+        "matchNumber": 1,
+        "section": "winners",
+        "roundInSection": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 5,
+        "matchNumber": 2,
+        "section": "winners",
+        "roundInSection": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 6,
+        "matchNumber": 1,
+        "section": "winners",
+        "roundInSection": 3,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 7,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 1,
+        "opponent1Position": 1,
+        "opponent2Position": 2
+      },
+      {
+        "matchId": 8,
+        "matchNumber": 2,
+        "section": "losers",
+        "roundInSection": 1,
+        "opponent1Position": 3,
+        "opponent2Position": 4
+      },
+      {
+        "matchId": 9,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 2,
+        "opponent1Position": 2,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 10,
+        "matchNumber": 2,
+        "section": "losers",
+        "roundInSection": 2,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 11,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 3,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 12,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 4,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 13,
+        "matchNumber": 1,
+        "section": "grand_final",
+        "roundInSection": 1,
+        "opponent1Position": null,
+        "opponent2Position": 1
+      }
+    ]
+  },
+  "de_16": {
+    "participantCount": 16,
+    "grandFinal": "simple",
+    "totalMatches": 30,
+    "wbRoundCount": 4,
+    "lbRoundCount": 6,
+    "gfRoundCount": 1,
+    "wbMatches": 15,
+    "lbMatches": 14,
+    "gfMatches": 1,
+    "matches": [
+      {
+        "matchId": 0,
+        "matchNumber": 1,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 1,
+        "opponent2Position": 16
+      },
+      {
+        "matchId": 1,
+        "matchNumber": 2,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 8,
+        "opponent2Position": 9
+      },
+      {
+        "matchId": 2,
+        "matchNumber": 3,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 4,
+        "opponent2Position": 13
+      },
+      {
+        "matchId": 3,
+        "matchNumber": 4,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 5,
+        "opponent2Position": 12
+      },
+      {
+        "matchId": 4,
+        "matchNumber": 5,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 2,
+        "opponent2Position": 15
+      },
+      {
+        "matchId": 5,
+        "matchNumber": 6,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 7,
+        "opponent2Position": 10
+      },
+      {
+        "matchId": 6,
+        "matchNumber": 7,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 3,
+        "opponent2Position": 14
+      },
+      {
+        "matchId": 7,
+        "matchNumber": 8,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 6,
+        "opponent2Position": 11
+      },
+      {
+        "matchId": 8,
+        "matchNumber": 1,
+        "section": "winners",
+        "roundInSection": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 9,
+        "matchNumber": 2,
+        "section": "winners",
+        "roundInSection": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 10,
+        "matchNumber": 3,
+        "section": "winners",
+        "roundInSection": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 11,
+        "matchNumber": 4,
+        "section": "winners",
+        "roundInSection": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 12,
+        "matchNumber": 1,
+        "section": "winners",
+        "roundInSection": 3,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 13,
+        "matchNumber": 2,
+        "section": "winners",
+        "roundInSection": 3,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 14,
+        "matchNumber": 1,
+        "section": "winners",
+        "roundInSection": 4,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 15,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 1,
+        "opponent1Position": 1,
+        "opponent2Position": 2
+      },
+      {
+        "matchId": 16,
+        "matchNumber": 2,
+        "section": "losers",
+        "roundInSection": 1,
+        "opponent1Position": 3,
+        "opponent2Position": 4
+      },
+      {
+        "matchId": 17,
+        "matchNumber": 3,
+        "section": "losers",
+        "roundInSection": 1,
+        "opponent1Position": 5,
+        "opponent2Position": 6
+      },
+      {
+        "matchId": 18,
+        "matchNumber": 4,
+        "section": "losers",
+        "roundInSection": 1,
+        "opponent1Position": 7,
+        "opponent2Position": 8
+      },
+      {
+        "matchId": 19,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 2,
+        "opponent1Position": 2,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 20,
+        "matchNumber": 2,
+        "section": "losers",
+        "roundInSection": 2,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 21,
+        "matchNumber": 3,
+        "section": "losers",
+        "roundInSection": 2,
+        "opponent1Position": 4,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 22,
+        "matchNumber": 4,
+        "section": "losers",
+        "roundInSection": 2,
+        "opponent1Position": 3,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 23,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 3,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 24,
+        "matchNumber": 2,
+        "section": "losers",
+        "roundInSection": 3,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 25,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 4,
+        "opponent1Position": 2,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 26,
+        "matchNumber": 2,
+        "section": "losers",
+        "roundInSection": 4,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 27,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 5,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 28,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 6,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 29,
+        "matchNumber": 1,
+        "section": "grand_final",
+        "roundInSection": 1,
+        "opponent1Position": null,
+        "opponent2Position": 1
+      }
+    ]
+  },
+  "de_8_double_gf": {
+    "participantCount": 8,
+    "grandFinal": "double",
+    "totalMatches": 15,
+    "wbRoundCount": 3,
+    "lbRoundCount": 4,
+    "gfRoundCount": 2,
+    "wbMatches": 7,
+    "lbMatches": 6,
+    "gfMatches": 2,
+    "matches": [
+      {
+        "matchId": 0,
+        "matchNumber": 1,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 1,
+        "opponent2Position": 8
+      },
+      {
+        "matchId": 1,
+        "matchNumber": 2,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 4,
+        "opponent2Position": 5
+      },
+      {
+        "matchId": 2,
+        "matchNumber": 3,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 2,
+        "opponent2Position": 7
+      },
+      {
+        "matchId": 3,
+        "matchNumber": 4,
+        "section": "winners",
+        "roundInSection": 1,
+        "opponent1Position": 3,
+        "opponent2Position": 6
+      },
+      {
+        "matchId": 4,
+        "matchNumber": 1,
+        "section": "winners",
+        "roundInSection": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 5,
+        "matchNumber": 2,
+        "section": "winners",
+        "roundInSection": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 6,
+        "matchNumber": 1,
+        "section": "winners",
+        "roundInSection": 3,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 7,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 1,
+        "opponent1Position": 1,
+        "opponent2Position": 2
+      },
+      {
+        "matchId": 8,
+        "matchNumber": 2,
+        "section": "losers",
+        "roundInSection": 1,
+        "opponent1Position": 3,
+        "opponent2Position": 4
+      },
+      {
+        "matchId": 9,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 2,
+        "opponent1Position": 2,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 10,
+        "matchNumber": 2,
+        "section": "losers",
+        "roundInSection": 2,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 11,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 3,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 12,
+        "matchNumber": 1,
+        "section": "losers",
+        "roundInSection": 4,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 13,
+        "matchNumber": 1,
+        "section": "grand_final",
+        "roundInSection": 1,
+        "opponent1Position": null,
+        "opponent2Position": 1
+      },
+      {
+        "matchId": 14,
+        "matchNumber": 1,
+        "section": "grand_final",
+        "roundInSection": 2,
+        "opponent1Position": null,
+        "opponent2Position": null
+      }
+    ]
+  },
+  "lb_routing_8": {
+    "participantCount": 8,
+    "idToName": {
+      "0": "Seed 1",
+      "1": "Seed 2",
+      "2": "Seed 3",
+      "3": "Seed 4",
+      "4": "Seed 5",
+      "5": "Seed 6",
+      "6": "Seed 7",
+      "7": "Seed 8"
+    },
+    "lbFinalState": [
+      {
+        "matchId": 7,
+        "matchNumber": 1,
+        "lbRound": 1,
+        "opponent1Name": "Seed 8",
+        "opponent2Name": "Seed 5",
+        "opponent1Position": 1,
+        "opponent2Position": 2
+      },
+      {
+        "matchId": 8,
+        "matchNumber": 2,
+        "lbRound": 1,
+        "opponent1Name": "Seed 7",
+        "opponent2Name": "Seed 6",
+        "opponent1Position": 3,
+        "opponent2Position": 4
+      },
+      {
+        "matchId": 9,
+        "matchNumber": 1,
+        "lbRound": 2,
+        "opponent1Name": "Seed 3",
+        "opponent2Name": null,
+        "opponent1Position": 2,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 10,
+        "matchNumber": 2,
+        "lbRound": 2,
+        "opponent1Name": "Seed 4",
+        "opponent2Name": null,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 11,
+        "matchNumber": 1,
+        "lbRound": 3,
+        "opponent1Name": null,
+        "opponent2Name": null,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 12,
+        "matchNumber": 1,
+        "lbRound": 4,
+        "opponent1Name": "Seed 2",
+        "opponent2Name": null,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      }
+    ],
+    "snapshots": [
+      {
+        "afterWbRound": 1,
+        "lbState": [
+          {
+            "matchId": 7,
+            "matchNumber": 1,
+            "lbRound": 1,
+            "opponent1Id": 7,
+            "opponent1Position": 1,
+            "opponent2Id": 4,
+            "opponent2Position": 2
+          },
+          {
+            "matchId": 8,
+            "matchNumber": 2,
+            "lbRound": 1,
+            "opponent1Id": 6,
+            "opponent1Position": 3,
+            "opponent2Id": 5,
+            "opponent2Position": 4
+          },
+          {
+            "matchId": 9,
+            "matchNumber": 1,
+            "lbRound": 2,
+            "opponent1Id": null,
+            "opponent1Position": 2,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 10,
+            "matchNumber": 2,
+            "lbRound": 2,
+            "opponent1Id": null,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 11,
+            "matchNumber": 1,
+            "lbRound": 3,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 12,
+            "matchNumber": 1,
+            "lbRound": 4,
+            "opponent1Id": null,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          }
+        ]
+      },
+      {
+        "afterWbRound": 2,
+        "lbState": [
+          {
+            "matchId": 7,
+            "matchNumber": 1,
+            "lbRound": 1,
+            "opponent1Id": 7,
+            "opponent1Position": 1,
+            "opponent2Id": 4,
+            "opponent2Position": 2
+          },
+          {
+            "matchId": 8,
+            "matchNumber": 2,
+            "lbRound": 1,
+            "opponent1Id": 6,
+            "opponent1Position": 3,
+            "opponent2Id": 5,
+            "opponent2Position": 4
+          },
+          {
+            "matchId": 9,
+            "matchNumber": 1,
+            "lbRound": 2,
+            "opponent1Id": 2,
+            "opponent1Position": 2,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 10,
+            "matchNumber": 2,
+            "lbRound": 2,
+            "opponent1Id": 3,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 11,
+            "matchNumber": 1,
+            "lbRound": 3,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 12,
+            "matchNumber": 1,
+            "lbRound": 4,
+            "opponent1Id": null,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          }
+        ]
+      },
+      {
+        "afterWbRound": 3,
+        "lbState": [
+          {
+            "matchId": 7,
+            "matchNumber": 1,
+            "lbRound": 1,
+            "opponent1Id": 7,
+            "opponent1Position": 1,
+            "opponent2Id": 4,
+            "opponent2Position": 2
+          },
+          {
+            "matchId": 8,
+            "matchNumber": 2,
+            "lbRound": 1,
+            "opponent1Id": 6,
+            "opponent1Position": 3,
+            "opponent2Id": 5,
+            "opponent2Position": 4
+          },
+          {
+            "matchId": 9,
+            "matchNumber": 1,
+            "lbRound": 2,
+            "opponent1Id": 2,
+            "opponent1Position": 2,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 10,
+            "matchNumber": 2,
+            "lbRound": 2,
+            "opponent1Id": 3,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 11,
+            "matchNumber": 1,
+            "lbRound": 3,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 12,
+            "matchNumber": 1,
+            "lbRound": 4,
+            "opponent1Id": 1,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          }
+        ]
+      }
+    ]
+  },
+  "lb_routing_16": {
+    "participantCount": 16,
+    "idToName": {
+      "0": "Seed 1",
+      "1": "Seed 2",
+      "2": "Seed 3",
+      "3": "Seed 4",
+      "4": "Seed 5",
+      "5": "Seed 6",
+      "6": "Seed 7",
+      "7": "Seed 8",
+      "8": "Seed 9",
+      "9": "Seed 10",
+      "10": "Seed 11",
+      "11": "Seed 12",
+      "12": "Seed 13",
+      "13": "Seed 14",
+      "14": "Seed 15",
+      "15": "Seed 16"
+    },
+    "lbFinalState": [
+      {
+        "matchId": 15,
+        "matchNumber": 1,
+        "lbRound": 1,
+        "opponent1Name": "Seed 16",
+        "opponent2Name": "Seed 9",
+        "opponent1Position": 1,
+        "opponent2Position": 2
+      },
+      {
+        "matchId": 16,
+        "matchNumber": 2,
+        "lbRound": 1,
+        "opponent1Name": "Seed 13",
+        "opponent2Name": "Seed 12",
+        "opponent1Position": 3,
+        "opponent2Position": 4
+      },
+      {
+        "matchId": 17,
+        "matchNumber": 3,
+        "lbRound": 1,
+        "opponent1Name": "Seed 15",
+        "opponent2Name": "Seed 10",
+        "opponent1Position": 5,
+        "opponent2Position": 6
+      },
+      {
+        "matchId": 18,
+        "matchNumber": 4,
+        "lbRound": 1,
+        "opponent1Name": "Seed 14",
+        "opponent2Name": "Seed 11",
+        "opponent1Position": 7,
+        "opponent2Position": 8
+      },
+      {
+        "matchId": 19,
+        "matchNumber": 1,
+        "lbRound": 2,
+        "opponent1Name": "Seed 5",
+        "opponent2Name": null,
+        "opponent1Position": 2,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 20,
+        "matchNumber": 2,
+        "lbRound": 2,
+        "opponent1Name": "Seed 8",
+        "opponent2Name": null,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 21,
+        "matchNumber": 3,
+        "lbRound": 2,
+        "opponent1Name": "Seed 6",
+        "opponent2Name": null,
+        "opponent1Position": 4,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 22,
+        "matchNumber": 4,
+        "lbRound": 2,
+        "opponent1Name": "Seed 7",
+        "opponent2Name": null,
+        "opponent1Position": 3,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 23,
+        "matchNumber": 1,
+        "lbRound": 3,
+        "opponent1Name": null,
+        "opponent2Name": null,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 24,
+        "matchNumber": 2,
+        "lbRound": 3,
+        "opponent1Name": null,
+        "opponent2Name": null,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 25,
+        "matchNumber": 1,
+        "lbRound": 4,
+        "opponent1Name": "Seed 3",
+        "opponent2Name": null,
+        "opponent1Position": 2,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 26,
+        "matchNumber": 2,
+        "lbRound": 4,
+        "opponent1Name": "Seed 4",
+        "opponent2Name": null,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 27,
+        "matchNumber": 1,
+        "lbRound": 5,
+        "opponent1Name": null,
+        "opponent2Name": null,
+        "opponent1Position": null,
+        "opponent2Position": null
+      },
+      {
+        "matchId": 28,
+        "matchNumber": 1,
+        "lbRound": 6,
+        "opponent1Name": "Seed 2",
+        "opponent2Name": null,
+        "opponent1Position": 1,
+        "opponent2Position": null
+      }
+    ],
+    "snapshots": [
+      {
+        "afterWbRound": 1,
+        "lbState": [
+          {
+            "matchId": 15,
+            "matchNumber": 1,
+            "lbRound": 1,
+            "opponent1Id": 15,
+            "opponent1Position": 1,
+            "opponent2Id": 8,
+            "opponent2Position": 2
+          },
+          {
+            "matchId": 16,
+            "matchNumber": 2,
+            "lbRound": 1,
+            "opponent1Id": 12,
+            "opponent1Position": 3,
+            "opponent2Id": 11,
+            "opponent2Position": 4
+          },
+          {
+            "matchId": 17,
+            "matchNumber": 3,
+            "lbRound": 1,
+            "opponent1Id": 14,
+            "opponent1Position": 5,
+            "opponent2Id": 9,
+            "opponent2Position": 6
+          },
+          {
+            "matchId": 18,
+            "matchNumber": 4,
+            "lbRound": 1,
+            "opponent1Id": 13,
+            "opponent1Position": 7,
+            "opponent2Id": 10,
+            "opponent2Position": 8
+          },
+          {
+            "matchId": 19,
+            "matchNumber": 1,
+            "lbRound": 2,
+            "opponent1Id": null,
+            "opponent1Position": 2,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 20,
+            "matchNumber": 2,
+            "lbRound": 2,
+            "opponent1Id": null,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 21,
+            "matchNumber": 3,
+            "lbRound": 2,
+            "opponent1Id": null,
+            "opponent1Position": 4,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 22,
+            "matchNumber": 4,
+            "lbRound": 2,
+            "opponent1Id": null,
+            "opponent1Position": 3,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 23,
+            "matchNumber": 1,
+            "lbRound": 3,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 24,
+            "matchNumber": 2,
+            "lbRound": 3,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 25,
+            "matchNumber": 1,
+            "lbRound": 4,
+            "opponent1Id": null,
+            "opponent1Position": 2,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 26,
+            "matchNumber": 2,
+            "lbRound": 4,
+            "opponent1Id": null,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 27,
+            "matchNumber": 1,
+            "lbRound": 5,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 28,
+            "matchNumber": 1,
+            "lbRound": 6,
+            "opponent1Id": null,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          }
+        ]
+      },
+      {
+        "afterWbRound": 2,
+        "lbState": [
+          {
+            "matchId": 15,
+            "matchNumber": 1,
+            "lbRound": 1,
+            "opponent1Id": 15,
+            "opponent1Position": 1,
+            "opponent2Id": 8,
+            "opponent2Position": 2
+          },
+          {
+            "matchId": 16,
+            "matchNumber": 2,
+            "lbRound": 1,
+            "opponent1Id": 12,
+            "opponent1Position": 3,
+            "opponent2Id": 11,
+            "opponent2Position": 4
+          },
+          {
+            "matchId": 17,
+            "matchNumber": 3,
+            "lbRound": 1,
+            "opponent1Id": 14,
+            "opponent1Position": 5,
+            "opponent2Id": 9,
+            "opponent2Position": 6
+          },
+          {
+            "matchId": 18,
+            "matchNumber": 4,
+            "lbRound": 1,
+            "opponent1Id": 13,
+            "opponent1Position": 7,
+            "opponent2Id": 10,
+            "opponent2Position": 8
+          },
+          {
+            "matchId": 19,
+            "matchNumber": 1,
+            "lbRound": 2,
+            "opponent1Id": 4,
+            "opponent1Position": 2,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 20,
+            "matchNumber": 2,
+            "lbRound": 2,
+            "opponent1Id": 7,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 21,
+            "matchNumber": 3,
+            "lbRound": 2,
+            "opponent1Id": 5,
+            "opponent1Position": 4,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 22,
+            "matchNumber": 4,
+            "lbRound": 2,
+            "opponent1Id": 6,
+            "opponent1Position": 3,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 23,
+            "matchNumber": 1,
+            "lbRound": 3,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 24,
+            "matchNumber": 2,
+            "lbRound": 3,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 25,
+            "matchNumber": 1,
+            "lbRound": 4,
+            "opponent1Id": null,
+            "opponent1Position": 2,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 26,
+            "matchNumber": 2,
+            "lbRound": 4,
+            "opponent1Id": null,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 27,
+            "matchNumber": 1,
+            "lbRound": 5,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 28,
+            "matchNumber": 1,
+            "lbRound": 6,
+            "opponent1Id": null,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          }
+        ]
+      },
+      {
+        "afterWbRound": 3,
+        "lbState": [
+          {
+            "matchId": 15,
+            "matchNumber": 1,
+            "lbRound": 1,
+            "opponent1Id": 15,
+            "opponent1Position": 1,
+            "opponent2Id": 8,
+            "opponent2Position": 2
+          },
+          {
+            "matchId": 16,
+            "matchNumber": 2,
+            "lbRound": 1,
+            "opponent1Id": 12,
+            "opponent1Position": 3,
+            "opponent2Id": 11,
+            "opponent2Position": 4
+          },
+          {
+            "matchId": 17,
+            "matchNumber": 3,
+            "lbRound": 1,
+            "opponent1Id": 14,
+            "opponent1Position": 5,
+            "opponent2Id": 9,
+            "opponent2Position": 6
+          },
+          {
+            "matchId": 18,
+            "matchNumber": 4,
+            "lbRound": 1,
+            "opponent1Id": 13,
+            "opponent1Position": 7,
+            "opponent2Id": 10,
+            "opponent2Position": 8
+          },
+          {
+            "matchId": 19,
+            "matchNumber": 1,
+            "lbRound": 2,
+            "opponent1Id": 4,
+            "opponent1Position": 2,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 20,
+            "matchNumber": 2,
+            "lbRound": 2,
+            "opponent1Id": 7,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 21,
+            "matchNumber": 3,
+            "lbRound": 2,
+            "opponent1Id": 5,
+            "opponent1Position": 4,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 22,
+            "matchNumber": 4,
+            "lbRound": 2,
+            "opponent1Id": 6,
+            "opponent1Position": 3,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 23,
+            "matchNumber": 1,
+            "lbRound": 3,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 24,
+            "matchNumber": 2,
+            "lbRound": 3,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 25,
+            "matchNumber": 1,
+            "lbRound": 4,
+            "opponent1Id": 2,
+            "opponent1Position": 2,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 26,
+            "matchNumber": 2,
+            "lbRound": 4,
+            "opponent1Id": 3,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 27,
+            "matchNumber": 1,
+            "lbRound": 5,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 28,
+            "matchNumber": 1,
+            "lbRound": 6,
+            "opponent1Id": null,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          }
+        ]
+      },
+      {
+        "afterWbRound": 4,
+        "lbState": [
+          {
+            "matchId": 15,
+            "matchNumber": 1,
+            "lbRound": 1,
+            "opponent1Id": 15,
+            "opponent1Position": 1,
+            "opponent2Id": 8,
+            "opponent2Position": 2
+          },
+          {
+            "matchId": 16,
+            "matchNumber": 2,
+            "lbRound": 1,
+            "opponent1Id": 12,
+            "opponent1Position": 3,
+            "opponent2Id": 11,
+            "opponent2Position": 4
+          },
+          {
+            "matchId": 17,
+            "matchNumber": 3,
+            "lbRound": 1,
+            "opponent1Id": 14,
+            "opponent1Position": 5,
+            "opponent2Id": 9,
+            "opponent2Position": 6
+          },
+          {
+            "matchId": 18,
+            "matchNumber": 4,
+            "lbRound": 1,
+            "opponent1Id": 13,
+            "opponent1Position": 7,
+            "opponent2Id": 10,
+            "opponent2Position": 8
+          },
+          {
+            "matchId": 19,
+            "matchNumber": 1,
+            "lbRound": 2,
+            "opponent1Id": 4,
+            "opponent1Position": 2,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 20,
+            "matchNumber": 2,
+            "lbRound": 2,
+            "opponent1Id": 7,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 21,
+            "matchNumber": 3,
+            "lbRound": 2,
+            "opponent1Id": 5,
+            "opponent1Position": 4,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 22,
+            "matchNumber": 4,
+            "lbRound": 2,
+            "opponent1Id": 6,
+            "opponent1Position": 3,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 23,
+            "matchNumber": 1,
+            "lbRound": 3,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 24,
+            "matchNumber": 2,
+            "lbRound": 3,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 25,
+            "matchNumber": 1,
+            "lbRound": 4,
+            "opponent1Id": 2,
+            "opponent1Position": 2,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 26,
+            "matchNumber": 2,
+            "lbRound": 4,
+            "opponent1Id": 3,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 27,
+            "matchNumber": 1,
+            "lbRound": 5,
+            "opponent1Id": null,
+            "opponent1Position": null,
+            "opponent2Id": null,
+            "opponent2Position": null
+          },
+          {
+            "matchId": 28,
+            "matchNumber": 1,
+            "lbRound": 6,
+            "opponent1Id": 1,
+            "opponent1Position": 1,
+            "opponent2Id": null,
+            "opponent2Position": null
+          }
+        ]
+      }
+    ]
+  }
+}

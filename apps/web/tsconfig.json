@@ -1,0 +1,5 @@
+{
+  "extends": "@bracket-engine/typescript/base.json",
+  "compilerOptions": { "lib": ["ES2023", "DOM", "DOM.Iterable"] },
+  "include": ["src", "vite.config.ts"]
+}

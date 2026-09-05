@@ -1,0 +1,17 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreExportsUsedInFile": true,
+  "workspaces": {
+    "packages/*": {
+      "project": ["src/**/*.ts"]
+    },
+    "apps/web": {
+      "entry": ["index.html"],
+      "project": ["src/**/*.ts"]
+    },
+    "apps/tournament-engine": {
+      "project": ["src/**/*.ts"]
+    }
+  },
+  "ignore": ["tools/oxlint/anti-slop/**"]
+}

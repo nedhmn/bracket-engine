@@ -1,0 +1,26 @@
+{
+  "name": "tournament-engine",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "cli": "node src/cli/index.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node src/db/migrate.ts",
+    "typecheck": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@bracket-engine/core": "workspace:*",
+    "drizzle-orm": "0.45.2",
+    "pg": "8.23.0"
+  },
+  "devDependencies": {
+    "@bracket-engine/typescript": "workspace:*",
+    "@types/node": "26.4.1",
+    "@types/pg": "8.23.1",
+    "drizzle-kit": "0.31.10",
+    "typescript": "7.0.2",
+    "vitest": "5.0.0"
+  }
+}

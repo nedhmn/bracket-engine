@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bracket Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-0: #08080a;
+        --bg-1: #0e0f12;
+        --bg-2: #14161b;
+        --bg-3: #1a1d24;
+        --bg-4: #22262f;
+        --border-0: #1e2028;
+        --border-1: #282b35;
+        --border-2: #353944;
+        --text-0: #f0f0f2;
+        --text-1: #b0b3be;
+        --text-2: #6e7282;
+        --text-3: #464a56;
+        --accent: #c8fb44;
+        --accent-dim: #3a4a18;
+        --accent-bg: rgba(200, 251, 68, 0.06);
+        --red: #ff5c5c;
+        --red-dim: #4a1e1e;
+        --red-bg: rgba(255, 92, 92, 0.08);
+        --blue: #5cacff;
+        --blue-dim: #1e2e4a;
+        --orange: #ffaa44;
+        --mono: "JetBrains Mono", monospace;
+        --sans: "Instrument Sans", -apple-system, sans-serif;
+        --radius: 6px;
+      }
+
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+        color: var(--text-1);
+        background: var(--bg-0);
+      }
+
+      /* ─── Header ─── */
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: var(--bg-1);
+        border-bottom: 1px solid var(--border-0);
+        backdrop-filter: blur(12px);
+      }
+
+      .header-top {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        padding: 14px 24px;
+      }
+
+      .logo {
+        font-family: var(--mono);
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--accent);
+        letter-spacing: -0.5px;
+        white-space: nowrap;
+        user-select: none;
+      }
+
+      .logo span {
+        font-weight: 400;
+        color: var(--text-3);
+      }
+
+      .config-group {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .config-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-3);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
+
+      select,
+      input[type="number"] {
+        padding: 6px 28px 6px 10px;
+        font-family: var(--mono);
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-0);
+        appearance: none;
+        cursor: pointer;
+        background: var(--bg-3);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236e7282'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        border: 1px solid var(--border-1);
+        border-radius: var(--radius);
+        transition: border-color 0.15s;
+      }
+
+      input[type="number"] {
+        width: 76px;
+        padding-right: 10px;
+        cursor: text;
+        background-image: none;
+      }
+
+      select:hover,
+      input[type="number"]:hover {
+        border-color: var(--border-2);
+      }
+      select:focus,
+      input[type="number"]:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+
+      .status-bar {
+        margin-left: auto;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--text-2);
+        white-space: nowrap;
+      }
+
+      .status-bar.complete {
+        color: var(--accent);
+      }
+
+      .sep {
+        width: 1px;
+        height: 20px;
+        background: var(--border-0);
+      }
+
+      /* ─── Command Bar ─── */
+      .command-bar {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        padding: 8px 24px 10px;
+        overflow-x: auto;
+        border-top: 1px solid var(--border-0);
+      }
+
+      .cmd-group {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+      }
+
+      .cmd-group-label {
+        padding: 0 6px;
+        font-size: 9px;
+        font-weight: 700;
+        color: var(--text-3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        white-space: nowrap;
+      }
+
+      .cmd {
+        display: inline-flex;
+        gap: 5px;
+        align-items: center;
+        padding: 5px 10px;
+        font-family: var(--mono);
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text-1);
+        white-space: nowrap;
+        cursor: pointer;
+        background: var(--bg-3);
+        border: 1px solid var(--border-1);
+        border-radius: var(--radius);
+        transition: all 0.12s;
+      }
+
+      .cmd:hover {
+        color: var(--text-0);
+        background: var(--bg-4);
+        border-color: var(--border-2);
+      }
+
+      .cmd:active {
+        transform: scale(0.97);
+      }
+
+      .cmd:disabled {
+        pointer-events: none;
+        cursor: not-allowed;
+        opacity: 0.35;
+      }
+
+      .cmd.primary {
+        color: var(--accent);
+        background: var(--accent-dim);
+        border-color: rgba(200, 251, 68, 0.2);
+      }
+      .cmd.primary:hover {
+        background: rgba(200, 251, 68, 0.15);
+        border-color: rgba(200, 251, 68, 0.3);
+      }
+
+      .cmd.danger {
+        color: var(--red);
+      }
+      .cmd.danger:hover {
+        background: var(--red-bg);
+        border-color: rgba(255, 92, 92, 0.2);
+      }
+
+      .cmd-sep {
+        width: 1px;
+        height: 18px;
+        margin: 0 4px;
+        background: var(--border-0);
+      }
+
+      /* ─── Event Log ─── */
+      .log-toggle {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        z-index: 50;
+        padding: 6px 12px;
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--text-2);
+        cursor: pointer;
+        background: var(--bg-3);
+        border: 1px solid var(--border-1);
+        border-radius: var(--radius);
+        transition: all 0.15s;
+      }
+
+      .log-toggle:hover {
+        color: var(--text-0);
+        border-color: var(--border-2);
+      }
+
+      .log-panel {
+        position: fixed;
+        right: 16px;
+        bottom: 48px;
+        z-index: 50;
+        display: none;
+        width: 360px;
+        max-height: 280px;
+        overflow: hidden;
+        background: var(--bg-1);
+        border: 1px solid var(--border-1);
+        border-radius: 8px;
+      }
+
+      .log-panel.open {
+        display: block;
+      }
+
+      .log-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 12px;
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--text-3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid var(--border-0);
+      }
+
+      .log-body {
+        max-height: 240px;
+        padding: 4px 0;
+        overflow-y: auto;
+      }
+
+      .log-entry {
+        padding: 3px 12px;
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--text-2);
+        border-bottom: 1px solid rgba(30, 32, 40, 0.5);
+      }
+
+      .log-entry .log-time {
+        color: var(--text-3);
+      }
+      .log-entry .log-action {
+        color: var(--accent);
+      }
+      .log-entry .log-undo {
+        color: var(--orange);
+      }
+
+      /* ─── Main Content ─── */
+      .main {
+        padding: 28px 24px 80px;
+      }
+
+      /* ─── Bracket Sections ─── */
+      .section {
+        margin-bottom: 36px;
+      }
+
+      .section-label {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 14px;
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--text-3);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
+
+      .section-label::after {
+        flex: 1;
+        height: 1px;
+        content: "";
+        background: var(--border-0);
+      }
+
+      .bracket {
+        display: flex;
+        gap: 4px;
+        align-items: flex-start;
+        padding-bottom: 8px;
+        overflow-x: auto;
+      }
+
+      .round {
+        display: flex;
+        flex-direction: column;
+        min-width: 180px;
+      }
+
+      .round-label {
+        padding: 4px 0 10px;
+        font-family: var(--mono);
+        font-size: 9px;
+        font-weight: 600;
+        color: var(--text-3);
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .round-matches {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 0 6px;
+      }
+
+      /* ─── Match Card ─── */
+      .match {
+        position: relative;
+        overflow: hidden;
+        background: var(--bg-2);
+        border: 1px solid var(--border-0);
+        border-radius: var(--radius);
+        transition: all 0.15s;
+      }
+
+      .match::before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 2px;
+        content: "";
+        background: transparent;
+        transition: background 0.15s;
+      }
+
+      .match.playable {
+        border-color: var(--border-1);
+      }
+
+      .match.playable::before {
+        background: var(--accent);
+      }
+
+      .match.selected {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 1px rgba(92, 172, 255, 0.15);
+      }
+
+      .match.selected::before {
+        background: var(--blue);
+      }
+
+      .match.completed {
+        opacity: 0.55;
+      }
+
+      .match.bye {
+        opacity: 0.25;
+      }
+
+      .match-id {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 3px 8px 2px;
+        font-family: var(--mono);
+        font-size: 9px;
+        font-weight: 600;
+        color: var(--text-3);
+        background: var(--bg-1);
+      }
+
+      .match-reopen {
+        padding: 1px 4px;
+        font-family: var(--mono);
+        font-size: 8px;
+        color: var(--text-3);
+        cursor: pointer;
+        border-radius: 2px;
+        opacity: 0;
+        transition: all 0.1s;
+      }
+
+      .match.completed:hover .match-reopen {
+        opacity: 1;
+      }
+
+      .match-reopen:hover {
+        color: var(--orange);
+        background: rgba(255, 170, 68, 0.1);
+      }
+
+      .slot {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 7px 10px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: default;
+        border-top: 1px solid var(--border-0);
+        transition: all 0.1s;
+      }
+
+      .slot.clickable {
+        cursor: pointer;
+      }
+
+      .slot.clickable:hover {
+        background: var(--accent-bg);
+      }
+
+      .seed-name {
+        font-family: var(--sans);
+        font-weight: 500;
+        color: var(--text-0);
+      }
+
+      .seed-num {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--text-3);
+      }
+
+      .slot.winner {
+        background: rgba(200, 251, 68, 0.05);
+      }
+
+      .slot.winner .seed-name {
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .slot.loser .seed-name {
+        color: var(--text-3);
+        text-decoration: line-through;
+      }
+
+      .slot.empty .seed-name {
+        font-style: italic;
+        font-weight: 400;
+        color: var(--text-3);
+      }
+
+      /* ─── Swiss ─── */
+      .swiss-container {
+        max-width: 600px;
+      }
+
+      .swiss-round {
+        margin-bottom: 28px;
+      }
+
+      .swiss-round-header {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 10px;
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--text-3);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
+
+      .swiss-round-header::after {
+        flex: 1;
+        height: 1px;
+        content: "";
+        background: var(--border-0);
+      }
+
+      .swiss-pairing {
+        display: flex;
+        gap: 0;
+        align-items: center;
+        margin-bottom: 6px;
+        overflow: hidden;
+        background: var(--bg-2);
+        border: 1px solid var(--border-0);
+        border-radius: var(--radius);
+      }
+
+      .swiss-pairing.has-result {
+        opacity: 0.55;
+      }
+
+      .swiss-player {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.1s;
+      }
+
+      .swiss-player:hover {
+        background: var(--accent-bg);
+      }
+
+      .swiss-player-name {
+        color: var(--text-0);
+      }
+
+      .swiss-player.winner {
+        background: rgba(200, 251, 68, 0.05);
+      }
+
+      .swiss-player.winner .swiss-player-name {
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .swiss-player.loser .swiss-player-name {
+        color: var(--text-3);
+        text-decoration: line-through;
+      }
+
+      .swiss-player.bye-player {
+        cursor: default;
+      }
+
+      .swiss-player-record {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--text-3);
+      }
+
+      .swiss-vs {
+        flex-shrink: 0;
+        padding: 0 6px;
+        font-family: var(--mono);
+        font-size: 9px;
+        color: var(--text-3);
+      }
+
+      /* ─── Standings ─── */
+      .standings {
+        margin-top: 24px;
+      }
+
+      .standings-title {
+        margin-bottom: 10px;
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--text-3);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
+
+      .standings-table {
+        width: 100%;
+        max-width: 600px;
+        font-size: 12px;
+        border-collapse: collapse;
+      }
+
+      .standings-table th {
+        padding: 6px 10px;
+        font-family: var(--mono);
+        font-size: 9px;
+        font-weight: 700;
+        color: var(--text-3);
+        text-align: left;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid var(--border-1);
+      }
+
+      .standings-table td {
+        padding: 5px 10px;
+        color: var(--text-1);
+        border-bottom: 1px solid var(--border-0);
+      }
+
+      .standings-table td:first-child {
+        font-family: var(--mono);
+        font-weight: 600;
+        color: var(--text-2);
+      }
+
+      .standings-table td.player-name {
+        font-weight: 500;
+        color: var(--text-0);
+      }
+
+      .standings-table .dropped td {
+        color: var(--text-3);
+        text-decoration: line-through;
+      }
+
+      /* ─── Phase label ─── */
+      .phase-banner {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 20px;
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--text-3);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border: 1px solid var(--border-0);
+        border-radius: var(--radius);
+      }
+
+      .phase-banner.active {
+        color: var(--accent);
+        background: rgba(200, 251, 68, 0.04);
+        border-color: rgba(200, 251, 68, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-top">
+        <div class="logo">bracket-engine <span>playground</span></div>
+
+        <div class="sep"></div>
+
+        <div class="config-group">
+          <span class="config-label">Players</span>
+          <input id="playerCount" type="number" min="2" max="128" step="1" value="8" />
+        </div>
+
+        <div class="config-group">
+          <span class="config-label">Format</span>
+          <select id="format">
+            <option value="double">Double Elim</option>
+            <option value="single">Single Elim</option>
+            <option value="swiss">Swiss</option>
+            <option value="swiss_se">Swiss → SE</option>
+            <option value="swiss_de">Swiss → DE</option>
+          </select>
+        </div>
+
+        <div class="config-group" id="gfGroup">
+          <span class="config-label">Grand Final</span>
+          <select id="gfType">
+            <option value="simple">Simple</option>
+            <option value="double">Double</option>
+            <option value="none">None</option>
+          </select>
+        </div>
+
+        <div class="config-group" id="topCutGroup" style="display: none">
+          <span class="config-label">Top Cut</span>
+          <select id="topCut">
+            <option value="4">Top 4</option>
+            <option value="8" selected>Top 8</option>
+            <option value="16">Top 16</option>
+            <option value="32">Top 32</option>
+          </select>
+        </div>
+
+        <div class="status-bar" id="status">ready</div>
+      </div>
+
+      <div class="command-bar">
+        <div class="cmd-group">
+          <span class="cmd-group-label">Tournament</span>
+          <button class="cmd primary" id="cmdStart">Start</button>
+          <button class="cmd" id="cmdNextRound" style="display: none">Next Round</button>
+          <button class="cmd" id="cmdTopCut" style="display: none">Create Top Cut</button>
+          <button class="cmd" id="cmdEnd" disabled>End</button>
+        </div>
+
+        <div class="cmd-sep"></div>
+
+        <div class="cmd-group">
+          <span class="cmd-group-label">Admin</span>
+          <button class="cmd" id="cmdAutoPlay">Auto-play</button>
+          <button class="cmd" id="cmdAutoRound" style="display: none">Auto-round</button>
+          <button class="cmd" id="cmdUndo" disabled>Undo</button>
+          <button class="cmd" id="cmdDropPlayer" disabled>Drop Player</button>
+        </div>
+
+        <div class="cmd-sep"></div>
+
+        <div class="cmd-group">
+          <button class="cmd" id="cmdCopyJson">Copy JSON</button>
+          <button class="cmd danger" id="cmdReset">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="main" id="app"></div>
+
+    <button class="log-toggle" id="logToggle">Event Log</button>
+    <div class="log-panel" id="logPanel">
+      <div class="log-header">
+        <span>Event Log</span>
+        <span id="logCount">0</span>
+      </div>
+      <div class="log-body" id="logBody"></div>
+    </div>
+
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

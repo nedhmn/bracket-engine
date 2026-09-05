@@ -1,0 +1,13 @@
+node_modules
+dist
+.turbo
+*.tsbuildinfo
+.env
+!.env.example
+.DS_Store
+*.log
+
+# maintainer tooling, installed by the oss-repo skill
+.claude/skills/*
+!.claude/skills/release
+skills-lock.json
