@@ -20,15 +20,17 @@ pnpm gate
 ```
 
 CI runs the same steps in the same order. A `pre-push` hook runs them for you, so a push
-that would fail CI fails on your machine first. `pnpm install` wires the hook; there is no
-hook manager. `git push --no-verify` skips it once. `SKIP_HOOKS=1` skips it for a shell.
+that would fail CI fails on your machine first. A `commit-msg` hook checks the subject.
+`pnpm install` wires both; there is no hook manager. `--no-verify` skips a hook once.
+`SKIP_HOOKS=1` skips them for a shell.
 
 ## Commits and releases
 
-Commit subjects are conventional commits and they are the release notes. Pull requests are
-squash merged, so the PR title is the subject. Use `feat`, `fix`, `perf`, `refactor`,
-`docs`, `deps`, `revert` for anything user-visible. `chore`, `test`, `ci`, `build`,
-`style` stay out of the changelog. A `!` after the type marks a breaking change.
+Commit subjects are lowercase conventional commits and they are the release notes. Pull
+requests are squash merged, so the PR title is the subject and CI checks it the same way.
+Use `feat`, `fix`, `perf`, `refactor`, `docs`, `deps`, `revert` for anything user-visible.
+`chore`, `test`, `ci`, `build`, `style` stay out of the changelog. A `!` after the type
+marks a breaking change. No `Co-Authored-By` trailers.
 
 release-please keeps one open pull request on `main` with the next version and
 changelog. Merging it tags the release and publishes the GitHub Release. Nothing is

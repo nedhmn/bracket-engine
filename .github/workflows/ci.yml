@@ -66,8 +66,8 @@ jobs:
         env:
           TITLE: ${{ github.event.pull_request.title }}
         run: |
-          if ! printf '%s' "$TITLE" | grep -Eq '^(feat|fix|perf|refactor|docs|deps|revert|chore|test|ci|build|style)(\([a-z0-9-]+\))?!?: [^ ].*$'; then
-            echo "Title must be a conventional commit subject, e.g. 'fix(core): handle byes in round one'"
+          if ! printf '%s' "$TITLE" | grep -Eq '^(feat|fix|perf|refactor|docs|deps|revert|chore|test|ci|build|style)(\([a-z0-9-]+\))?!?: [a-z0-9][^A-Z]*$'; then
+            echo "Title must be a lowercase conventional commit subject, e.g. 'fix(core): handle byes in round one'"
             exit 1
           fi
 

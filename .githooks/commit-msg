@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+set -eu
+
+[ -n "${SKIP_HOOKS:-}" ] && exit 0
+
+subject=$(head -n1 "$1")
+case "$subject" in
+Merge\ *|fixup!\ *|squash!\ *) exit 0 ;;
+esac
+
+if ! printf '%s' "$subject" | grep -Eq '^(feat|fix|perf|refactor|docs|deps|revert|chore|test|ci|build|style)(\([a-z0-9-]+\))?!?: [a-z0-9][^A-Z]*$'; then
+	echo ""
+	echo "  Subject must be a lowercase conventional commit, e.g. 'fix(core): handle byes in round one'"
+	echo ""
+	exit 1
+fi
+
+if grep -Eiq '^co-authored-by:' "$1"; then
+	echo ""
+	echo "  No Co-Authored-By trailers. Commits are authored by the person who pushes them."
+	echo ""
+	exit 1
+fi

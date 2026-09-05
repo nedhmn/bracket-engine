@@ -17,8 +17,9 @@
 - A module in `apps/tournament-engine` moves to `packages/` only when a second app imports it.
 - Run the gate in `CONTRIBUTING.md` before every push. A red step is fixed in the source.
   A lint override is scoped to a path and carries its reason in the lint config.
-- Commit subjects are conventional commits and they are the release notes. Write the
-  subject for the person reading the changelog.
+- Commit subjects are lowercase conventional commits and they are the release notes.
+  Write the subject for the person reading the changelog.
+- No `Co-Authored-By` trailer, ever. The person who pushes is the author.
 - Ported or vendored code keeps its attribution in `LICENSE` and its own header.
 - Third-party skills and vendored rules are never edited in place. Edit upstream or fork it.
 - No docstrings, no narrative comments, no em dashes.
