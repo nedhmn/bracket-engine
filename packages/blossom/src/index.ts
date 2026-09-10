@@ -1,4 +1,4 @@
-// Port of https://github.com/mattkrick/EdmondsBlossom (MIT). Notice in LICENSE.
+// Port of https://github.com/mattkrick/EdmondsBlossom (MIT).
 type Edge = [number, number, number];
 
 const filledArray = <T>(len: number, fill: T): T[] => {
