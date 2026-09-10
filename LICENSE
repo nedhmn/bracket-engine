@@ -19,17 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
---------------------------------------------------------------------------------
-
-Third-party notices
-
-tools/oxlint/anti-slop
-  Copyright (c) 2026 Dillon Mulroy. MIT.
-  https://github.com/dmmulroy/anti-slop
-
-packages/blossom
-  TypeScript port of EdmondsBlossom by Matt Krick. Copyright (c) 2015 mattkrick. MIT.
-  https://github.com/mattkrick/EdmondsBlossom
-  Itself a port of mwmatching.py by Joris van Rantwijk, which states no license.
-  http://jorisvr.nl/article/maximum-matching

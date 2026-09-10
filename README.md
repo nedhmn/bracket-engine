@@ -47,4 +47,4 @@ Everything else is in [docs/](./docs/README.md).
 
 ## License
 
-MIT. Third-party notices are in [LICENSE](./LICENSE).
+MIT.
