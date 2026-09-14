@@ -24,7 +24,7 @@
     "typescript": "7.0.2"
   },
   "engines": {
-    "node": "v26.8.1"
+    "node": "26.8.2"
   },
   "packageManager": "pnpm@12.3.2"
 }
