@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@oxlint/plugins": "1.81.0",
-    "knip": "6.34.0",
+    "knip": "6.35.1",
     "oxfmt": "0.66.0",
     "oxlint": "1.81.0",
     "turbo": "2.10.12",
