@@ -20,7 +20,7 @@
     "knip": "6.35.1",
     "oxfmt": "0.66.0",
     "oxlint": "1.81.0",
-    "turbo": "2.10.12",
+    "turbo": "2.10.13",
     "typescript": "7.0.2"
   },
   "engines": {
