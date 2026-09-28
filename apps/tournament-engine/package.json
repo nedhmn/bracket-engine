@@ -12,14 +12,14 @@
   },
   "dependencies": {
     "@bracket-engine/core": "workspace:*",
-    "drizzle-orm": "0.45.2",
+    "drizzle-orm": "0.45.3",
     "pg": "8.23.0"
   },
   "devDependencies": {
     "@bracket-engine/typescript": "workspace:*",
     "@types/node": "26.5.1",
     "@types/pg": "8.23.1",
-    "drizzle-kit": "0.31.10",
+    "drizzle-kit": "0.31.11",
     "typescript": "7.0.2",
     "vitest": "5.0.0"
   }
