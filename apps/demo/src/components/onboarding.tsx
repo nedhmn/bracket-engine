@@ -8,7 +8,9 @@ import {
   DialogTitle,
 } from "@repo/design-system/components/dialog";
 import { cn } from "@repo/design-system/lib/utils";
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
+
+import { DatabaseIcon } from "./database-icon.tsx";
 
 export const REPO_URL = "https://github.com/nedhmn/bracket-engine";
 
@@ -18,45 +20,51 @@ const COPIED_MS = 1500;
 type Step = {
   alt: string;
   image: string;
-  text: string;
+  text: ReactNode;
   title: string;
 };
 
 const STEPS: Step[] = [
   {
-    alt: "The Configure screen with format presets and a player count.",
+    alt: "The New tournament form with format rows, a player count and the Start tournament button highlighted.",
     image: "configure",
-    text: "Choose a format and a player count, then start the tournament.",
+    text: "Choose a format and a player count, then press Start tournament.",
     title: "Pick a format",
   },
   {
-    alt: "Swiss round 1 with match cards and the Play round and Play all buttons.",
+    alt: "A Swiss round with a clickable player and the Play round and Play all buttons highlighted.",
     image: "swiss",
     text: "Click a player to pick the winner, or use Play round or Play all.",
     title: "Play the Swiss rounds",
   },
   {
-    alt: "The Edit dialog for a finished match, with both players and a Clear result button.",
+    alt: "A finished match with its Edit button highlighted, next to the Edit dialog with a Clear result button.",
     image: "edit",
-    text: "Change the winner of a finished match, or clear it to reopen the match.",
+    text: "Press Edit on a finished match to change the winner or clear the result.",
     title: "Edit or clear a result",
   },
   {
-    alt: "A top 8 single elimination bracket in progress.",
+    alt: "Finished Swiss rounds with the Create top 8 button highlighted and the cut line in the standings.",
     image: "bracket",
-    text: "The top Swiss players move into a bracket seeded by their Swiss rank.",
-    title: "Play the top cut",
+    text: "After the last Swiss round, Create top 8 starts a bracket seeded by Swiss rank.",
+    title: "Create the top cut",
   },
   {
-    alt: "The standings table with the Overall, Swiss and Top cut toggle.",
+    alt: "The standings table with the Overall, Swiss and Top cut toggle highlighted.",
     image: "standings",
     text: "Switch between Overall, Swiss and Top cut to see each ranking.",
     title: "Read the standings",
   },
   {
-    alt: "The Data panel listing engine calls, their events and the tournament state.",
+    alt: "The page with the round Data button highlighted at the bottom right.",
     image: "data",
-    text: "Data lists every engine call, the events it returned, and the full state.",
+    text: (
+      <>
+        Open Data with{" "}
+        <DatabaseIcon className="inline size-4 -translate-y-px align-middle text-accent" /> at the
+        bottom right to see every engine call, the events it returned, and the full state.
+      </>
+    ),
     title: "Inspect the data",
   },
 ];
