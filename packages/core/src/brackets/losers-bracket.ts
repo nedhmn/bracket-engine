@@ -7,14 +7,7 @@ type LosersBracketResult = {
 
 type RoundMatches = { matches: BracketMatch[]; matchNumbers: number[] };
 
-const defaultMinorOrdering = new Map<number, LbOrdering[]>([
-  [4, ["natural", "reverse"]],
-  [8, ["natural", "reverse", "natural"]],
-  [16, ["natural", "reverse_half_shift", "reverse", "natural"]],
-  [32, ["natural", "reverse", "half_shift", "natural", "natural"]],
-  [64, ["natural", "reverse", "half_shift", "reverse", "natural", "natural"]],
-  [128, ["natural", "reverse", "half_shift", "pair_flip", "pair_flip", "pair_flip", "natural"]],
-]);
+const DROP_IN_CYCLE: LbOrdering[] = ["reverse", "reverse_half_shift", "half_shift", "natural"];
 
 export const applyOrdering = <T>(array: T[], method: LbOrdering): T[] => {
   const half = array.length / 2;
@@ -44,18 +37,11 @@ const makePairs = <T>(array: T[]): [T, T][] =>
     .map((_, i) => (i % 2 === 0 ? ([array[i], array[i + 1]] as [T, T]) : undefined))
     .filter((v): v is [T, T] => v !== undefined);
 
-const getMajorOrdering = (participantCount: number): LbOrdering =>
-  defaultMinorOrdering.get(participantCount)?.[0] ?? "natural";
-
-export const getMinorOrdering = (
-  participantCount: number,
-  index: number,
-  roundPairCount: number,
-): LbOrdering | undefined => {
+export const getMinorOrdering = (index: number, roundPairCount: number): LbOrdering | undefined => {
   if (index === roundPairCount - 1) {
     return;
   }
-  return defaultMinorOrdering.get(participantCount)?.[1 + index] ?? "natural";
+  return DROP_IN_CYCLE[index % DROP_IN_CYCLE.length];
 };
 
 type SlotEntry = {
@@ -156,7 +142,6 @@ export const generateLosersBracket = (
   wbLosersPerRound: (Seed | null)[][],
   startingMatchNumber: number,
 ): LosersBracketResult => {
-  const participantCount = 2 ** wbRoundCount;
   const roundPairCount = wbRoundCount - 1;
   const matches: BracketMatch[] = [];
   let matchNumber = startingMatchNumber;
@@ -166,9 +151,7 @@ export const generateLosersBracket = (
   const firstLosers = wbLosersPerRound[losersIdx++].map((s) => ({
     seed: s,
   }));
-  const majorOrdering = getMajorOrdering(participantCount);
-  const ordered = applyOrdering(firstLosers, majorOrdering);
-  let duels = makePairs(ordered);
+  let duels = makePairs(firstLosers);
 
   for (let i = 0; i < roundPairCount; i++) {
     const matchCount = 2 ** (roundPairCount - i - 1);
@@ -183,7 +166,7 @@ export const generateLosersBracket = (
     matchNumber += matchCount;
 
     const losers = wbLosersPerRound[losersIdx++].map((s) => ({ seed: s }));
-    const minorOrdering = getMinorOrdering(participantCount, i, roundPairCount);
+    const minorOrdering = getMinorOrdering(i, roundPairCount);
     duels = transitionToMinor(duels, losers, minorOrdering);
 
     const minor = createRoundMatches(duels, matchCount, i * 2 + 2, matchNumber);

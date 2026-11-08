@@ -241,6 +241,7 @@ function initSwiss() {
     wins: 0,
     losses: 0,
     byes: 0,
+    floats: 0,
     opponents: [],
     dropped: false,
   }));

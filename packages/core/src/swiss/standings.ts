@@ -129,6 +129,18 @@ const applySwissMatchToStandings = (match: MatchResult, standings: Map<string, S
   }
 };
 
+const countFloat = (match: MatchResult, standings: Map<string, Standing>) => {
+  if (match.player2Id === null) {
+    return;
+  }
+  const p1 = standings.get(match.player1Id);
+  const p2 = standings.get(match.player2Id);
+  if (!(p1 && p2) || p1.wins === p2.wins) {
+    return;
+  }
+  (p1.wins > p2.wins ? p1 : p2).floats++;
+};
+
 export const buildSwissStandings = (
   participants: Array<{ participantId: string; dropped: boolean }>,
   matches: MatchResult[],
@@ -141,13 +153,22 @@ export const buildSwissStandings = (
       wins: 0,
       losses: 0,
       byes: 0,
+      floats: 0,
       opponents: [],
       dropped: participant.dropped,
     });
   }
 
-  for (const match of matches) {
-    applySwissMatchToStandings(match, standings);
+  const rounds = [...new Set(matches.map((m) => m.roundNumber))].toSorted((a, b) => a - b);
+  for (const round of rounds) {
+    const roundMatches = matches.filter((m) => m.roundNumber === round);
+    // Floats compare records as they stood before the round.
+    for (const match of roundMatches) {
+      countFloat(match, standings);
+    }
+    for (const match of roundMatches) {
+      applySwissMatchToStandings(match, standings);
+    }
   }
 
   return participants

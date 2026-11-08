@@ -15,18 +15,13 @@ export {
   type EliminationStandingEntry,
 } from "./elimination-standings.ts";
 export { generateSeeding, nextPowerOf2 } from "./seeding.ts";
-export {
-  calculateRecommendedRounds,
-  generateSwissRound,
-  type SwissRoundOptions,
-} from "./swiss/pairing.ts";
+export { calculateRecommendedRounds, generateSwissRound } from "./swiss/pairing.ts";
 export { buildSwissStandings, calculateMantisRankings } from "./swiss/standings.ts";
 export type {
   AdvanceResult,
   BracketMatch,
   BracketMatchStatus,
   BracketSection,
-  ByeWeightFn,
   DoubleEliminationResult,
   GrandFinalType,
   LbOrdering,

@@ -1,12 +1,9 @@
 import blossom from "@bracket-engine/blossom";
 
-import type { ByeWeightFn, Pairing, Standing } from "../types.ts";
+import type { Pairing, Standing } from "../types.ts";
 
-const REMATCH_WEIGHT = 1_000_000;
-const STANDING_POWER = 2;
+const NOISE_RANGE = 1000;
 const SEED_MULTIPLIER = 6781;
-
-const defaultByeWeight: ByeWeightFn = (s) => -(s.wins - s.losses);
 
 const seededRng = (seed: number) => {
   let s = seed;
@@ -16,154 +13,86 @@ const seededRng = (seed: number) => {
   };
 };
 
-const shuffle = <T>(array: T[], rng: () => number): T[] => {
-  const result = [...array];
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-  return result;
+type Weights = {
+  bye: number;
+  float: number;
+  rematch: number;
+  repeatBye: number;
+  repeatFloat: number;
 };
 
-type ParticipantStats = {
-  byes: number;
-  dropped: boolean;
-  id: string;
-  losses: number;
-  opponents: string[];
-  wins: number;
+// Each tier outweighs the worst case sum of every tier below it.
+const buildWeights = (players: Standing[]): Weights => {
+  const pairs = Math.ceil(players.length / 2) + 1;
+  const wins = players.map((p) => p.wins);
+  const gap = Math.max(...wins) - Math.min(...wins);
+  const repeatFloat = pairs * NOISE_RANGE;
+  const float = repeatFloat * pairs;
+  const bye = float * (pairs * gap * gap + 1);
+  const repeatBye = bye * (gap + 1);
+  const rematch = repeatBye * (players.length + 1);
+  return { bye, float, rematch, repeatBye, repeatFloat };
 };
 
-const buildStats = (standings: Standing[]): ParticipantStats[] =>
-  standings.map((s) => ({
-    id: s.participantId,
-    wins: s.wins,
-    losses: s.losses,
-    byes: s.byes,
-    opponents: [...s.opponents],
-    dropped: s.dropped,
-  }));
+const pairCost = (a: Standing, b: Standing, weights: Weights): number => {
+  const gap = Math.abs(a.wins - b.wins);
+  const floater = a.wins > b.wins ? a : b;
+  const timesPlayed = a.opponents.filter((o) => o === b.participantId).length;
+  return (
+    weights.rematch * timesPlayed +
+    weights.float * gap * gap +
+    (gap > 0 && floater.floats > 0 ? weights.repeatFloat : 0)
+  );
+};
 
-const buildEdges = (
-  shuffled: ParticipantStats[],
-  idToIndex: Map<string, number>,
-  byeNodeIndex: number | null,
-  byeWeightFn: ByeWeightFn,
-): [number, number, number][] => {
+const byeCost = (s: Standing, lowest: number, weights: Weights): number =>
+  weights.repeatBye * s.byes + weights.bye * (s.wins - lowest);
+
+const buildEdges = (players: Standing[], rng: () => number): [number, number, number][] => {
+  const weights = buildWeights(players);
+  const lowest = Math.min(...players.map((p) => p.wins));
+  const byeNode = players.length;
   const edges: [number, number, number][] = [];
 
-  for (let i = 0; i < shuffled.length; i++) {
-    const a = shuffled[i];
-    const aIdx = idToIndex.get(a.id) ?? 0;
-
-    for (let j = i + 1; j < shuffled.length; j++) {
-      const b = shuffled[j];
-      const bIdx = idToIndex.get(b.id) ?? 0;
-
-      const pointDiff = a.wins - a.losses - (b.wins - b.losses);
-      const timesPlayed = a.opponents.filter((o) => o === b.id).length;
-
-      const weight = -(pointDiff ** STANDING_POWER + REMATCH_WEIGHT * timesPlayed);
-      edges.push([aIdx, bIdx, weight]);
+  for (let i = 0; i < players.length; i++) {
+    for (let j = i + 1; j < players.length; j++) {
+      const noise = Math.floor(rng() * NOISE_RANGE);
+      edges.push([i, j, -(pairCost(players[i], players[j], weights) + noise)]);
     }
-
-    if (byeNodeIndex !== null) {
-      const standing: Standing = {
-        participantId: a.id,
-        wins: a.wins,
-        losses: a.losses,
-        byes: a.byes,
-        opponents: a.opponents,
-        dropped: a.dropped,
-      };
-      const byeWeight = byeWeightFn(standing) - REMATCH_WEIGHT * a.byes;
-      edges.push([aIdx, byeNodeIndex, byeWeight]);
+    if (players.length % 2 === 1) {
+      const noise = Math.floor(rng() * NOISE_RANGE);
+      edges.push([i, byeNode, -(byeCost(players[i], lowest, weights) + noise)]);
     }
   }
 
   return edges;
 };
 
-const extractPairings = (
-  results: number[],
-  indexToId: Map<number, string>,
-  byeNodeIndex: number | null,
-  standings: Standing[],
-): Pairing[] => {
-  const paired = new Set<number>();
+const extractPairings = (players: Standing[], mates: number[]): Pairing[] => {
   const pairings: Pairing[] = [];
-
-  const standingOrder = new Map<string, number>();
-  for (let i = 0; i < standings.length; i++) {
-    standingOrder.set(standings[i].participantId, i);
-  }
-
-  const sortedIndices = [...indexToId.keys()]
-    .filter((i) => i !== byeNodeIndex)
-    .toSorted((a, b) => {
-      const aOrder = standingOrder.get(indexToId.get(a) ?? "") ?? Number.POSITIVE_INFINITY;
-      const bOrder = standingOrder.get(indexToId.get(b) ?? "") ?? Number.POSITIVE_INFINITY;
-      return aOrder - bOrder;
-    });
-
-  for (const i of sortedIndices) {
+  const paired = new Set<number>();
+  for (let i = 0; i < players.length; i++) {
     if (paired.has(i)) {
       continue;
     }
-    const partner = results[i];
-    if (partner === -1) {
-      continue;
-    }
-
+    const mate = mates[i];
     paired.add(i);
-    paired.add(partner);
-
-    const id1 = indexToId.get(i) ?? "";
-    const id2 = indexToId.get(partner) ?? "";
-
-    if (partner === byeNodeIndex) {
-      pairings.push({ player1: id1, player2: null });
-    } else {
-      pairings.push({ player1: id1, player2: id2 });
-    }
+    paired.add(mate);
+    pairings.push({
+      player1: players[i].participantId,
+      player2: mate === players.length ? null : players[mate].participantId,
+    });
   }
-
   return pairings;
 };
 
-export type SwissRoundOptions = {
-  // Higher weight is likelier to get the bye. Default: lowest ranked
-  byeWeight?: ByeWeightFn;
-};
-
-export const generateSwissRound = (
-  standings: Standing[],
-  roundNumber: number,
-  options?: SwissRoundOptions,
-): Pairing[] => {
-  const byeWeightFn = options?.byeWeight ?? defaultByeWeight;
-  const stats = buildStats(standings).filter((s) => !s.dropped);
-
-  const idToIndex = new Map<string, number>();
-  const indexToId = new Map<number, string>();
-  for (let i = 0; i < stats.length; i++) {
-    idToIndex.set(stats[i].id, i);
-    indexToId.set(i, stats[i].id);
+export const generateSwissRound = (standings: Standing[], roundNumber: number): Pairing[] => {
+  const players = standings.filter((s) => !s.dropped);
+  if (players.length === 0) {
+    return [];
   }
-
-  let byeNodeIndex: number | null = null;
-  if (stats.length % 2 === 1) {
-    byeNodeIndex = stats.length;
-    indexToId.set(byeNodeIndex, "__BYE__");
-  }
-
-  const rng = seededRng(roundNumber);
-  const shuffled = shuffle(stats, rng);
-
-  const edges = buildEdges(shuffled, idToIndex, byeNodeIndex, byeWeightFn);
-  const results = blossom(edges, true);
-
-  return extractPairings(results, indexToId, byeNodeIndex, standings);
+  const edges = buildEdges(players, seededRng(roundNumber));
+  return extractPairings(players, blossom(edges, true));
 };
 
 export const calculateRecommendedRounds = (participantCount: number): number =>

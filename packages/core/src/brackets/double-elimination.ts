@@ -1,4 +1,4 @@
-import { generateSeeding, nextPowerOf2 } from "../seeding.ts";
+import { generateSeeding } from "../seeding.ts";
 import type {
   BracketMatch,
   DoubleEliminationResult,
@@ -70,7 +70,6 @@ export const generateDoubleElimination = (
     lbMatchesByRound.set(m.roundNumber, arr);
   }
 
-  const participantSize = nextPowerOf2(participantCount);
   const roundPairCount = wb.roundCount - 1;
 
   for (let wbRound = 0; wbRound < wb.roundCount; wbRound++) {
@@ -78,7 +77,7 @@ export const generateDoubleElimination = (
     if (wbRound === 0) {
       wireWbRound1ToLb(wbRoundMatches, lbMatchesByRound.get(1) ?? []);
     } else {
-      const minorOrdering = getMinorOrdering(participantSize, wbRound - 1, roundPairCount);
+      const minorOrdering = getMinorOrdering(wbRound - 1, roundPairCount);
       wireWbRoundToLbMinor(wbRoundMatches, lbMatchesByRound.get(wbRound * 2) ?? [], minorOrdering);
     }
   }
