@@ -19,11 +19,11 @@ import type { Phase, Tournament, TopCutInput } from "tournament-engine";
 import { createTopCut, dropParticipant, endTournament, reportResult } from "tournament-engine";
 
 import { sortedPhases } from "../lookup.ts";
-import { type Plan, presetInfo, usesGrandFinal } from "../plan.ts";
+import { presetInfo, usesGrandFinal } from "../plan.ts";
 import { type Next, nextStep, phaseHeading, randomWinner, roundMatches } from "../progress.ts";
 import { type CallFn, useSession } from "../session.tsx";
 import { BracketView } from "./bracket.tsx";
-import { OverallStandings, PhaseStandings, SwissStandings } from "./standings.tsx";
+import { Standings } from "./standings.tsx";
 import { SwissRounds } from "./swiss.tsx";
 
 const TOOLBAR = "toolbar";
@@ -231,25 +231,6 @@ function Matches({ phase, tournament }: { phase: Phase; tournament: Tournament }
   );
 }
 
-function Standings({ plan, tournament }: { plan: Plan | null; tournament: Tournament }) {
-  const [first] = sortedPhases(tournament);
-  const cut = tournament.phases.find((p) => p.position > 1);
-  if (cut !== undefined) {
-    return <OverallStandings cut={cut} swiss={first} tournament={tournament} />;
-  }
-  if (first.format !== "swiss") {
-    return <PhaseStandings phase={first} tournament={tournament} />;
-  }
-  const pending = plan !== null && presetInfo(plan.preset).cut !== null;
-  return (
-    <SwissStandings
-      cut={pending && tournament.status !== "complete" ? plan.topCut : null}
-      phase={first}
-      tournament={tournament}
-    />
-  );
-}
-
 export function Watch({ tournament }: { tournament: Tournament }) {
   const session = useSession();
   const next = nextStep(tournament, session.plan);
@@ -280,7 +261,6 @@ export function Watch({ tournament }: { tournament: Tournament }) {
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start lg:gap-8">
         <Matches phase={shown} tournament={tournament} />
         <aside className="grid min-w-0 content-start gap-4 lg:sticky lg:top-20 lg:max-h-[calc(100dvh-10rem)] lg:overflow-y-auto">
-          <h2 className="text-base font-medium">Standings</h2>
           <Standings plan={session.plan} tournament={tournament} />
         </aside>
       </div>

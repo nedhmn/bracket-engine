@@ -163,6 +163,13 @@ function EditButton({ match, tournament }: CardProps) {
     });
   };
 
+  const clear = () => {
+    setOpen(false);
+    session.perform(matchScope(match), `Clear #${match.matchNumber}`, (call) =>
+      call("reopenResult", { matchId: match.id }, (i) => reopenResult(tournament, i)),
+    );
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <Button variant="ghost" className={EDIT_BUTTON} onClick={() => setOpen(true)}>
@@ -191,7 +198,10 @@ function EditButton({ match, tournament }: CardProps) {
             );
           })}
         </div>
-        <DialogFooter>
+        <DialogFooter className="sm:justify-between">
+          <Button variant="secondary" size="md" onClick={clear}>
+            Clear result
+          </Button>
           <DialogClose asChild>
             <Button variant="ghost" size="md">
               Cancel
