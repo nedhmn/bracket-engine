@@ -2,10 +2,11 @@
   "name": "tournament-engine",
   "version": "0.1.1",
   "description": "Single elimination, double elimination and Swiss tournaments as pure functions over plain data.",
+  "homepage": "https://nedhmn.github.io/tournament-engine",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nedhmn/bracket-engine.git",
+    "url": "git+https://github.com/nedhmn/tournament-engine.git",
     "directory": "packages/engine"
   },
   "files": [
