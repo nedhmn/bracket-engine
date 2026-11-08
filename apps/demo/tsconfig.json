@@ -1,5 +1,9 @@
 {
   "extends": "@repo/typescript/base.json",
-  "compilerOptions": { "lib": ["ES2023", "DOM", "DOM.Iterable"] },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"]
+  },
   "include": ["src", "test", "vite.config.ts", "vitest.config.ts"]
 }

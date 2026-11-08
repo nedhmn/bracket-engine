@@ -1,25 +1,33 @@
-import type { Match, Phase, PhaseFormat, Tournament } from "tournament-engine";
+import type {
+  EliminationFormat,
+  GrandFinalType,
+  Match,
+  Phase,
+  PhaseFormat,
+  Tournament,
+} from "tournament-engine";
 
-const ESCAPES = new Map([
-  ["&", "&amp;"],
-  ["<", "&lt;"],
-  [">", "&gt;"],
-  ['"', "&quot;"],
-  ["'", "&#39;"],
-]);
+export type Option<T extends string> = readonly [T, string];
 
-export function esc(text: string | number): string {
-  return String(text).replace(/[&<>"']/g, (c) => ESCAPES.get(c) ?? c);
-}
-
-export const FORMAT_LABELS: ReadonlyMap<PhaseFormat, string> = new Map([
+export const FORMATS: readonly Option<PhaseFormat>[] = [
   ["swiss", "Swiss"],
   ["single_elimination", "Single elimination"],
   ["double_elimination", "Double elimination"],
-]);
+];
+
+export const ELIMINATION_FORMATS: readonly Option<EliminationFormat>[] = [
+  ["single_elimination", "Single elimination"],
+  ["double_elimination", "Double elimination"],
+];
+
+export const GRAND_FINALS: readonly Option<GrandFinalType>[] = [
+  ["double", "Double (bracket reset)"],
+  ["simple", "Simple"],
+  ["none", "None"],
+];
 
 export function formatLabel(format: PhaseFormat): string {
-  return FORMAT_LABELS.get(format) ?? format;
+  return FORMATS.find(([value]) => value === format)?.[1] ?? format;
 }
 
 export function nameOf(tournament: Tournament, id: string | null): string {
@@ -45,4 +53,13 @@ export function sortedPhases(tournament: Tournament): Phase[] {
 
 export function isLive(tournament: Tournament, phase: Phase): boolean {
   return tournament.status !== "complete" && phase.status !== "complete";
+}
+
+export function groupBy<K, T>(items: readonly T[], key: (item: T) => K): Map<K, T[]> {
+  const groups = new Map<K, T[]>();
+  for (const item of items) {
+    const k = key(item);
+    groups.set(k, [...(groups.get(k) ?? []), item]);
+  }
+  return groups;
 }

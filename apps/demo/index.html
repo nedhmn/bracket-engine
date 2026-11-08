@@ -4,20 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>tournament-engine demo</title>
+    <link rel="icon" href="data:," />
     <meta
       name="description"
       content="Run a Swiss or elimination tournament in the browser on tournament-engine."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./src/style.css" />
+    <script>
+      // Mirrors applyTheme in src/theme.ts so the first paint has the right theme
+      try {
+        const stored = localStorage.getItem("tournament-engine-demo/theme");
+        const theme = stored === "light" || stored === "dark" ? stored : "system";
+        const dark =
+          theme === "dark" ||
+          (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", dark);
+        document.documentElement.classList.toggle("system", theme === "system");
+      } catch {}
+    </script>
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="./src/main.ts"></script>
+    <script type="module" src="./src/main.tsx"></script>
   </body>
 </html>

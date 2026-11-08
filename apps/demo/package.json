@@ -10,10 +10,17 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@repo/design-system": "workspace:*",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "tournament-engine": "workspace:*"
   },
   "devDependencies": {
     "@repo/typescript": "workspace:*",
+    "@tailwindcss/vite": "4.3.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.2.1",
     "typescript": "7.0.2",
     "vite": "8.2.2",
     "vitest": "5.0.0"
