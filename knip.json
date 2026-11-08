@@ -10,7 +10,7 @@
     },
     "apps/demo": {
       "entry": ["index.html"],
-      "project": ["src/**/*.ts", "test/**/*.ts"]
+      "project": ["src/**/*.{ts,tsx}"]
     },
     "apps/cli": {
       "project": ["src/**/*.ts", "test/**/*.ts"]
