@@ -294,7 +294,7 @@ try {
     error instanceof TournamentError ||
     error instanceof NotFoundError
   ) {
-    console.error(error.message);
+    console.error(error.message.replace("pass force: true", "pass --force"));
     process.exitCode = 1;
   } else {
     throw error;
