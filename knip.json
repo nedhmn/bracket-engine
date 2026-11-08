@@ -5,9 +5,9 @@
     "packages/*": {
       "project": ["src/**/*.ts", "test/**/*.ts"]
     },
-    "apps/web": {
+    "apps/demo": {
       "entry": ["index.html"],
-      "project": ["src/**/*.ts"]
+      "project": ["src/**/*.ts", "test/**/*.ts"]
     },
     "apps/cli": {
       "project": ["src/**/*.ts", "test/**/*.ts"]

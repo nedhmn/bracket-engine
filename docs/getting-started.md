@@ -2,7 +2,7 @@
 
 Node 24, pnpm, Docker.
 
-## Playground
+## Demo
 
 ```sh
 pnpm install
