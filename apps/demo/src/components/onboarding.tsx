@@ -13,7 +13,7 @@ import {
 export const REPO_URL = "https://github.com/nedhmn/bracket-engine";
 
 const STEPS = [
-  "Pick a format and a player count. Players get sample names.",
+  "Pick a format and a player count. Player 1 is the top seed.",
   "Press Play round to fill in random winners, or click a player to pick the winner yourself.",
   "Open Data to see the engine call behind each click, the events it returned, and the tournament as JSON.",
 ];

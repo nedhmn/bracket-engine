@@ -1,6 +1,6 @@
 import type { BracketSection, Match, Phase, Tournament } from "tournament-engine";
 
-import { groupBy, phaseMatches, phaseSeeds, roundName } from "../lookup.ts";
+import { groupBy, phaseMatches, roundName } from "../lookup.ts";
 import { MatchCard } from "./match.tsx";
 
 const SECTION_LABELS: Record<BracketSection, string> = {
@@ -12,7 +12,6 @@ const SECTION_LABELS: Record<BracketSection, string> = {
 type RoundsProps = {
   matches: Match[];
   phase: Phase;
-  seeds: Map<string, number>;
   tournament: Tournament;
 };
 
@@ -26,7 +25,7 @@ function columnName(phase: Phase, section: BracketSection | null, round: number,
   return round === rounds ? "Final" : `Round ${round}`;
 }
 
-function Rounds({ matches, phase, seeds, tournament }: RoundsProps) {
+function Rounds({ matches, phase, tournament }: RoundsProps) {
   const columns = groupBy(matches, (m) => m.roundNumber);
   const rounds = Math.max(...columns.keys());
   return (
@@ -39,7 +38,7 @@ function Rounds({ matches, phase, seeds, tournament }: RoundsProps) {
             </div>
             <div className="flex flex-1 flex-col justify-around gap-4">
               {list.map((m) => (
-                <MatchCard key={m.id} match={m} seeds={seeds} tournament={tournament} />
+                <MatchCard key={m.id} match={m} tournament={tournament} />
               ))}
             </div>
           </div>
@@ -50,12 +49,11 @@ function Rounds({ matches, phase, seeds, tournament }: RoundsProps) {
 }
 
 export function BracketView({ phase, tournament }: { phase: Phase; tournament: Tournament }) {
-  const seeds = phaseSeeds(tournament, phase.id);
   const matches = phaseMatches(tournament, phase.id);
   const sections = groupBy(matches, (m) => m.bracketSection);
 
   if (phase.format === "single_elimination" || sections.size === 1) {
-    return <Rounds matches={matches} phase={phase} seeds={seeds} tournament={tournament} />;
+    return <Rounds matches={matches} phase={phase} tournament={tournament} />;
   }
   return (
     <div className="grid min-w-0 gap-8">
@@ -64,7 +62,7 @@ export function BracketView({ phase, tournament }: { phase: Phase; tournament: T
           <h3 className="text-sm font-medium text-text-secondary">
             {key === null ? "Bracket" : SECTION_LABELS[key]}
           </h3>
-          <Rounds matches={list} phase={phase} seeds={seeds} tournament={tournament} />
+          <Rounds matches={list} phase={phase} tournament={tournament} />
         </section>
       ))}
     </div>

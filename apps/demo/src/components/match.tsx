@@ -19,27 +19,19 @@ export function FailureText({ className, scope }: { className?: string; scope: s
 
 type CardProps = {
   match: Match;
-  seeds: Map<string, number>;
   tournament: Tournament;
 };
 
 const ROW = "flex h-9 w-full min-w-0 items-center gap-2 px-3 text-left text-sm";
 
-function Row({ id, match, seeds, tournament }: CardProps & { id: string | null }) {
+function Row({ id, match, tournament }: CardProps & { id: string | null }) {
   const session = useSession();
   if (id === null) {
     const label = match.status === "bye" || match.status === "complete" ? "BYE" : "TBD";
     return <div className={cn(ROW, "font-code text-xs text-text-faint")}>{label}</div>;
   }
   const name = nameOf(tournament, id);
-  const body = (
-    <>
-      <span className="min-w-0 flex-1 truncate">{name}</span>
-      <span className="shrink-0 font-code text-xs font-normal text-text-faint">
-        {seeds.get(id) ?? ""}
-      </span>
-    </>
-  );
+  const body = <span className="min-w-0 flex-1 truncate">{name}</span>;
   if (match.status === "open") {
     return (
       <button

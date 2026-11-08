@@ -1,6 +1,6 @@
 import type { Match, Phase, Tournament } from "tournament-engine";
 
-import { activePhase, nameOf, phaseMatches, roundName } from "./lookup.ts";
+import { activePhase, phaseMatches, roundName } from "./lookup.ts";
 import { type Plan, presetInfo } from "./plan.ts";
 
 export type Next =
@@ -34,49 +34,24 @@ export function randomWinner(match: Match): string | null {
   return players.at(Math.floor(Math.random() * players.length)) ?? null;
 }
 
-function reported(matches: Match[]): string {
-  const counted = matches.filter((m) => m.status !== "bye" && m.status !== "unreachable");
-  const done = counted.filter((m) => m.status === "complete").length;
-  return `${done} of ${counted.length} reported`;
-}
-
-function playStatus(tournament: Tournament, phase: Phase): string {
-  const matches = phaseMatches(tournament, phase.id);
+export function phaseHeading(tournament: Tournament, phase: Phase): string {
+  const label = phase.format === "swiss" ? "Swiss" : phase.position > 1 ? "Top cut" : "Bracket";
+  if (tournament.status === "complete") {
+    return `${label} · Complete`;
+  }
   if (phase.format === "swiss") {
     const round = phase.currentRound ?? 1;
-    const inRound = matches.filter((m) => m.roundNumber === round);
-    return `Round ${round} of ${phase.rounds ?? round} · ${reported(inRound)}`;
+    return `Swiss · Round ${round} of ${phase.rounds ?? round}`;
   }
+  const matches = phaseMatches(tournament, phase.id);
   const first = matches
     .filter((m) => m.status === "open")
     .toSorted((a, b) => a.matchNumber - b.matchNumber)
     .at(0);
   if (first === undefined) {
-    return "";
+    return label;
   }
   const section = matches.filter((m) => m.bracketSection === first.bracketSection);
   const rounds = Math.max(...section.map((m) => m.roundNumber));
-  const name = roundName(phase.format, first.bracketSection, first.roundNumber, rounds);
-  const prefix = phase.position > 1 ? "Top cut · " : "";
-  return `${prefix}${name} · ${reported(section.filter((m) => m.roundNumber === first.roundNumber))}`;
-}
-
-export function statusLine(tournament: Tournament, next: Next): string {
-  switch (next.kind) {
-    case "done": {
-      const winner = tournament.participants.find((p) => p.finalStanding === 1);
-      return winner === undefined
-        ? "Complete."
-        : `Complete. ${nameOf(tournament, winner.id)} wins.`;
-    }
-    case "cut":
-      return `Swiss is done. Create the top ${next.size}.`;
-    case "end":
-      if (next.phase.format === "swiss") {
-        return "Swiss is done. End the tournament to lock in standings.";
-      }
-      return `${next.phase.position > 1 ? "Top cut" : "Bracket"} is done. End the tournament to lock in standings.`;
-    case "play":
-      return playStatus(tournament, next.phase);
-  }
+  return `${label} · ${roundName(phase.format, first.bracketSection, first.roundNumber, rounds)}`;
 }

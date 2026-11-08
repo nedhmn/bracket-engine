@@ -5,27 +5,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@repo/design-system/components/dropdown-menu";
-import type { ReactNode } from "react";
-import type { PhaseFormat, Tournament, TopCutInput } from "tournament-engine";
+import type { Phase, Tournament, TopCutInput } from "tournament-engine";
 import { createTopCut, dropParticipant, endTournament, reportResult } from "tournament-engine";
 
 import { sortedPhases } from "../lookup.ts";
 import { type Plan, presetInfo, usesGrandFinal } from "../plan.ts";
-import { type Next, nextStep, randomWinner, roundMatches, statusLine } from "../progress.ts";
+import { type Next, nextStep, phaseHeading, randomWinner, roundMatches } from "../progress.ts";
 import { type CallFn, useSession } from "../session.tsx";
 import { BracketView } from "./bracket.tsx";
 import { FailureText } from "./match.tsx";
-import { FinalStandings, PhaseStandings, SwissStandings } from "./standings.tsx";
+import { OverallStandings, PhaseStandings, SwissStandings } from "./standings.tsx";
 import { SwissRounds } from "./swiss.tsx";
 
 const TOOLBAR = "toolbar";
 const PLAY_LIMIT = 500;
-
-const FORMAT_LABELS: Record<PhaseFormat, string> = {
-  single_elimination: "Single elimination",
-  double_elimination: "Double elimination",
-  swiss: "Swiss",
-};
 
 function playRound(call: CallFn, start: Tournament, phaseId: string): Tournament {
   let tournament = start;
@@ -149,101 +142,49 @@ function DropMenu({ tournament }: { tournament: Tournament }) {
   );
 }
 
-function Section({ children, title }: { children: ReactNode; title: string }) {
+function Matches({ phase, tournament }: { phase: Phase; tournament: Tournament }) {
   return (
-    <section className="grid min-w-0 gap-4">
-      <h2 className="text-base font-medium">{title}</h2>
-      {children}
+    <section className="grid min-w-0 content-start gap-4">
+      <h2 className="text-base font-medium">{phaseHeading(tournament, phase)}</h2>
+      {phase.format === "swiss" ? (
+        <SwissRounds phase={phase} tournament={tournament} />
+      ) : (
+        <BracketView phase={phase} tournament={tournament} />
+      )}
     </section>
   );
 }
 
-function Sections({ plan, tournament }: { plan: Plan | null; tournament: Tournament }) {
-  const phases = sortedPhases(tournament);
-  const first = phases[0];
-  const cut = phases.find((p) => p.position > 1);
-  const complete = tournament.status === "complete";
-  const standings = "max-w-2xl";
-
-  if (first.format !== "swiss") {
-    return (
-      <>
-        <Section title="Bracket">
-          <BracketView phase={first} tournament={tournament} />
-        </Section>
-        <Section title={complete ? "Final standings" : "Standings"}>
-          <div className={standings}>
-            {complete ? (
-              <FinalStandings tournament={tournament} />
-            ) : (
-              <PhaseStandings phase={first} tournament={tournament} />
-            )}
-          </div>
-        </Section>
-      </>
-    );
+function Standings({ plan, tournament }: { plan: Plan | null; tournament: Tournament }) {
+  const [first] = sortedPhases(tournament);
+  const cut = tournament.phases.find((p) => p.position > 1);
+  if (cut !== undefined) {
+    return <OverallStandings cut={cut} swiss={first} tournament={tournament} />;
   }
-
-  const cutFormat = plan === null ? null : presetInfo(plan.preset).cut;
-  const pendingCut = cutFormat !== null && cut === undefined && !complete;
+  if (first.format !== "swiss") {
+    return <PhaseStandings phase={first} tournament={tournament} />;
+  }
+  const pending = plan !== null && presetInfo(plan.preset).cut !== null;
   return (
-    <>
-      {cut === undefined ? null : (
-        <>
-          <Section title={`Top cut · ${FORMAT_LABELS[cut.format]}`}>
-            <BracketView phase={cut} tournament={tournament} />
-          </Section>
-          <Section title={complete ? "Final standings" : "Top cut standings"}>
-            <div className={standings}>
-              {complete ? (
-                <FinalStandings tournament={tournament} />
-              ) : (
-                <PhaseStandings phase={cut} tournament={tournament} />
-              )}
-            </div>
-          </Section>
-        </>
-      )}
-      <Section
-        title={
-          cutFormat === null ? (complete ? "Final standings" : "Standings") : "Swiss standings"
-        }
-      >
-        <div className={standings}>
-          <SwissStandings
-            cut={pendingCut ? (plan?.topCut ?? null) : null}
-            phase={first}
-            tournament={tournament}
-          />
-        </div>
-      </Section>
-      <Section title={cutFormat === null ? "Rounds" : "Swiss rounds"}>
-        <SwissRounds phase={first} tournament={tournament} />
-      </Section>
-    </>
+    <SwissStandings
+      cut={pending && tournament.status !== "complete" ? plan.topCut : null}
+      phase={first}
+      tournament={tournament}
+    />
   );
 }
 
 export function Watch({ tournament }: { tournament: Tournament }) {
   const session = useSession();
   const next = nextStep(tournament, session.plan);
+  const shown = sortedPhases(tournament).at(-1) ?? tournament.phases[0];
 
   return (
-    <div className="grid gap-12">
+    <div className="grid gap-8">
       <div className="grid gap-3 border-b pb-6">
         <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
           <div className="grid min-w-0 gap-1.5">
-            <button
-              type="button"
-              className="mb-2 cursor-pointer justify-self-start text-sm text-text-secondary hover:text-text-primary"
-              onClick={session.reset}
-            >
-              ← New tournament
-            </button>
             <h1 className="text-xl leading-tight font-medium">{tournament.name}</h1>
-            <p className="text-sm text-text-primary" aria-live="polite">
-              {statusLine(tournament, next)}
-            </p>
             {tournament.status === "complete" ? null : (
               <p className="text-sm text-text-muted">
                 Click a player to make them the winner. Reopen undoes a result.
@@ -257,7 +198,13 @@ export function Watch({ tournament }: { tournament: Tournament }) {
         </div>
         <FailureText scope={TOOLBAR} className="text-sm" />
       </div>
-      <Sections plan={session.plan} tournament={tournament} />
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start lg:gap-8">
+        <Matches phase={shown} tournament={tournament} />
+        <aside className="grid min-w-0 content-start gap-4 lg:sticky lg:top-20 lg:max-h-[calc(100dvh-10rem)] lg:overflow-y-auto">
+          <h2 className="text-base font-medium">Standings</h2>
+          <Standings plan={session.plan} tournament={tournament} />
+        </aside>
+      </div>
     </div>
   );
 }

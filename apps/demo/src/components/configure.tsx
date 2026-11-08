@@ -16,7 +16,6 @@ import {
   TOP_CUTS,
   usesGrandFinal,
 } from "../plan.ts";
-import { sampleNames, shuffle } from "../players.ts";
 import { useSession } from "../session.tsx";
 import { FailureText } from "./match.tsx";
 import { Segmented } from "./segmented.tsx";
@@ -105,12 +104,12 @@ export function Configure() {
       "Create tournament",
       (call) => {
         let t = call("createTournament", input, createTournament);
-        for (const name of sampleNames([], count)) {
+        for (let seed = 1; seed <= count; seed++) {
           const current = t;
-          t = call("joinTournament", { name }, (i) => joinTournament(current, i));
+          t = call("joinTournament", { name: `Player ${seed}` }, (i) => joinTournament(current, i));
         }
         const joined = t;
-        const seeding = shuffle(joined.participants.map((p) => p.id));
+        const seeding = joined.participants.map((p) => p.id);
         call("startTournament", { seeding }, (i) => startTournament(joined, i));
       },
       plan,

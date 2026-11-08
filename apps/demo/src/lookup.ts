@@ -52,11 +52,3 @@ export function roundName(
   const name = round === rounds ? "final" : `round ${round}`;
   return `${section === "losers" ? "Losers" : "Winners"} ${name}`;
 }
-
-export function phaseSeeds(tournament: Tournament, phaseId: string): Map<string, number> {
-  return new Map(
-    tournament.phaseParticipants
-      .filter((p) => p.phaseId === phaseId)
-      .map((p) => [p.participantId, p.seed]),
-  );
-}

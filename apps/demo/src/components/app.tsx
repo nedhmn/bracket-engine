@@ -17,24 +17,42 @@ function GitHubIcon() {
   );
 }
 
+const NAV_LINK =
+  "cursor-pointer px-1 text-sm whitespace-nowrap text-text-secondary hover:text-text-primary";
+
 function Header({ onHelp }: { onHelp: () => void }) {
+  const session = useSession();
   return (
     <header className="sticky top-0 z-20 border-b bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] backdrop-blur-[14px]">
       <div className="mx-auto flex max-w-wide items-center gap-3 px-4 py-3 sm:px-6">
-        <span className="flex min-w-0 items-center gap-2 font-code text-xs font-medium sm:text-sm">
+        <a
+          href={import.meta.env.BASE_URL}
+          className="flex min-w-0 items-center gap-2 font-code text-xs font-medium text-text-primary no-underline sm:text-sm"
+          onClick={(e) => {
+            e.preventDefault();
+            session.reset();
+          }}
+        >
           <span className="truncate">
             <span className="text-text-muted max-sm:hidden">nedhmn/</span>tournament-engine
           </span>
-          <Badge tone="outline" mono>
+          <Badge tone="outline" mono className="max-sm:hidden">
             demo
           </Badge>
-        </span>
+        </a>
         <nav className="ml-auto flex shrink-0 items-center gap-2">
-          <button
-            type="button"
-            className="cursor-pointer px-1 text-sm whitespace-nowrap text-text-secondary hover:text-text-primary"
-            onClick={onHelp}
-          >
+          {session.tournament === null ? null : (
+            <button
+              type="button"
+              aria-label="New tournament"
+              className={NAV_LINK}
+              onClick={session.reset}
+            >
+              <span className="max-sm:hidden">New tournament</span>
+              <span className="sm:hidden">New</span>
+            </button>
+          )}
+          <button type="button" className={NAV_LINK} onClick={onHelp}>
             How it works
           </button>
           <Button variant="ghost" className="size-8 rounded-pill p-0" asChild>
@@ -49,22 +67,13 @@ function Header({ onHelp }: { onHelp: () => void }) {
 }
 
 function DataPill({ onOpen }: { onOpen: () => void }) {
-  const { log } = useSession();
-  const events = log.reduce((n, e) => n + e.calls.reduce((m, c) => m + c.events.length, 0), 0);
   return (
     <button
       type="button"
-      className="fixed right-4 bottom-4 z-30 flex cursor-pointer items-center gap-2 rounded-pill border border-border-bright bg-bg-elevated py-2 pr-2.5 pl-4 text-sm shadow-window transition-colors hover:bg-bg-hover sm:right-6 sm:bottom-6"
-      aria-label={`Data, ${events} events`}
+      className="fixed right-4 bottom-4 z-30 cursor-pointer rounded-pill bg-accent px-5 py-2.5 text-sm font-semibold text-bg shadow-window transition-opacity hover:opacity-90 sm:right-6 sm:bottom-6"
       onClick={onOpen}
     >
-      <span aria-hidden="true" className="font-code text-xs text-text-muted">
-        {"{ }"}
-      </span>
       Data
-      <span className="rounded-pill bg-bg-hover px-2 py-0.5 font-code text-xs text-text-secondary tabular-nums">
-        {events}
-      </span>
     </button>
   );
 }
@@ -77,7 +86,7 @@ export function App() {
   return (
     <>
       <Header onHelp={() => setOnboarding(true)} />
-      <main className="mx-auto w-full max-w-wide px-4 pt-8 pb-section-sm sm:px-6">
+      <main className="mx-auto w-full max-w-wide px-4 pt-8 pb-28 sm:px-6">
         {session.tournament === null ? (
           <Configure />
         ) : (
