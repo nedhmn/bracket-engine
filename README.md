@@ -32,10 +32,10 @@ and final standings, driven by a CLI and tested against a real database in CI.
 
 ## Apps
 
-| App        | What it is                                                         |
-| ---------- | ------------------------------------------------------------------ |
-| `apps/web` | The playground deployed at https://nedhmn.github.io/bracket-engine |
-| `apps/cli` | A CLI running a tournament on Postgres through `@repo/db`          |
+| App         | What it is                                                                            |
+| ----------- | ------------------------------------------------------------------------------------- |
+| `apps/demo` | A full tournament in the browser, deployed at https://nedhmn.github.io/bracket-engine |
+| `apps/cli`  | A CLI running a tournament on Postgres through `@repo/db`                             |
 
 ## Quick start
 

@@ -46,6 +46,14 @@
     {
       "files": ["apps/*/src/cli/**"],
       "rules": { "no-console": "off" }
+    },
+    {
+      // The demo's localStorage parser is the I/O boundary: it decodes raw JSON into a Tournament
+      "files": ["apps/demo/src/parse.ts"],
+      "rules": {
+        "anti-slop/no-runtime-typeof": "off",
+        "anti-slop/no-unknown-parameters": "off"
+      }
     }
   ]
 }
