@@ -38,7 +38,11 @@ export { createTournament, type CreateTournamentInput } from "./tournament/actio
 export { dropParticipant, type DropParticipantInput } from "./tournament/actions/drop.ts";
 export { endTournament, type EndTournamentInput } from "./tournament/actions/end.ts";
 export { joinTournament, type JoinTournamentInput } from "./tournament/actions/join.ts";
-export { reopenResult, type ReopenResultInput } from "./tournament/actions/reopen.ts";
+export {
+  canReopenResult,
+  reopenResult,
+  type ReopenResultInput,
+} from "./tournament/actions/reopen.ts";
 export { reportResult, type ReportResultInput } from "./tournament/actions/report.ts";
 export { startTournament, type StartTournamentInput } from "./tournament/actions/start.ts";
 export { createTopCut, type TopCutInput } from "./tournament/actions/top-cut.ts";

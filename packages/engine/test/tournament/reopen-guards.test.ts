@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { dropParticipant, endTournament, reopenResult, reportResult } from "../../src/index.ts";
+import {
+  canReopenResult,
+  dropParticipant,
+  endTournament,
+  reopenResult,
+  reportResult,
+} from "../../src/index.ts";
 import type { Tournament } from "../../src/index.ts";
 import {
   expectCode,
@@ -27,6 +33,7 @@ describe("reopen guards", () => {
       "bye match",
     );
     expectCode(() => reopenResult(t, { matchId: bye.id }), "bye_not_reopenable");
+    expect(canReopenResult(t, { matchId: bye.id })).toBe(false);
   });
 
   it("reopen then re-report restores identical matches", () => {
@@ -36,6 +43,7 @@ describe("reopen guards", () => {
       "open match",
     );
     const reported = reportResult(t, { matchId: m.id, winnerId: player1(m) }).tournament;
+    expect(canReopenResult(reported, { matchId: m.id })).toBe(true);
     const reopened = reopenResult(reported, { matchId: m.id });
     expect(reopened.events).toEqual([
       { type: "match_reopened", matchId: m.id },
@@ -68,11 +76,13 @@ describe("reopen guards", () => {
     const t = seeded("single_elimination", 4);
     const open = required(openIn(t, phaseId(t, 1))[0], "open match");
     expectCode(() => reopenResult(t, { matchId: open.id }), "match_not_complete");
+    expect(canReopenResult(t, { matchId: open.id })).toBe(false);
     const pending = required(
       t.matches.find((m) => m.status === "pending"),
       "pending match",
     );
     expectCode(() => reopenResult(t, { matchId: pending.id }), "match_not_complete");
+    expect(canReopenResult(t, { matchId: pending.id })).toBe(false);
   });
 
   it("rejects reopening a swiss round that later pairings came from", () => {
@@ -85,6 +95,7 @@ describe("reopen guards", () => {
     expect(t.phases[0]?.currentRound).toBe(2);
     const first = required(roundOne[0], "round one match");
     expectCode(() => reopenResult(t, { matchId: first.id }), "later_round_paired");
+    expect(canReopenResult(t, { matchId: first.id })).toBe(false);
 
     const current = required(openIn(t, swiss)[0], "round two match");
     const reported = reportResult(t, { matchId: current.id, winnerId: player1(current) });
@@ -99,6 +110,7 @@ describe("reopen guards", () => {
     );
     const dropped = dropParticipant(t, { participantId: "p1" }).tournament;
     expectCode(() => reopenResult(dropped, { matchId: theirs.id }), "dropped_participant");
+    expect(canReopenResult(dropped, { matchId: theirs.id })).toBe(false);
   });
 
   it("rejects reopening once the phase is complete", () => {
@@ -107,6 +119,7 @@ describe("reopen guards", () => {
     const reported = reportResult(t, { matchId: m.id, winnerId: player1(m) }).tournament;
     const done = endTournament(reported, { force: false }).tournament;
     expectCode(() => reopenResult(done, { matchId: m.id }), "phase_complete");
+    expect(canReopenResult(done, { matchId: m.id })).toBe(false);
   });
 
   it("rejects an unknown match", () => {
