@@ -33,3 +33,28 @@ export type {
   Seed,
   Standing,
 } from "./formats/types.ts";
+export { createTournament, type CreateTournamentInput } from "./tournament/actions/create.ts";
+export { dropParticipant, type DropParticipantInput } from "./tournament/actions/drop.ts";
+export { endTournament, type EndTournamentInput } from "./tournament/actions/end.ts";
+export { joinTournament, type JoinTournamentInput } from "./tournament/actions/join.ts";
+export { reopenResult, type ReopenResultInput } from "./tournament/actions/reopen.ts";
+export { reportResult, type ReportResultInput } from "./tournament/actions/report.ts";
+export { startTournament, type StartTournamentInput } from "./tournament/actions/start.ts";
+export { createTopCut, type TopCutInput } from "./tournament/actions/top-cut.ts";
+export { TournamentError, type TournamentErrorCode } from "./tournament/errors.ts";
+export { phaseStandings, swissRankings, type PhaseStanding } from "./tournament/standings.ts";
+export type {
+  ActionResult,
+  EliminationFormat,
+  Match,
+  MatchStatus,
+  Participant,
+  ParticipantStatus,
+  Phase,
+  PhaseFormat,
+  PhaseParticipant,
+  PhaseStatus,
+  Tournament,
+  TournamentEvent,
+  TournamentStatus,
+} from "./tournament/types.ts";
