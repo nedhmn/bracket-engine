@@ -152,9 +152,11 @@ function Walkthrough() {
       />
       <div className="grid gap-1.5">
         <h3 className="text-lg font-medium">{step.title}</h3>
-        <DialogDescription className="text-sm text-text-secondary">{step.text}</DialogDescription>
+        <DialogDescription className="min-h-[3lh] text-sm text-text-secondary sm:min-h-[1lh]">
+          {step.text}
+        </DialogDescription>
       </div>
-      {last ? <Install /> : null}
+      <Install />
       <div className="flex items-center justify-between gap-4 border-t pt-4">
         <div className="flex items-center gap-3">
           <div className="flex gap-1.5" aria-hidden="true">
