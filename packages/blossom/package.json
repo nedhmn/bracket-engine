@@ -1,5 +1,5 @@
 {
-  "name": "@bracket-engine/blossom",
+  "name": "@repo/blossom",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,7 +11,7 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "@bracket-engine/typescript": "workspace:*",
+    "@repo/typescript": "workspace:*",
     "typescript": "7.0.2",
     "vitest": "5.0.0"
   }

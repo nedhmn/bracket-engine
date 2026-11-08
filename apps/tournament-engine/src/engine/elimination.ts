@@ -1,4 +1,5 @@
-import type { AdvanceResult, BracketMatch, GrandFinalType } from "@bracket-engine/core";
+import { and, eq } from "drizzle-orm";
+import type { AdvanceResult, BracketMatch, GrandFinalType } from "tournament-engine";
 import {
   advanceWinner,
   calculateEliminationStandings,
@@ -6,8 +7,7 @@ import {
   generateSingleElimination,
   propagateByes,
   reopenMatch as reopenBracketMatch,
-} from "@bracket-engine/core";
-import { and, eq } from "drizzle-orm";
+} from "tournament-engine";
 
 import type { Tx } from "../db/client.ts";
 import type { EliminationFormat } from "../db/schema.ts";

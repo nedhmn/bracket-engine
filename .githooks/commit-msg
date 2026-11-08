@@ -11,7 +11,7 @@ esac
 
 if ! printf '%s' "$subject" | grep -Eq '^(feat|fix|perf|refactor|docs|deps|revert|chore|test|ci|build|style)(\([a-z0-9-]+\))?!?: [a-z0-9][^A-Z]*$'; then
 	echo ""
-	echo "  Subject must be a lowercase conventional commit, e.g. 'fix(core): handle byes in round one'"
+	echo "  Subject must be a lowercase conventional commit, e.g. 'fix(engine): handle byes in round one'"
 	echo ""
 	exit 1
 fi

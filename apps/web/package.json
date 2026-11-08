@@ -9,10 +9,10 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@bracket-engine/core": "workspace:*"
+    "tournament-engine": "workspace:*"
   },
   "devDependencies": {
-    "@bracket-engine/typescript": "workspace:*",
+    "@repo/typescript": "workspace:*",
     "typescript": "7.0.2",
     "vite": "8.2.2"
   }

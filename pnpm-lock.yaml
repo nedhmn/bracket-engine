@@ -130,17 +130,17 @@ importers:
 
   apps/tournament-engine:
     dependencies:
-      '@bracket-engine/core':
-        specifier: workspace:*
-        version: link:../../packages/core
       drizzle-orm:
         specifier: 0.45.4
         version: 0.45.4(@types/pg@8.23.1)(pg@8.23.1)
       pg:
         specifier: 8.23.1
         version: 8.23.1
+      tournament-engine:
+        specifier: workspace:*
+        version: link:../../packages/engine
     devDependencies:
-      '@bracket-engine/typescript':
+      '@repo/typescript':
         specifier: workspace:*
         version: link:../../tools/typescript
       '@types/node':
@@ -161,11 +161,11 @@ importers:
 
   apps/web:
     dependencies:
-      '@bracket-engine/core':
+      tournament-engine:
         specifier: workspace:*
-        version: link:../../packages/core
+        version: link:../../packages/engine
     devDependencies:
-      '@bracket-engine/typescript':
+      '@repo/typescript':
         specifier: workspace:*
         version: link:../../tools/typescript
       typescript:
@@ -177,7 +177,7 @@ importers:
 
   packages/blossom:
     devDependencies:
-      '@bracket-engine/typescript':
+      '@repo/typescript':
         specifier: workspace:*
         version: link:../../tools/typescript
       typescript:
@@ -187,13 +187,13 @@ importers:
         specifier: 5.0.0
         version: 5.0.0(@types/node@26.4.1)(vite@8.2.2(@types/node@26.4.1))
 
-  packages/core:
+  packages/engine:
     dependencies:
-      '@bracket-engine/blossom':
+      '@repo/blossom':
         specifier: workspace:*
         version: link:../blossom
     devDependencies:
-      '@bracket-engine/typescript':
+      '@repo/typescript':
         specifier: workspace:*
         version: link:../../tools/typescript
       typescript:
@@ -201,7 +201,7 @@ importers:
         version: 7.0.2
       vitest:
         specifier: 5.0.0
-        version: 5.0.0(@types/node@26.4.1)(vite@8.2.2(@types/node@26.4.1))
+        version: 5.0.0(@types/node@26.6.5)(vite@8.2.2(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
 
   tools/oxlint: {}
 

@@ -1,6 +1,6 @@
-import type { GrandFinalType } from "@bracket-engine/core";
-import { calculateRecommendedRounds } from "@bracket-engine/core";
 import { and, asc, desc, eq, or } from "drizzle-orm";
+import type { GrandFinalType } from "tournament-engine";
+import { calculateRecommendedRounds } from "tournament-engine";
 
 import type { Db, Tx } from "../db/client.ts";
 import type { EliminationFormat, Phase, PhaseFormat } from "../db/schema.ts";
