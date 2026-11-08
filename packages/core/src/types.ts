@@ -54,11 +54,10 @@ export type MatchResult = {
   winnerId: string | null;
 };
 
-export type ByeWeightFn = (standing: Standing) => number;
-
 export type Standing = {
   byes: number;
   dropped: boolean;
+  floats: number;
   losses: number;
   opponents: string[];
   participantId: string;

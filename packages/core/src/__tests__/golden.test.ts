@@ -130,7 +130,7 @@ describe("golden: LB routing spot-checks", () => {
     expect(wbR2[1].loserNextMatchSlot).toBe("player1");
   });
 
-  it("16-player DE: WB R2 losers routed with reverse_half_shift", () => {
+  it("16-player DE: WB R2 losers routed with reverse ordering", () => {
     const result = generateDoubleElimination(16);
 
     const wbR2 = result.winners
@@ -143,13 +143,13 @@ describe("golden: LB routing spot-checks", () => {
     expect(wbR2.length).toBe(4);
     expect(lbMinor.length).toBe(4);
 
-    expect(wbR2[0].loserNextMatchNumber).toBe(lbMinor[1].matchNumber);
-    expect(wbR2[1].loserNextMatchNumber).toBe(lbMinor[0].matchNumber);
-    expect(wbR2[2].loserNextMatchNumber).toBe(lbMinor[3].matchNumber);
-    expect(wbR2[3].loserNextMatchNumber).toBe(lbMinor[2].matchNumber);
+    expect(wbR2[0].loserNextMatchNumber).toBe(lbMinor[3].matchNumber);
+    expect(wbR2[1].loserNextMatchNumber).toBe(lbMinor[2].matchNumber);
+    expect(wbR2[2].loserNextMatchNumber).toBe(lbMinor[1].matchNumber);
+    expect(wbR2[3].loserNextMatchNumber).toBe(lbMinor[0].matchNumber);
   });
 
-  it("16-player DE: WB R3 losers routed with reverse ordering", () => {
+  it("16-player DE: WB R3 losers routed with reverse_half_shift", () => {
     const result = generateDoubleElimination(16);
 
     const wbR3 = result.winners
@@ -162,8 +162,8 @@ describe("golden: LB routing spot-checks", () => {
     expect(wbR3.length).toBe(2);
     expect(lbR4.length).toBe(2);
 
-    expect(wbR3[0].loserNextMatchNumber).toBe(lbR4[1].matchNumber);
-    expect(wbR3[1].loserNextMatchNumber).toBe(lbR4[0].matchNumber);
+    expect(wbR3[0].loserNextMatchNumber).toBe(lbR4[0].matchNumber);
+    expect(wbR3[1].loserNextMatchNumber).toBe(lbR4[1].matchNumber);
   });
 });
 
@@ -300,7 +300,7 @@ describe("golden: end-to-end DE walkthrough", () => {
       .filter((m) => m.bracketSection === "losers" && m.roundNumber === 2)
       .toSorted((a, b) => a.matchNumber - b.matchNumber);
 
-    expect(lbR2.map((m) => m.player1Seed)).toEqual([5, 8, 6, 7]);
+    expect(lbR2.map((m) => m.player1Seed)).toEqual([6, 7, 5, 8]);
   });
 });
 
