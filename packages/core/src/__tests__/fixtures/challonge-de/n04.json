@@ -1,0 +1,11 @@
+{
+  "players": 4,
+  "matches": [
+    { "id": "A", "round": 1, "player1": { "seed": 1 }, "player2": { "seed": 4 } },
+    { "id": "B", "round": 1, "player1": { "seed": 2 }, "player2": { "seed": 3 } },
+    { "id": "F", "round": -1, "player1": { "loserOf": "A" }, "player2": { "loserOf": "B" } },
+    { "id": "C", "round": 2, "player1": { "winnerOf": "A" }, "player2": { "winnerOf": "B" } },
+    { "id": "G", "round": -2, "player1": { "loserOf": "C" }, "player2": { "winnerOf": "F" } },
+    { "id": "D", "round": 3, "player1": { "winnerOf": "C" }, "player2": { "winnerOf": "G" } }
+  ]
+}
