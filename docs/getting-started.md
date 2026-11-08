@@ -1,15 +1,23 @@
 # Getting started
 
-Node 24, pnpm, Docker.
+Node 26, pnpm 12, Docker.
+
+```sh
+git clone https://github.com/nedhmn/bracket-engine.git
+cd bracket-engine
+pnpm install
+```
 
 ## Demo
 
 ```sh
-pnpm install
 pnpm dev
 ```
 
-## Tournament engine
+Opens the demo at http://localhost:5173/bracket-engine/. Tournaments live in memory, so a
+refresh starts over.
+
+## CLI on Postgres
 
 ```sh
 cp .env.example .env
@@ -33,6 +41,9 @@ started with 6 participants
 
 $ pnpm --filter cli cli show 9933…ef9c
 Weekly 12  underway
+participants
+  18f1…8019  Ana
+  # Ben to Fay
 phase 1  swiss  underway  round 1/3
   deba…3512  r1 #1  open      Ana vs Eli
   12ab…f892  r1 #2  open      Ben vs Cy
