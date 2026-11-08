@@ -13,7 +13,7 @@
     "resolveJsonModule": true,
     "moduleDetection": "force",
     "verbatimModuleSyntax": true,
-    // Off until packages/core and packages/blossom check their array reads
+    // Off until packages/engine and packages/blossom check their array reads
     "noUncheckedIndexedAccess": false,
     "allowImportingTsExtensions": true
   },

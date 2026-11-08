@@ -1,10 +1,10 @@
-import type { MatchResult, Standing } from "@bracket-engine/core";
+import { and, eq, or } from "drizzle-orm";
+import type { MatchResult, Standing } from "tournament-engine";
 import {
   buildSwissStandings,
   calculateMantisRankings,
   generateSwissRound,
-} from "@bracket-engine/core";
-import { and, eq, or } from "drizzle-orm";
+} from "tournament-engine";
 
 import type { Tx } from "../db/client.ts";
 import type { Match } from "../db/schema.ts";

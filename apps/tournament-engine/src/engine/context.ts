@@ -1,5 +1,5 @@
-import type { BracketMatch } from "@bracket-engine/core";
 import { eq } from "drizzle-orm";
+import type { BracketMatch } from "tournament-engine";
 
 import type { Tx } from "../db/client.ts";
 import type { Match } from "../db/schema.ts";

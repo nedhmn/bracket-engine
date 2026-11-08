@@ -1,5 +1,5 @@
 {
-  "name": "tournament-engine",
+  "name": "cli",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,12 +11,12 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@bracket-engine/core": "workspace:*",
     "drizzle-orm": "0.45.4",
-    "pg": "8.23.1"
+    "pg": "8.23.1",
+    "tournament-engine": "workspace:*"
   },
   "devDependencies": {
-    "@bracket-engine/typescript": "workspace:*",
+    "@repo/typescript": "workspace:*",
     "@types/node": "26.6.5",
     "@types/pg": "8.23.1",
     "drizzle-kit": "0.31.11",

@@ -15,7 +15,7 @@ import {
   startTournament,
 } from "../engine/tournament.ts";
 
-const USAGE = `tournament-engine: run a tournament on Postgres with @bracket-engine/core
+const USAGE = `tournament-engine: run a tournament on Postgres with tournament-engine
 
   create <name> --format swiss|single_elimination|double_elimination [--rounds N] [--grand-final none|simple|double]
   join <tournament-id> <name>

@@ -1,0 +1,21 @@
+{
+  "name": "tournament-engine",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@repo/blossom": "workspace:*"
+  },
+  "devDependencies": {
+    "@repo/typescript": "workspace:*",
+    "typescript": "7.0.2",
+    "vitest": "5.0.0"
+  }
+}

@@ -24,10 +24,10 @@ and final standings, driven by a CLI and tested against a real database in CI.
 
 ## Packages
 
-| Package                   | What it does                                                                                   |
-| ------------------------- | ---------------------------------------------------------------------------------------------- |
-| `@bracket-engine/core`    | Seeding, single and double elimination, byes, advancement, reopening, Swiss pairing, standings |
-| `@bracket-engine/blossom` | Edmonds' blossom algorithm for maximum-weight matching. `core` uses it to pair Swiss rounds    |
+| Package             | What it does                                                                                             |
+| ------------------- | -------------------------------------------------------------------------------------------------------- |
+| `tournament-engine` | Seeding, single and double elimination, byes, advancement, reopening, Swiss pairing, standings           |
+| `@repo/blossom`     | Edmonds' blossom algorithm for maximum-weight matching. `tournament-engine` uses it to pair Swiss rounds |
 
 ## Apps
 

@@ -1,5 +1,5 @@
 {
-  "extends": "@bracket-engine/typescript/base.json",
+  "extends": "@repo/typescript/base.json",
   "compilerOptions": { "types": ["node"] },
   "include": ["src", "drizzle.config.ts", "vitest.config.ts"]
 }

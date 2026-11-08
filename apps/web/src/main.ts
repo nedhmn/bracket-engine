@@ -6,7 +6,7 @@ import type {
   MatchResult,
   Pairing,
   Standing,
-} from "@bracket-engine/core";
+} from "tournament-engine";
 import {
   advanceWinner,
   buildSwissStandings,
@@ -17,7 +17,7 @@ import {
   generateSingleElimination,
   generateSwissRound,
   reopenMatch,
-} from "@bracket-engine/core";
+} from "tournament-engine";
 
 type MatchState = {
   winnerSeed: number;
