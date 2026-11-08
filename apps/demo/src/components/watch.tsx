@@ -1,10 +1,20 @@
 import { Button } from "@repo/design-system/components/button";
 import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@repo/design-system/components/dialog";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@repo/design-system/components/dropdown-menu";
+import { useState } from "react";
 import type { Phase, Tournament, TopCutInput } from "tournament-engine";
 import { createTopCut, dropParticipant, endTournament, reportResult } from "tournament-engine";
 
@@ -13,12 +23,18 @@ import { type Plan, presetInfo, usesGrandFinal } from "../plan.ts";
 import { type Next, nextStep, phaseHeading, randomWinner, roundMatches } from "../progress.ts";
 import { type CallFn, useSession } from "../session.tsx";
 import { BracketView } from "./bracket.tsx";
-import { FailureText } from "./match.tsx";
 import { OverallStandings, PhaseStandings, SwissStandings } from "./standings.tsx";
 import { SwissRounds } from "./swiss.tsx";
 
 const TOOLBAR = "toolbar";
 const PLAY_LIMIT = 500;
+
+const END_LABEL = (
+  <>
+    <span className="max-sm:hidden">End tournament</span>
+    <span className="sm:hidden">End</span>
+  </>
+);
 
 function playRound(call: CallFn, start: Tournament, phaseId: string): Tournament {
   let tournament = start;
@@ -35,14 +51,66 @@ function playRound(call: CallFn, start: Tournament, phaseId: string): Tournament
   return tournament;
 }
 
-function Actions({ next, tournament }: { next: Next; tournament: Tournament }) {
-  const session = useSession();
-  const plan = session.plan;
+function unresolved(tournament: Tournament): number {
+  const live = new Set(tournament.phases.filter((p) => p.status === "underway").map((p) => p.id));
+  return tournament.matches.filter(
+    (m) => live.has(m.phaseId) && (m.status === "open" || m.status === "pending"),
+  ).length;
+}
 
+function EndButton({ primary, tournament }: { primary: boolean; tournament: Tournament }) {
+  const session = useSession();
+  const [open, setOpen] = useState(false);
+  const pending = unresolved(tournament);
   const end = (force: boolean) =>
     session.perform(TOOLBAR, null, (call) =>
       call("endTournament", { force }, (i) => endTournament(tournament, i)),
     );
+  const variant = primary ? "primary" : "outline";
+
+  if (pending === 0) {
+    return (
+      <Button variant={variant} aria-label="End tournament" onClick={() => end(false)}>
+        {END_LABEL}
+      </Button>
+    );
+  }
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <Button variant={variant} aria-label="End tournament" onClick={() => setOpen(true)}>
+        {END_LABEL}
+      </Button>
+      <DialogContent className="max-w-sm gap-5">
+        <DialogHeader>
+          <DialogTitle>End now?</DialogTitle>
+          <DialogDescription>
+            {pending} {pending === 1 ? "match has" : "matches have"} no result.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="ghost" size="md">
+              Cancel
+            </Button>
+          </DialogClose>
+          <Button
+            size="md"
+            onClick={() => {
+              setOpen(false);
+              end(true);
+            }}
+          >
+            End tournament
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function Actions({ next, tournament }: { next: Next; tournament: Tournament }) {
+  const session = useSession();
+  const plan = session.plan;
 
   switch (next.kind) {
     case "play": {
@@ -75,6 +143,8 @@ function Actions({ next, tournament }: { next: Next; tournament: Tournament }) {
           >
             Play all
           </Button>
+          <EndButton primary={false} tournament={tournament} />
+          <DropMenu tournament={tournament} />
         </>
       );
     }
@@ -87,27 +157,30 @@ function Actions({ next, tournament }: { next: Next; tournament: Tournament }) {
         ? { size: next.size, format, grandFinalType: plan.grandFinal }
         : { size: next.size, format };
       return (
-        <Button
-          onClick={() =>
-            session.perform(TOOLBAR, null, (call) =>
-              call("createTopCut", input, (i) => createTopCut(tournament, i)),
-            )
-          }
-        >
-          Create top {next.size}
-        </Button>
+        <>
+          <Button
+            onClick={() =>
+              session.perform(TOOLBAR, null, (call) =>
+                call("createTopCut", input, (i) => createTopCut(tournament, i)),
+              )
+            }
+          >
+            Create top {next.size}
+          </Button>
+          <EndButton primary={false} tournament={tournament} />
+          <DropMenu tournament={tournament} />
+        </>
       );
     }
     case "end":
-      return session.failure?.scope === TOOLBAR && session.failure.code === "unresolved_matches" ? (
-        <Button variant="outline" className="text-error" onClick={() => end(true)}>
-          End anyway
-        </Button>
-      ) : (
-        <Button onClick={() => end(false)}>End tournament</Button>
+      return (
+        <>
+          <EndButton primary tournament={tournament} />
+          <DropMenu tournament={tournament} />
+        </>
       );
     case "done":
-      return null;
+      return <Button onClick={session.reset}>New tournament</Button>;
   }
 }
 
@@ -120,7 +193,10 @@ function DropMenu({ tournament }: { tournament: Tournament }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Drop a player</Button>
+        <Button variant="outline" aria-label="Drop a player">
+          <span className="max-sm:hidden">Drop a player</span>
+          <span className="sm:hidden">Drop</span>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="max-h-80 overflow-y-auto">
         {active.map((p) => (
@@ -177,26 +253,29 @@ function Standings({ plan, tournament }: { plan: Plan | null; tournament: Tourna
 export function Watch({ tournament }: { tournament: Tournament }) {
   const session = useSession();
   const next = nextStep(tournament, session.plan);
+  const failure = session.failure?.scope === TOOLBAR ? session.failure : null;
   const shown = sortedPhases(tournament).at(-1) ?? tournament.phases[0];
 
   return (
     <div className="grid gap-8">
-      <div className="grid gap-3 border-b pb-6">
-        <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
-          <div className="grid min-w-0 gap-1.5">
-            <h1 className="text-xl leading-tight font-medium">{tournament.name}</h1>
-            {tournament.status === "complete" ? null : (
-              <p className="text-sm text-text-muted">
-                Click a player to make them the winner. Reopen undoes a result.
-              </p>
-            )}
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <Actions next={next} tournament={tournament} />
-            <DropMenu tournament={tournament} />
-          </div>
+      <div className="flex min-w-0 flex-wrap items-end justify-between gap-x-8 gap-y-4 border-b pb-6">
+        <div className="grid min-w-0 gap-1.5">
+          <h1 className="text-xl leading-tight font-medium">{tournament.name}</h1>
+          {failure === null ? (
+            <p className="text-sm text-text-muted max-sm:min-h-[2lh]">
+              {tournament.status === "complete"
+                ? "Tournament complete. Start a new one to play again."
+                : "Click a player to pick the winner. Edit changes a finished match."}
+            </p>
+          ) : (
+            <p role="alert" className="text-sm text-error max-sm:min-h-[2lh]">
+              {failure.message}
+            </p>
+          )}
         </div>
-        <FailureText scope={TOOLBAR} className="text-sm" />
+        <div className="flex h-9 items-center gap-2 overflow-x-auto max-sm:w-full [&>*]:shrink-0">
+          <Actions next={next} tournament={tournament} />
+        </div>
       </div>
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start lg:gap-8">
         <Matches phase={shown} tournament={tournament} />

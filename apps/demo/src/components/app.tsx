@@ -1,5 +1,11 @@
 import { Badge } from "@repo/design-system/components/badge";
 import { Button } from "@repo/design-system/components/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@repo/design-system/components/tooltip";
 import { useState } from "react";
 
 import { isOnboarded, markOnboarded } from "../onboarded.ts";
@@ -66,15 +72,42 @@ function Header({ onHelp }: { onHelp: () => void }) {
   );
 }
 
-function DataPill({ onOpen }: { onOpen: () => void }) {
+function DatabaseIcon() {
   return (
-    <button
-      type="button"
-      className="fixed right-4 bottom-4 z-30 cursor-pointer rounded-pill bg-accent px-5 py-2.5 text-sm font-semibold text-bg shadow-window transition-opacity hover:opacity-90 sm:right-6 sm:bottom-6"
-      onClick={onOpen}
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="size-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      Data
-    </button>
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M3 5v14a9 3 0 0 0 18 0V5" />
+      <path d="M3 12a9 3 0 0 0 18 0" />
+    </svg>
+  );
+}
+
+function DataButton({ onOpen }: { onOpen: () => void }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          type="button"
+          aria-label="Data"
+          className="fixed right-4 bottom-4 z-30 flex size-11 cursor-pointer items-center justify-center rounded-full border border-border-bright bg-bg-elevated text-accent shadow-window transition-colors hover:bg-bg-hover sm:right-6 sm:bottom-6"
+          onClick={onOpen}
+        >
+          <DatabaseIcon />
+        </button>
+      </TooltipTrigger>
+      <TooltipContent side="left" sideOffset={8}>
+        Data
+      </TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -84,7 +117,7 @@ export function App() {
   const [data, setData] = useState(false);
 
   return (
-    <>
+    <TooltipProvider>
       <Header onHelp={() => setOnboarding(true)} />
       <main className="mx-auto w-full max-w-wide px-4 pt-8 pb-28 sm:px-6">
         {session.tournament === null ? (
@@ -102,8 +135,8 @@ export function App() {
           }
         }}
       />
-      <DataPill onOpen={() => setData(true)} />
+      <DataButton onOpen={() => setData(true)} />
       <DataSheet open={data} onOpenChange={setData} />
-    </>
+    </TooltipProvider>
   );
 }
