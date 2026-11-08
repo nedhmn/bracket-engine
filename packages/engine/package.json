@@ -1,21 +1,43 @@
 {
   "name": "tournament-engine",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.1",
+  "description": "Single elimination, double elimination and Swiss tournaments as pure functions over plain data.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nedhmn/bracket-engine.git",
+    "directory": "packages/engine"
+  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.js",
+      "./package.json": "./package.json"
+    }
   },
   "scripts": {
+    "build": "tsdown",
     "typecheck": "tsc",
     "test": "vitest run"
   },
-  "dependencies": {
-    "@repo/blossom": "workspace:*"
-  },
   "devDependencies": {
+    "@arethetypeswrong/core": "0.18.5",
+    "@repo/blossom": "workspace:*",
     "@repo/typescript": "workspace:*",
+    "publint": "0.3.25",
+    "tsdown": "0.23.7",
     "typescript": "7.0.2",
     "vitest": "5.0.0"
+  },
+  "engines": {
+    "node": ">=22.12"
   }
 }

@@ -21,7 +21,7 @@ export function endTournament(tournament: Tournament, input: EndTournamentInput)
   if (unresolved > 0 && !input.force) {
     throw new TournamentError(
       "unresolved_matches",
-      `${unresolved} matches are unresolved. Resolve them or pass --force.`,
+      `${unresolved} matches are unresolved. Resolve them or pass force: true.`,
     );
   }
 
