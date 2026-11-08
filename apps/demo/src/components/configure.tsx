@@ -33,29 +33,44 @@ function Group({ children, label }: { children: ReactNode; label: string }) {
   );
 }
 
+const PRESET_GROUPS = [
+  { label: "Single phase", presets: PRESETS.filter((p) => p.cut === null) },
+  { label: "Multi-phase", presets: PRESETS.filter((p) => p.cut !== null) },
+];
+
 function PresetPicker({ onChange, value }: { onChange: (p: Preset) => void; value: Preset }) {
   return (
-    <div className="grid gap-2 sm:grid-cols-2">
-      {PRESETS.map((p) => (
-        <label
-          key={p.value}
-          className={cn(
-            "grid cursor-pointer content-start gap-1 rounded-lg border p-3.5 transition-colors hover:bg-bg-hover has-focus-visible:ring-[3px] has-focus-visible:ring-accent-bg-strong",
-            p.value === value && "border-ink bg-bg-hover",
-            p.value === "swiss" && "sm:col-span-2",
-          )}
-        >
-          <input
-            type="radio"
-            name="preset"
-            value={p.value}
-            checked={p.value === value}
-            onChange={() => onChange(p.value)}
-            className="sr-only"
-          />
-          <span className="text-sm font-medium">{p.label}</span>
-          <span className="text-xs text-text-secondary">{p.copy}</span>
-        </label>
+    <div className="grid gap-4">
+      {PRESET_GROUPS.map((group) => (
+        <div key={group.label} className="grid gap-1.5">
+          <span className="font-code text-[11px] tracking-wider text-text-muted uppercase">
+            {group.label}
+          </span>
+          <div className="divide-y border">
+            {group.presets.map((p) => (
+              <label
+                key={p.value}
+                className={cn(
+                  "flex cursor-pointer items-center gap-3 px-3 py-2.5 transition-colors hover:bg-bg-hover",
+                  p.value === value && "bg-bg-hover",
+                )}
+              >
+                <input
+                  type="radio"
+                  name="preset"
+                  value={p.value}
+                  checked={p.value === value}
+                  onChange={() => onChange(p.value)}
+                  className="size-3.5 shrink-0 accent-[var(--accent)]"
+                />
+                <span className="grid min-w-0 gap-x-3 sm:flex sm:items-baseline">
+                  <span className="text-sm font-medium whitespace-nowrap">{p.label}</span>
+                  <span className="text-xs text-text-secondary sm:truncate">{p.copy}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
       ))}
     </div>
   );
@@ -112,7 +127,7 @@ export function Configure() {
     >
       <div className="grid gap-1">
         <h1 className="text-lg leading-tight font-medium">New tournament</h1>
-        <p className="text-sm text-text-secondary">Pick a format and a player count.</p>
+        <p className="text-sm text-text-secondary">Pick a format and a player count, then start.</p>
       </div>
       <Group label="Format">
         <PresetPicker value={preset} onChange={setPreset} />
@@ -163,7 +178,7 @@ export function Configure() {
       ) : null}
       <div className="grid gap-2 border-t pt-5">
         <Button type="submit" size="md" disabled={!ready} className="justify-self-start">
-          Create tournament
+          Start tournament
         </Button>
         <FailureText scope={SCOPE} />
       </div>

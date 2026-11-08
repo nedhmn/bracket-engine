@@ -7,8 +7,7 @@ import type {
 } from "tournament-engine";
 import { TournamentError } from "tournament-engine";
 
-import { fallbackPlan, loadPlan, type Plan, savePlan } from "./plan.ts";
-import { clearTournament, loadTournament, saveTournament } from "./storage.ts";
+import type { Plan } from "./plan.ts";
 
 export type Failure = {
   code: TournamentErrorCode | null;
@@ -61,16 +60,12 @@ function compact<I>(input: I): string {
   return JSON.stringify(input, null, 1).replaceAll(/\n\s*/g, " ");
 }
 
-function restore(): Snapshot {
-  const tournament = loadTournament();
-  const plan = tournament === null ? null : (loadPlan() ?? fallbackPlan(tournament));
-  return { failure: null, log: [], plan, tournament };
-}
+const EMPTY: Snapshot = { failure: null, log: [], plan: null, tournament: null };
 
 let nextEntryId = 1;
 
 export function SessionProvider({ children }: { children: ReactNode }) {
-  const [snapshot, setSnapshot] = useState<Snapshot>(restore);
+  const [snapshot, setSnapshot] = useState<Snapshot>(EMPTY);
 
   const perform: Session["perform"] = (scope, title, script, plan) => {
     let current = snapshot.tournament;
@@ -91,12 +86,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     }
     // A plan marks tournament creation, which commits all or nothing
     const commit = calls.length > 0 && (plan === undefined || failure === null);
-    if (commit && current !== null) {
-      saveTournament(current);
-    }
-    if (commit && plan !== undefined) {
-      savePlan(plan);
-    }
     const entry = calls.length > 0 ? [{ calls, id: nextEntryId++, title }] : [];
     setSnapshot((s) => ({
       failure,
@@ -110,11 +99,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const session: Session = {
     ...snapshot,
     perform,
-    reset: () => {
-      clearTournament();
-      savePlan(null);
-      setSnapshot({ failure: null, log: [], plan: null, tournament: null });
-    },
+    reset: () => setSnapshot(EMPTY),
   };
 
   return <SessionContext value={session}>{children}</SessionContext>;

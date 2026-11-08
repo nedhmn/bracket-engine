@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,18 +9,6 @@
       name="description"
       content="Run a Swiss or elimination tournament in the browser on tournament-engine."
     />
-    <script>
-      // Mirrors applyTheme in src/theme.ts so the first paint has the right theme
-      try {
-        const stored = localStorage.getItem("tournament-engine-demo/theme");
-        const theme = stored === "light" || stored === "dark" ? stored : "system";
-        const dark =
-          theme === "dark" ||
-          (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-        document.documentElement.classList.toggle("dark", dark);
-        document.documentElement.classList.toggle("system", theme === "system");
-      } catch {}
-    </script>
   </head>
   <body>
     <div id="app"></div>

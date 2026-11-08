@@ -57,7 +57,8 @@ function playStatus(tournament: Tournament, phase: Phase): string {
   const section = matches.filter((m) => m.bracketSection === first.bracketSection);
   const rounds = Math.max(...section.map((m) => m.roundNumber));
   const name = roundName(phase.format, first.bracketSection, first.roundNumber, rounds);
-  return `${name} · ${reported(section.filter((m) => m.roundNumber === first.roundNumber))}`;
+  const prefix = phase.position > 1 ? "Top cut · " : "";
+  return `${prefix}${name} · ${reported(section.filter((m) => m.roundNumber === first.roundNumber))}`;
 }
 
 export function statusLine(tournament: Tournament, next: Next): string {
@@ -71,9 +72,10 @@ export function statusLine(tournament: Tournament, next: Next): string {
     case "cut":
       return `Swiss is done. Create the top ${next.size}.`;
     case "end":
-      return next.phase.format === "swiss"
-        ? "Swiss is done. End the tournament to lock in standings."
-        : "Bracket is done. End the tournament to lock in standings.";
+      if (next.phase.format === "swiss") {
+        return "Swiss is done. End the tournament to lock in standings.";
+      }
+      return `${next.phase.position > 1 ? "Top cut" : "Bracket"} is done. End the tournament to lock in standings.`;
     case "play":
       return playStatus(tournament, next.phase);
   }

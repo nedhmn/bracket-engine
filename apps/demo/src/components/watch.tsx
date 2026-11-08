@@ -1,20 +1,31 @@
 import { Button } from "@repo/design-system/components/button";
-import { useState } from "react";
-import type { Phase, Tournament, TopCutInput } from "tournament-engine";
-import { createTopCut, endTournament, reportResult } from "tournament-engine";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@repo/design-system/components/dropdown-menu";
+import type { ReactNode } from "react";
+import type { PhaseFormat, Tournament, TopCutInput } from "tournament-engine";
+import { createTopCut, dropParticipant, endTournament, reportResult } from "tournament-engine";
 
-import { activePhase, sortedPhases } from "../lookup.ts";
-import { presetInfo, usesGrandFinal } from "../plan.ts";
+import { sortedPhases } from "../lookup.ts";
+import { type Plan, presetInfo, usesGrandFinal } from "../plan.ts";
 import { type Next, nextStep, randomWinner, roundMatches, statusLine } from "../progress.ts";
 import { type CallFn, useSession } from "../session.tsx";
 import { BracketView } from "./bracket.tsx";
 import { FailureText } from "./match.tsx";
-import { Segmented } from "./segmented.tsx";
-import { FinalStandings } from "./standings.tsx";
-import { SwissView } from "./swiss.tsx";
+import { FinalStandings, PhaseStandings, SwissStandings } from "./standings.tsx";
+import { SwissRounds } from "./swiss.tsx";
 
 const TOOLBAR = "toolbar";
 const PLAY_LIMIT = 500;
+
+const FORMAT_LABELS: Record<PhaseFormat, string> = {
+  single_elimination: "Single elimination",
+  double_elimination: "Double elimination",
+  swiss: "Swiss",
+};
 
 function playRound(call: CallFn, start: Tournament, phaseId: string): Tournament {
   let tournament = start;
@@ -107,56 +118,146 @@ function Actions({ next, tournament }: { next: Next; tournament: Tournament }) {
   }
 }
 
-function phaseLabel(tournament: Tournament, phase: Phase): string {
-  if (phase.format === "swiss") {
-    return "Swiss";
+function DropMenu({ tournament }: { tournament: Tournament }) {
+  const session = useSession();
+  const active = tournament.participants.filter((p) => p.status === "active");
+  if (tournament.status !== "underway" || active.length === 0) {
+    return null;
   }
-  const size = tournament.phaseParticipants.filter((p) => p.phaseId === phase.id).length;
-  return phase.position === 1 ? "Bracket" : `Top ${size}`;
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">Drop a player</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="max-h-80 overflow-y-auto">
+        {active.map((p) => (
+          <DropdownMenuItem
+            key={p.id}
+            onSelect={() =>
+              session.perform(TOOLBAR, null, (call) =>
+                call("dropParticipant", { participantId: p.id }, (i) =>
+                  dropParticipant(tournament, i),
+                ),
+              )
+            }
+          >
+            {p.name}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function Section({ children, title }: { children: ReactNode; title: string }) {
+  return (
+    <section className="grid min-w-0 gap-4">
+      <h2 className="text-base font-medium">{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+function Sections({ plan, tournament }: { plan: Plan | null; tournament: Tournament }) {
+  const phases = sortedPhases(tournament);
+  const first = phases[0];
+  const cut = phases.find((p) => p.position > 1);
+  const complete = tournament.status === "complete";
+  const standings = "max-w-2xl";
+
+  if (first.format !== "swiss") {
+    return (
+      <>
+        <Section title="Bracket">
+          <BracketView phase={first} tournament={tournament} />
+        </Section>
+        <Section title={complete ? "Final standings" : "Standings"}>
+          <div className={standings}>
+            {complete ? (
+              <FinalStandings tournament={tournament} />
+            ) : (
+              <PhaseStandings phase={first} tournament={tournament} />
+            )}
+          </div>
+        </Section>
+      </>
+    );
+  }
+
+  const cutFormat = plan === null ? null : presetInfo(plan.preset).cut;
+  const pendingCut = cutFormat !== null && cut === undefined && !complete;
+  return (
+    <>
+      {cut === undefined ? null : (
+        <>
+          <Section title={`Top cut · ${FORMAT_LABELS[cut.format]}`}>
+            <BracketView phase={cut} tournament={tournament} />
+          </Section>
+          <Section title={complete ? "Final standings" : "Top cut standings"}>
+            <div className={standings}>
+              {complete ? (
+                <FinalStandings tournament={tournament} />
+              ) : (
+                <PhaseStandings phase={cut} tournament={tournament} />
+              )}
+            </div>
+          </Section>
+        </>
+      )}
+      <Section
+        title={
+          cutFormat === null ? (complete ? "Final standings" : "Standings") : "Swiss standings"
+        }
+      >
+        <div className={standings}>
+          <SwissStandings
+            cut={pendingCut ? (plan?.topCut ?? null) : null}
+            phase={first}
+            tournament={tournament}
+          />
+        </div>
+      </Section>
+      <Section title={cutFormat === null ? "Rounds" : "Swiss rounds"}>
+        <SwissRounds phase={first} tournament={tournament} />
+      </Section>
+    </>
+  );
 }
 
 export function Watch({ tournament }: { tournament: Tournament }) {
   const session = useSession();
-  const phases = sortedPhases(tournament);
-  const active = activePhase(tournament) ?? phases[0];
-  const [picked, setPicked] = useState<{ active: string; phase: string } | null>(null);
-  const shown =
-    phases.find((p) => p.id === (picked?.active === active.id ? picked.phase : active.id)) ??
-    active;
   const next = nextStep(tournament, session.plan);
 
   return (
-    <div className="grid gap-6">
-      <div className="grid gap-2 border-b pb-5">
-        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-          <div className="grid min-w-0 gap-1">
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-              <h1 className="text-lg leading-tight font-medium">{tournament.name}</h1>
-              {phases.length > 1 ? (
-                <Segmented
-                  label="Phase"
-                  value={shown.id}
-                  onChange={(id) => setPicked({ active: active.id, phase: id })}
-                  options={phases.map((p) => ({ value: p.id, label: phaseLabel(tournament, p) }))}
-                />
-              ) : null}
-            </div>
-            <p className="text-sm text-text-secondary" aria-live="polite">
+    <div className="grid gap-12">
+      <div className="grid gap-3 border-b pb-6">
+        <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+          <div className="grid min-w-0 gap-1.5">
+            <button
+              type="button"
+              className="mb-2 cursor-pointer justify-self-start text-sm text-text-secondary hover:text-text-primary"
+              onClick={session.reset}
+            >
+              ← New tournament
+            </button>
+            <h1 className="text-xl leading-tight font-medium">{tournament.name}</h1>
+            <p className="text-sm text-text-primary" aria-live="polite">
               {statusLine(tournament, next)}
             </p>
+            {tournament.status === "complete" ? null : (
+              <p className="text-sm text-text-muted">
+                Click a player to make them the winner. Reopen undoes a result.
+              </p>
+            )}
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <Actions next={next} tournament={tournament} />
+            <DropMenu tournament={tournament} />
           </div>
         </div>
         <FailureText scope={TOOLBAR} className="text-sm" />
       </div>
-      {shown.format === "swiss" ? (
-        <SwissView key={shown.id} phase={shown} tournament={tournament} />
-      ) : (
-        <BracketView phase={shown} tournament={tournament} />
-      )}
-      {tournament.status === "complete" ? <FinalStandings tournament={tournament} /> : null}
+      <Sections plan={session.plan} tournament={tournament} />
     </div>
   );
 }

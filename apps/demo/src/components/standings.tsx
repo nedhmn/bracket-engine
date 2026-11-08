@@ -8,7 +8,7 @@ import {
 } from "@repo/design-system/components/table";
 import { cn } from "@repo/design-system/lib/utils";
 import type { Phase, Tournament } from "tournament-engine";
-import { swissRankings } from "tournament-engine";
+import { phaseStandings, swissRankings } from "tournament-engine";
 
 import { isActive, nameOf } from "../lookup.ts";
 
@@ -18,7 +18,15 @@ type Row = {
   id: string;
 };
 
-function StandingsTable({ head, rows }: { head: string[]; rows: Row[] }) {
+function StandingsTable({
+  cutAfter,
+  head,
+  rows,
+}: {
+  cutAfter?: string;
+  head: string[];
+  rows: Row[];
+}) {
   return (
     <Table className="tabular-nums">
       <TableHeader>
@@ -30,7 +38,7 @@ function StandingsTable({ head, rows }: { head: string[]; rows: Row[] }) {
       </TableHeader>
       <TableBody>
         {rows.map((r) => (
-          <TableRow key={r.id}>
+          <TableRow key={r.id} className={cn(r.id === cutAfter && "border-b-2 border-b-accent")}>
             {r.cells.map((c, i) => (
               <TableCell
                 key={head[i]}
@@ -54,7 +62,15 @@ function decimal(value: number): string {
   return Number.isInteger(value) ? String(value) : value.toFixed(3);
 }
 
-export function SwissStandings({ phase, tournament }: { phase: Phase; tournament: Tournament }) {
+export function SwissStandings({
+  cut,
+  phase,
+  tournament,
+}: {
+  cut: number | null;
+  phase: Phase;
+  tournament: Tournament;
+}) {
   const rows = swissRankings(tournament, phase.id).map((r) => ({
     id: r.participantId,
     cells: [
@@ -67,7 +83,29 @@ export function SwissStandings({ phase, tournament }: { phase: Phase; tournament
     ],
     dropped: !isActive(tournament, r.participantId),
   }));
-  return <StandingsTable head={["#", "Player", "W-L", "TB1", "TB2", "TB3"]} rows={rows} />;
+  const qualifiers = rows.filter((r) => !r.dropped);
+  const last = cut === null || qualifiers.length <= cut ? undefined : qualifiers[cut - 1].id;
+  return (
+    <div className="grid gap-2">
+      <StandingsTable
+        cutAfter={last}
+        head={["#", "Player", "W-L", "TB1", "TB2", "TB3"]}
+        rows={rows}
+      />
+      {last === undefined ? null : (
+        <p className="text-xs text-text-muted">The top {cut} above the line make the cut.</p>
+      )}
+    </div>
+  );
+}
+
+export function PhaseStandings({ phase, tournament }: { phase: Phase; tournament: Tournament }) {
+  const rows = phaseStandings(tournament, phase.id).map((r) => ({
+    id: r.participantId,
+    cells: [r.rank, nameOf(tournament, r.participantId)],
+    dropped: !isActive(tournament, r.participantId),
+  }));
+  return <StandingsTable head={["#", "Player"]} rows={rows} />;
 }
 
 export function FinalStandings({ tournament }: { tournament: Tournament }) {
@@ -75,13 +113,5 @@ export function FinalStandings({ tournament }: { tournament: Tournament }) {
     .flatMap((p) => (p.finalStanding === null ? [] : [{ p, rank: p.finalStanding }]))
     .toSorted((a, b) => a.rank - b.rank || a.p.name.localeCompare(b.p.name))
     .map(({ p, rank }) => ({ id: p.id, cells: [rank, p.name], dropped: p.status === "dropped" }));
-  if (rows.length === 0) {
-    return null;
-  }
-  return (
-    <section className="grid max-w-md gap-2 border-t pt-6">
-      <h2 className="text-sm font-medium">Final standings</h2>
-      <StandingsTable head={["#", "Player"]} rows={rows} />
-    </section>
-  );
+  return <StandingsTable head={["#", "Player"]} rows={rows} />;
 }
