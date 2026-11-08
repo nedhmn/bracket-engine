@@ -5,6 +5,9 @@
     "packages/*": {
       "project": ["src/**/*.ts", "test/**/*.ts"]
     },
+    "packages/design-system": {
+      "project": ["src/**/*.{ts,tsx}"]
+    },
     "apps/demo": {
       "entry": ["index.html"],
       "project": ["src/**/*.ts", "test/**/*.ts"]

@@ -1,0 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&display=swap");
+@import "tailwindcss";
+
+@source "../../../apps/demo/src/**/*.{ts,tsx}";
+@source "../**/*.{ts,tsx}";
+
+@custom-variant dark (&:is(.dark *));
+/* Toggle-label variants: "system" tracks the class, explicit light/dark exclude it. */
+@custom-variant theme-system (&:is(html.system *));
+@custom-variant theme-light (&:is(html:not(.system, .dark) *));
+@custom-variant theme-dark (&:is(html.dark:not(.system) *));
+
+:root {
+  --paper: #f7f7f4;
+  --paper-2: #f2f1ed;
+  --paper-3: #ebeae5;
+  --paper-4: #e6e5e0;
+  --paper-5: #e1e0db;
+  --ink: #26251e;
+  --ink-hover: #3a382f;
+  --ink-inverse: #edecec;
+  --soot: #14120b;
+  --soot-2: #1b1913;
+  --soot-3: #201e18;
+
+  --bg: var(--paper);
+  --bg-elevated: var(--paper-2);
+  --bg-hover: var(--paper-3);
+  --bg-hover-strong: var(--paper-4);
+  --text-primary: var(--ink);
+  --text-secondary: color-mix(in oklab, var(--ink) 60%, transparent);
+  --text-muted: color-mix(in oklab, var(--ink) 60%, transparent);
+  --text-faint: color-mix(in oklab, var(--ink) 50%, transparent);
+  --text-on-accent: var(--paper);
+  --border-hairline: color-mix(in oklab, var(--ink) 10%, transparent);
+  --border-bright: color-mix(in oklab, var(--ink) 20%, transparent);
+  --accent: #f54e00;
+  --accent-bg: color-mix(in srgb, var(--accent) 10%, transparent);
+  --accent-bg-strong: color-mix(in srgb, var(--accent) 25%, transparent);
+  --code-bg: var(--paper-2);
+  --code-text: var(--ink);
+  --success: #1f8a65;
+  --success-bg: color-mix(in srgb, var(--success) 15%, transparent);
+  --error: #cf2d56;
+  --error-bg: color-mix(in srgb, var(--error) 15%, transparent);
+  --warning: var(--accent);
+  --warning-bg: color-mix(in srgb, var(--accent) 15%, transparent);
+  --info: var(--text-secondary);
+
+  --section-pad-y: 67.2px;
+  --section-pad-y-lg: 112px;
+  --section-pad-y-sm: 33.6px;
+}
+
+/* Dark is a separate warm palette, not an inversion of light. */
+.dark {
+  --bg: var(--soot);
+  --bg-elevated: var(--soot-2);
+  --bg-hover: var(--soot-3);
+  --bg-hover-strong: #26241e;
+  --text-primary: var(--ink-inverse);
+  --text-secondary: color-mix(in oklab, var(--ink-inverse) 60%, transparent);
+  --text-muted: color-mix(in oklab, var(--ink-inverse) 60%, transparent);
+  --text-faint: color-mix(in oklab, var(--ink-inverse) 50%, transparent);
+  --border-hairline: color-mix(in oklab, var(--ink-inverse) 10%, transparent);
+  --border-bright: color-mix(in oklab, var(--ink-inverse) 20%, transparent);
+  --code-bg: var(--soot-2);
+  --code-text: var(--ink-inverse);
+  --info: var(--text-secondary);
+}
+
+@theme inline {
+  --color-*: initial;
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-paper-3: var(--paper-3);
+  --color-paper-4: var(--paper-4);
+  --color-paper-5: var(--paper-5);
+  --color-ink: var(--ink);
+  --color-ink-hover: var(--ink-hover);
+  --color-ink-inverse: var(--ink-inverse);
+  --color-soot: var(--soot);
+  --color-soot-2: var(--soot-2);
+  --color-soot-3: var(--soot-3);
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-hover: var(--bg-hover);
+  --color-bg-hover-strong: var(--bg-hover-strong);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+  --color-text-on-accent: var(--text-on-accent);
+  --color-border: var(--border-hairline);
+  --color-border-bright: var(--border-bright);
+  --color-accent: var(--accent);
+  --color-accent-bg: var(--accent-bg);
+  --color-accent-bg-strong: var(--accent-bg-strong);
+  --color-code-bg: var(--code-bg);
+  --color-code-text: var(--code-text);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-error: var(--error);
+  --color-error-bg: var(--error-bg);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-info: var(--info);
+
+  --spacing-section: var(--section-pad-y);
+  --spacing-section-lg: var(--section-pad-y-lg);
+  --spacing-section-sm: var(--section-pad-y-sm);
+}
+
+@theme {
+  --font-gothic: "Inter Tight", system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: var(--font-gothic);
+  --font-mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  --font-ui: var(--font-gothic);
+  --font-heading: var(--font-gothic);
+  --font-body: var(--font-gothic);
+  --font-code: var(--font-mono);
+
+  /* Measured from the source study: sizes are exact, not a round scale. */
+  --text-*: initial;
+  --text-xs: 13px;
+  --text-xs--line-height: 18.5714px;
+  --text-sm: 14px;
+  --text-sm--line-height: 21px;
+  --text-sm--letter-spacing: 0.14px;
+  --text-base: 16px;
+  --text-base--line-height: 24px;
+  --text-base--letter-spacing: 0.08px;
+  --text-lg: 22px;
+  --text-lg--line-height: 28.6px;
+  --text-lg--letter-spacing: -0.11px;
+  --text-xl: 26px;
+  --text-xl--line-height: 32.5px;
+  --text-xl--letter-spacing: -0.325px;
+  --text-2xl: 36px;
+  --text-2xl--line-height: 43.2px;
+  --text-2xl--letter-spacing: -0.72px;
+  --text-3xl: 56px;
+  --text-3xl--line-height: 60px;
+  --text-3xl--letter-spacing: -1.4px;
+
+  --radius-*: initial;
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-pill: 9999px;
+
+  /* Flat brand: borders do the work. Only floating windows and popovers cast shadows. */
+  --shadow-*: initial;
+  --shadow-window: 0 1px 2px rgba(38, 37, 30, 0.06), 0 12px 32px rgba(38, 37, 30, 0.12);
+  --shadow-popover: 0 1px 2px rgba(38, 37, 30, 0.08), 0 6px 16px rgba(38, 37, 30, 0.1);
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --default-transition-duration: 140ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+
+  --container-layout: 1240px;
+  --container-article: 680px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --default-transition-duration: 0s;
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  * {
+    border-color: var(--border-hairline);
+  }
+  body {
+    @apply bg-bg font-body text-base text-text-primary antialiased;
+  }
+  a {
+    @apply text-text-secondary underline decoration-1 underline-offset-2 transition-colors hover:text-text-primary;
+  }
+  code,
+  pre {
+    @apply font-code text-sm text-code-text;
+  }
+  ::selection {
+    background: var(--accent-bg-strong);
+  }
+}
