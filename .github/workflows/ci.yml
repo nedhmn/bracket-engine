@@ -113,5 +113,5 @@ jobs:
           package-manager-cache: false
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter tournament-engine build
-      # The release sha is checked out detached, which fails pnpm's branch check
+      # A fixed release sha, so pnpm's branch and remote-history checks don't apply
       - run: pnpm --filter tournament-engine publish --no-git-checks
