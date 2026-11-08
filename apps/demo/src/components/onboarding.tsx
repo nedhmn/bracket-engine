@@ -12,7 +12,7 @@ import { type ReactNode, useEffect, useState } from "react";
 
 import { DatabaseIcon } from "./database-icon.tsx";
 
-export const REPO_URL = "https://github.com/nedhmn/bracket-engine";
+export const REPO_URL = "https://github.com/nedhmn/tournament-engine";
 
 const INSTALL = "npm i tournament-engine";
 const COPIED_MS = 1500;

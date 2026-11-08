@@ -44,4 +44,4 @@ Every action takes a tournament and an input and returns the next tournament wit
 | `endTournament`                   | Ends the tournament and writes final standings            |
 | `phaseStandings`, `swissRankings` | Standings for a phase, Swiss with its three tiebreakers   |
 
-[Demo](https://nedhmn.github.io/bracket-engine) · [Source](https://github.com/nedhmn/bracket-engine)
+[Demo](https://nedhmn.github.io/tournament-engine) · [Source](https://github.com/nedhmn/tournament-engine)

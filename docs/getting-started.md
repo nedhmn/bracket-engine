@@ -3,8 +3,8 @@
 Node 26, pnpm 12, Docker.
 
 ```sh
-git clone https://github.com/nedhmn/bracket-engine.git
-cd bracket-engine
+git clone https://github.com/nedhmn/tournament-engine.git
+cd tournament-engine
 pnpm install
 ```
 
@@ -14,7 +14,7 @@ pnpm install
 pnpm dev
 ```
 
-Opens the demo at http://localhost:5173/bracket-engine/. Tournaments live in memory, so a
+Opens the demo at http://localhost:5173/tournament-engine/. Tournaments live in memory, so a
 refresh starts over.
 
 ## CLI on Postgres
