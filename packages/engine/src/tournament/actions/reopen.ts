@@ -1,5 +1,5 @@
 import { reopenCascade } from "../bracket.ts";
-import { TournamentError } from "../errors.ts";
+import { TournamentError, type TournamentErrorCode } from "../errors.ts";
 import { draft, findMatch, findPhase, openedEvents } from "../state.ts";
 import type { ActionResult, Tournament, TournamentEvent } from "../types.ts";
 
@@ -7,11 +7,14 @@ export type ReopenResultInput = {
   matchId: string;
 };
 
-export function reopenResult(tournament: Tournament, input: ReopenResultInput): ActionResult {
+const reopenBlocker = (
+  tournament: Tournament,
+  input: ReopenResultInput,
+): TournamentErrorCode | null => {
   const match = findMatch(tournament, input.matchId);
   const phase = findPhase(tournament, match.phaseId);
   if (phase.status === "complete") {
-    throw new TournamentError("phase_complete");
+    return "phase_complete";
   }
   // Later swiss pairings were derived from this result
   if (
@@ -19,22 +22,34 @@ export function reopenResult(tournament: Tournament, input: ReopenResultInput): 
     phase.currentRound !== null &&
     match.roundNumber < phase.currentRound
   ) {
-    throw new TournamentError("later_round_paired");
+    return "later_round_paired";
   }
   if (
     tournament.participants.some(
       (p) => p.status === "dropped" && (p.id === match.player1Id || p.id === match.player2Id),
     )
   ) {
-    throw new TournamentError("dropped_participant");
+    return "dropped_participant";
   }
   // Reopening a bye strands a one-player match
   if (match.status === "bye") {
-    throw new TournamentError("bye_not_reopenable");
+    return "bye_not_reopenable";
   }
   if (match.status !== "complete") {
-    throw new TournamentError("match_not_complete");
+    return "match_not_complete";
   }
+  return null;
+};
+
+export const canReopenResult = (tournament: Tournament, input: ReopenResultInput): boolean =>
+  reopenBlocker(tournament, input) === null;
+
+export function reopenResult(tournament: Tournament, input: ReopenResultInput): ActionResult {
+  const blocker = reopenBlocker(tournament, input);
+  if (blocker !== null) {
+    throw new TournamentError(blocker);
+  }
+  const match = findMatch(tournament, input.matchId);
 
   const next = draft(tournament);
   reopenCascade(next, findMatch(next, match.id));
