@@ -33,9 +33,11 @@ Use `feat`, `fix`, `perf`, `refactor`, `docs`, `deps`, `revert` for anything use
 marks a breaking change. No `Co-Authored-By` trailers.
 
 release-please keeps one open pull request on `main` with the next version and
-changelog. Merging it tags the release and publishes the GitHub Release. Nothing is
-published to a package registry. Versions are `0.x` until the API settles, and a breaking
-change bumps the minor.
+changelog. Merging it tags the release, publishes the GitHub Release, and bumps
+`packages/engine/package.json`. The `publish` job then publishes `tournament-engine` to npm
+with trusted publishing: no token, provenance included. It is the only published package;
+`@repo/blossom` is bundled into it and everything else stays private. Versions are `0.x`
+until the API settles, and a breaking change bumps the minor.
 
 ## Dependencies
 
