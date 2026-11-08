@@ -16,7 +16,8 @@ export {
 } from "./formats/elimination/standings.ts";
 export { generateSeeding, nextPowerOf2 } from "./formats/elimination/seeding.ts";
 export { calculateRecommendedRounds, generateSwissRound } from "./formats/swiss/pairing.ts";
-export { buildSwissStandings, calculateMantisRankings } from "./formats/swiss/standings.ts";
+export { buildSwissStandings } from "./formats/swiss/standings.ts";
+export { calculateMantisRankings } from "./formats/swiss/tiebreakers.ts";
 export type {
   AdvanceResult,
   BracketMatch,
