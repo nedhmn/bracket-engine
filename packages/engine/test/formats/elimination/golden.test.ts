@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { advanceWinner } from "../../../src/formats/elimination/advance.ts";
 import { generateDoubleElimination } from "../../../src/formats/elimination/double.ts";
 import { generateSingleElimination } from "../../../src/formats/elimination/single.ts";
-import { calculateMantisRankings } from "../../../src/formats/swiss/standings.ts";
+import { calculateMantisRankings } from "../../../src/formats/swiss/tiebreakers.ts";
 import type { BracketMatch } from "../../../src/formats/types.ts";
 import fixtures from "./golden.json" with { type: "json" };
 

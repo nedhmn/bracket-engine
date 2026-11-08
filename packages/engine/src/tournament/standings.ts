@@ -1,5 +1,5 @@
 import { calculateEliminationStandings } from "../formats/elimination/standings.ts";
-import { calculateMantisRankings } from "../formats/swiss/standings.ts";
+import { calculateMantisRankings } from "../formats/swiss/tiebreakers.ts";
 import type { MantisRanking } from "../formats/types.ts";
 import { findPhase, phaseMatches, phaseSeeds } from "./state.ts";
 import { swissResults } from "./swiss.ts";
