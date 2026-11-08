@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { advanceWinner } from "../brackets/advance.ts";
-import { propagateByes } from "../brackets/byes.ts";
-import { generateDoubleElimination } from "../brackets/double-elimination.ts";
-import { reopenMatch } from "../brackets/reopen.ts";
-import { generateSingleElimination } from "../brackets/single-elimination.ts";
-import type { BracketMatch, GrandFinalType } from "../types.ts";
+import { advanceWinner } from "../src/brackets/advance.ts";
+import { propagateByes } from "../src/brackets/byes.ts";
+import { generateDoubleElimination } from "../src/brackets/double-elimination.ts";
+import { reopenMatch } from "../src/brackets/reopen.ts";
+import { generateSingleElimination } from "../src/brackets/single-elimination.ts";
+import type { BracketMatch, GrandFinalType } from "../src/types.ts";
 
 const makeRng = (seed: number) => {
   let s = (seed % 2_147_483_646) + 1;

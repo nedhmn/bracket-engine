@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { advanceWinner } from "../brackets/advance.ts";
-import { propagateByes } from "../brackets/byes.ts";
-import { generateDoubleElimination } from "../brackets/double-elimination.ts";
-import { calculateEliminationStandings } from "../elimination-standings.ts";
-import type { BracketMatch, GrandFinalType } from "../types.ts";
+import { advanceWinner } from "../src/brackets/advance.ts";
+import { propagateByes } from "../src/brackets/byes.ts";
+import { generateDoubleElimination } from "../src/brackets/double-elimination.ts";
+import { calculateEliminationStandings } from "../src/elimination-standings.ts";
+import type { BracketMatch, GrandFinalType } from "../src/types.ts";
 
 const playFavorites = (initial: BracketMatch[]): BracketMatch[] => {
   let current = initial;

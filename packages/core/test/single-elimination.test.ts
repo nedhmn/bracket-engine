@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { propagateByes } from "../brackets/byes.ts";
-import { generateSingleElimination } from "../brackets/single-elimination.ts";
-import { generateSeeding, nextPowerOf2 } from "../seeding.ts";
+import { propagateByes } from "../src/brackets/byes.ts";
+import { generateSingleElimination } from "../src/brackets/single-elimination.ts";
+import { generateSeeding, nextPowerOf2 } from "../src/seeding.ts";
 
 describe("nextPowerOf2", () => {
   it("returns the value itself for powers of 2", () => {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { calculateRecommendedRounds, generateSwissRound } from "../swiss/pairing.ts";
-import type { Standing } from "../types.ts";
+import { calculateRecommendedRounds, generateSwissRound } from "../src/swiss/pairing.ts";
+import type { Standing } from "../src/types.ts";
 
 const makeStandings = (count: number, overrides?: (Partial<Standing> | undefined)[]): Standing[] =>
   Array.from({ length: count }, (_, i) => ({

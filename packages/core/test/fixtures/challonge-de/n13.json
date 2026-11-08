@@ -1,0 +1,29 @@
+{
+  "players": 13,
+  "matches": [
+    { "id": "A", "round": 1, "player1": { "seed": 8 }, "player2": { "seed": 9 } },
+    { "id": "B", "round": 1, "player1": { "seed": 4 }, "player2": { "seed": 13 } },
+    { "id": "C", "round": 1, "player1": { "seed": 5 }, "player2": { "seed": 12 } },
+    { "id": "D", "round": 1, "player1": { "seed": 7 }, "player2": { "seed": 10 } },
+    { "id": "E", "round": 1, "player1": { "seed": 6 }, "player2": { "seed": 11 } },
+    { "id": "O", "round": -1, "player1": { "loserOf": "B" }, "player2": { "loserOf": "C" } },
+    { "id": "F", "round": 2, "player1": { "seed": 1 }, "player2": { "winnerOf": "A" } },
+    { "id": "G", "round": 2, "player1": { "winnerOf": "B" }, "player2": { "winnerOf": "C" } },
+    { "id": "H", "round": 2, "player1": { "seed": 2 }, "player2": { "winnerOf": "D" } },
+    { "id": "I", "round": 2, "player1": { "seed": 3 }, "player2": { "winnerOf": "E" } },
+    { "id": "S", "round": -2, "player1": { "loserOf": "F" }, "player2": { "loserOf": "E" } },
+    { "id": "R", "round": -2, "player1": { "loserOf": "G" }, "player2": { "loserOf": "D" } },
+    { "id": "Q", "round": -2, "player1": { "loserOf": "H" }, "player2": { "winnerOf": "O" } },
+    { "id": "P", "round": -2, "player1": { "loserOf": "I" }, "player2": { "loserOf": "A" } },
+    { "id": "U", "round": -3, "player1": { "winnerOf": "R" }, "player2": { "winnerOf": "S" } },
+    { "id": "T", "round": -3, "player1": { "winnerOf": "P" }, "player2": { "winnerOf": "Q" } },
+    { "id": "J", "round": 3, "player1": { "winnerOf": "F" }, "player2": { "winnerOf": "G" } },
+    { "id": "K", "round": 3, "player1": { "winnerOf": "H" }, "player2": { "winnerOf": "I" } },
+    { "id": "V", "round": -4, "player1": { "loserOf": "J" }, "player2": { "winnerOf": "T" } },
+    { "id": "W", "round": -4, "player1": { "loserOf": "K" }, "player2": { "winnerOf": "U" } },
+    { "id": "X", "round": -5, "player1": { "winnerOf": "V" }, "player2": { "winnerOf": "W" } },
+    { "id": "L", "round": 4, "player1": { "winnerOf": "J" }, "player2": { "winnerOf": "K" } },
+    { "id": "Y", "round": -6, "player1": { "loserOf": "L" }, "player2": { "winnerOf": "X" } },
+    { "id": "M", "round": 5, "player1": { "winnerOf": "L" }, "player2": { "winnerOf": "Y" } }
+  ]
+}

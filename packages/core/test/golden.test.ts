@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { advanceWinner } from "../brackets/advance.ts";
-import { generateDoubleElimination } from "../brackets/double-elimination.ts";
-import { generateSingleElimination } from "../brackets/single-elimination.ts";
-import { calculateMantisRankings } from "../swiss/standings.ts";
-import type { BracketMatch } from "../types.ts";
-import fixtures from "./fixtures.json" with { type: "json" };
+import { advanceWinner } from "../src/brackets/advance.ts";
+import { generateDoubleElimination } from "../src/brackets/double-elimination.ts";
+import { generateSingleElimination } from "../src/brackets/single-elimination.ts";
+import { calculateMantisRankings } from "../src/swiss/standings.ts";
+import type { BracketMatch } from "../src/types.ts";
+import fixtures from "./fixtures/golden.json" with { type: "json" };
 
 type SEFixture = (typeof fixtures)["se_4"];
 type DEFixture = (typeof fixtures)["de_4"];

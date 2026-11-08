@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { calculateEliminationStandings } from "../elimination-standings.ts";
+import { calculateEliminationStandings } from "../src/elimination-standings.ts";
 
 describe("calculateEliminationStandings", () => {
   it("completed SE keeps champion first", () => {
