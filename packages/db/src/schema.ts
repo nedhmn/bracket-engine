@@ -9,16 +9,16 @@ import {
   unique,
   uuid,
 } from "drizzle-orm/pg-core";
-
-export type TournamentStatus = "pending" | "underway" | "complete";
-export type PhaseFormat = "swiss" | "single_elimination" | "double_elimination";
-export type EliminationFormat = Exclude<PhaseFormat, "swiss">;
-export type PhaseStatus = "pending" | "underway" | "complete";
-export type ParticipantStatus = "active" | "dropped";
-export type MatchStatus = "pending" | "open" | "complete" | "bye" | "unreachable";
-export type MatchSlot = "player1" | "player2";
-export type BracketSection = "winners" | "losers" | "grand_final";
-export type GrandFinalType = "none" | "simple" | "double";
+import type {
+  BracketSection,
+  GrandFinalType,
+  MatchSlot,
+  MatchStatus,
+  ParticipantStatus,
+  PhaseFormat,
+  PhaseStatus,
+  TournamentStatus,
+} from "tournament-engine";
 
 const id = uuid().primaryKey().defaultRandom();
 const createdAt = timestamp("created_at", { mode: "date" }).notNull().defaultNow();
@@ -106,8 +106,3 @@ export const matchesTable = pgTable(
     index().on(t.player2Id),
   ],
 );
-
-export type Tournament = typeof tournamentsTable.$inferSelect;
-export type Participant = typeof participantsTable.$inferSelect;
-export type Phase = typeof phasesTable.$inferSelect;
-export type Match = typeof matchesTable.$inferSelect;
