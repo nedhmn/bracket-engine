@@ -5,6 +5,9 @@
       "release-type": "node",
       "initial-version": "0.1.0",
       "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        { "type": "json", "path": "packages/engine/package.json", "jsonpath": "$.version" }
+      ],
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": false,
       "draft": false,

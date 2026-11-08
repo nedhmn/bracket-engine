@@ -1,0 +1,26 @@
+name: PR title
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+concurrency:
+  group: pr-title-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  pr-title:
+    name: conventional title
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Check
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if ! printf '%s' "$TITLE" | grep -Eq '^(feat|fix|perf|refactor|docs|deps|revert|chore|test|ci|build|style)(\([a-z0-9-]+\))?!?: [a-z0-9][^A-Z]*$'; then
+            echo "Title must be a lowercase conventional commit subject, e.g. 'fix(engine): handle byes in round one'"
+            exit 1
+          fi
