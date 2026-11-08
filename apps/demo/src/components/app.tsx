@@ -1,91 +1,100 @@
 import { Badge } from "@repo/design-system/components/badge";
 import { Button } from "@repo/design-system/components/button";
-import type { Tournament } from "tournament-engine";
+import { useState } from "react";
 
-import { sortedPhases } from "../lookup.ts";
+import { isOnboarded, markOnboarded } from "../plan.ts";
 import { useSession } from "../session.tsx";
-import { Controls } from "./controls.tsx";
-import { EventLog } from "./events.tsx";
-import { PhaseView } from "./phase.tsx";
-import { Registration } from "./registration.tsx";
-import { Setup } from "./setup.tsx";
-import { FinalStandings } from "./standings.tsx";
-import { StatusBadge } from "./status-badge.tsx";
+import { Configure } from "./configure.tsx";
+import { DataSheet } from "./data-sheet.tsx";
+import { Onboarding, REPO_URL } from "./onboarding.tsx";
 import { ThemeToggle } from "./theme-toggle.tsx";
+import { Watch } from "./watch.tsx";
 
-function Header() {
+const ICON_BUTTON = "size-8 rounded-pill p-0";
+
+function GitHubIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16" className="size-4" fill="currentColor">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+    </svg>
+  );
+}
+
+function Header({ onData, onHelp }: { onData: () => void; onHelp: () => void }) {
   const session = useSession();
 
   return (
     <header className="sticky top-0 z-20 border-b bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] backdrop-blur-[14px]">
-      <div className="mx-auto flex max-w-layout items-center gap-2 px-4 py-3 sm:px-5">
+      <div className="mx-auto flex max-w-wide flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3 sm:px-6">
         <span className="flex min-w-0 items-center gap-2 font-code text-xs font-medium sm:text-sm">
-          <span className="truncate">tournament-engine</span>
-          <Badge tone="accent" mono>
+          <span className="truncate">
+            <span className="text-text-muted">nedhmn/</span>tournament-engine
+          </span>
+          <Badge tone="outline" mono>
             demo
           </Badge>
         </span>
         <nav className="ml-auto flex items-center gap-1">
-          {session.tournament ? (
-            <Button variant="ghost" className="rounded-pill text-error" onClick={session.reset}>
-              Reset
+          {session.tournament === null ? null : (
+            <Button
+              variant="ghost"
+              className="rounded-pill"
+              aria-label="New tournament"
+              onClick={session.reset}
+            >
+              <span className="max-sm:hidden">New tournament</span>
+              <span className="sm:hidden">New</span>
             </Button>
-          ) : null}
+          )}
+          <Button
+            variant="ghost"
+            className={ICON_BUTTON}
+            aria-label="How this demo works"
+            title="How this demo works"
+            onClick={onHelp}
+          >
+            ?
+          </Button>
+          <Button variant="ghost" className={ICON_BUTTON} asChild>
+            <a href={REPO_URL} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
+              <GitHubIcon />
+            </a>
+          </Button>
           <ThemeToggle />
+          <Button variant="outline" onClick={onData}>
+            Data
+          </Button>
         </nav>
       </div>
     </header>
   );
 }
 
-function Running({ tournament }: { tournament: Tournament }) {
-  const phases = sortedPhases(tournament)
-    .filter((p) => p.status !== "pending")
-    .toReversed();
+export function App() {
+  const session = useSession();
+  const [onboarding, setOnboarding] = useState(() => !isOnboarded());
+  const [data, setData] = useState(false);
 
   return (
     <>
-      <FinalStandings tournament={tournament} />
-      {tournament.status === "underway" ? <Controls tournament={tournament} /> : null}
-      {phases.map((p) => (
-        <PhaseView key={p.id} phase={p} tournament={tournament} />
-      ))}
-    </>
-  );
-}
-
-function Content({ tournament }: { tournament: Tournament | null }) {
-  if (tournament === null) {
-    return <Setup />;
-  }
-  if (tournament.status === "pending") {
-    return <Registration tournament={tournament} />;
-  }
-  return <Running tournament={tournament} />;
-}
-
-export function App() {
-  const { events, tournament } = useSession();
-
-  return (
-    <div className="flex min-h-dvh flex-col">
-      <Header />
-      <main className="mx-auto grid w-full max-w-layout min-w-0 flex-1 content-start gap-6 px-4 pt-8 pb-section-sm sm:px-5">
-        <div className="grid gap-2">
-          <h1 className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xl break-words">
-            {tournament?.name ?? "Run a tournament"}
-            {tournament ? <StatusBadge status={tournament.status} /> : null}
-          </h1>
-          {tournament ? null : (
-            <p className="max-w-[56ch] text-sm text-text-secondary">
-              Swiss or elimination, run entirely in your browser on tournament-engine. State is
-              saved to this browser.
-            </p>
-          )}
-        </div>
-        <Content tournament={tournament} />
-        <EventLog events={events} tournament={tournament} />
+      <Header onHelp={() => setOnboarding(true)} onData={() => setData(true)} />
+      <main className="mx-auto w-full max-w-wide px-4 pt-8 pb-section-sm sm:px-6">
+        {session.tournament === null ? (
+          <Configure />
+        ) : (
+          <Watch key={session.tournament.id} tournament={session.tournament} />
+        )}
       </main>
-    </div>
+      <Onboarding
+        open={onboarding}
+        onOpenChange={(open) => {
+          setOnboarding(open);
+          if (!open) {
+            markOnboarded();
+          }
+        }}
+      />
+      <DataSheet open={data} onOpenChange={setData} />
+    </>
   );
 }

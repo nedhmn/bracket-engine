@@ -162,13 +162,54 @@
   --default-transition-duration: 140ms;
   --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 
+  --container-wide: 1600px;
   --container-layout: 1240px;
   --container-article: 680px;
+
+  --animate-fade-in: fade-in 160ms var(--ease-standard);
+  --animate-fade-out: fade-out 140ms var(--ease-standard);
+  --animate-dialog-in: dialog-in 180ms var(--ease-standard);
+  --animate-dialog-out: fade-out 140ms var(--ease-standard);
+  --animate-sheet-in: sheet-in 240ms var(--ease-standard);
+  --animate-sheet-out: sheet-out 180ms var(--ease-standard);
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.97);
+    }
+  }
+  @keyframes sheet-in {
+    from {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes sheet-out {
+    to {
+      transform: translateX(100%);
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
     --default-transition-duration: 0s;
+  }
+  [data-slot="dialog-overlay"],
+  [data-slot="dialog-content"],
+  [data-slot="sheet-overlay"],
+  [data-slot="sheet-content"] {
+    animation: none;
   }
 }
 

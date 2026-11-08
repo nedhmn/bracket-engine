@@ -1,13 +1,13 @@
 import { createContext, type ReactNode, use, useState } from "react";
 import type {
   ActionResult,
-  CreateTournamentInput,
   Tournament,
   TournamentErrorCode,
   TournamentEvent,
 } from "tournament-engine";
-import { createTournament, TournamentError } from "tournament-engine";
+import { TournamentError } from "tournament-engine";
 
+import { fallbackPlan, loadPlan, type Plan, savePlan } from "./plan.ts";
 import { clearTournament, loadTournament, saveTournament } from "./storage.ts";
 
 export type Failure = {
@@ -16,17 +16,36 @@ export type Failure = {
   scope: string;
 };
 
-type Snapshot = {
+export type Call = {
   events: TournamentEvent[];
+  fn: string;
+  input: string;
+  withTournament: boolean;
+};
+
+export type Entry = {
+  calls: Call[];
+  id: number;
+  title: string | null;
+};
+
+export type CallFn = <I>(fn: string, input: I, apply: (input: I) => ActionResult) => Tournament;
+
+type Script = (call: CallFn) => void;
+
+type Snapshot = {
   failure: Failure | null;
+  log: Entry[];
+  plan: Plan | null;
   tournament: Tournament | null;
 };
 
 type Session = Snapshot & {
-  create: (scope: string, input: () => CreateTournamentInput) => boolean;
+  perform: (scope: string, title: string | null, script: Script, plan?: Plan) => boolean;
   reset: () => void;
-  run: (scope: string, action: (tournament: Tournament) => ActionResult) => boolean;
 };
+
+const LOG_LIMIT = 100;
 
 const SessionContext = createContext<Session | null>(null);
 
@@ -38,35 +57,63 @@ function toFailure(scope: string, cause: unknown): Failure {
   return { code: null, message, scope };
 }
 
-export function SessionProvider({ children }: { children: ReactNode }) {
-  const [snapshot, setSnapshot] = useState<Snapshot>(() => ({
-    events: [],
-    failure: null,
-    tournament: loadTournament(),
-  }));
+function compact<I>(input: I): string {
+  return JSON.stringify(input, null, 1).replaceAll(/\n\s*/g, " ");
+}
 
-  const attempt = (scope: string, produce: () => ActionResult): boolean => {
+function restore(): Snapshot {
+  const tournament = loadTournament();
+  const plan = tournament === null ? null : (loadPlan() ?? fallbackPlan(tournament));
+  return { failure: null, log: [], plan, tournament };
+}
+
+let nextEntryId = 1;
+
+export function SessionProvider({ children }: { children: ReactNode }) {
+  const [snapshot, setSnapshot] = useState<Snapshot>(restore);
+
+  const perform: Session["perform"] = (scope, title, script, plan) => {
+    let current = snapshot.tournament;
+    const calls: Call[] = [];
+    const call: CallFn = (fn, input, apply) => {
+      const withTournament = current !== null;
+      const result = apply(input);
+      calls.push({ events: result.events, fn, input: compact(input), withTournament });
+      current = result.tournament;
+      return current;
+    };
+
+    let failure: Failure | null = null;
     try {
-      const result = produce();
-      saveTournament(result.tournament);
-      setSnapshot({ events: result.events, failure: null, tournament: result.tournament });
-      return true;
+      script(call);
     } catch (error) {
-      setSnapshot((s) => ({ ...s, failure: toFailure(scope, error) }));
-      return false;
+      failure = toFailure(scope, error);
     }
+    // A plan marks tournament creation, which commits all or nothing
+    const commit = calls.length > 0 && (plan === undefined || failure === null);
+    if (commit && current !== null) {
+      saveTournament(current);
+    }
+    if (commit && plan !== undefined) {
+      savePlan(plan);
+    }
+    const entry = calls.length > 0 ? [{ calls, id: nextEntryId++, title }] : [];
+    setSnapshot((s) => ({
+      failure,
+      log: [...entry, ...s.log].slice(0, LOG_LIMIT),
+      plan: commit && plan !== undefined ? plan : s.plan,
+      tournament: commit ? current : s.tournament,
+    }));
+    return failure === null;
   };
 
   const session: Session = {
     ...snapshot,
-    create: (scope, input) => attempt(scope, () => createTournament(input())),
+    perform,
     reset: () => {
       clearTournament();
-      setSnapshot({ events: [], failure: null, tournament: null });
-    },
-    run: (scope, action) => {
-      const { tournament } = snapshot;
-      return tournament !== null && attempt(scope, () => action(tournament));
+      savePlan(null);
+      setSnapshot({ failure: null, log: [], plan: null, tournament: null });
     },
   };
 

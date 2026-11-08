@@ -1,34 +1,6 @@
-import type {
-  EliminationFormat,
-  GrandFinalType,
-  Match,
-  Phase,
-  PhaseFormat,
-  Tournament,
-} from "tournament-engine";
+import type { BracketSection, Match, Phase, PhaseFormat, Tournament } from "tournament-engine";
 
 export type Option<T extends string> = readonly [T, string];
-
-export const FORMATS: readonly Option<PhaseFormat>[] = [
-  ["swiss", "Swiss"],
-  ["single_elimination", "Single elimination"],
-  ["double_elimination", "Double elimination"],
-];
-
-export const ELIMINATION_FORMATS: readonly Option<EliminationFormat>[] = [
-  ["single_elimination", "Single elimination"],
-  ["double_elimination", "Double elimination"],
-];
-
-export const GRAND_FINALS: readonly Option<GrandFinalType>[] = [
-  ["double", "Double (bracket reset)"],
-  ["simple", "Simple"],
-  ["none", "None"],
-];
-
-export function formatLabel(format: PhaseFormat): string {
-  return FORMATS.find(([value]) => value === format)?.[1] ?? format;
-}
 
 export function nameOf(tournament: Tournament, id: string | null): string {
   if (id === null) {
@@ -37,8 +9,8 @@ export function nameOf(tournament: Tournament, id: string | null): string {
   return tournament.participants.find((p) => p.id === id)?.name ?? id;
 }
 
-export function isDropped(tournament: Tournament, id: string): boolean {
-  return tournament.participants.some((p) => p.id === id && p.status === "dropped");
+export function isActive(tournament: Tournament, id: string): boolean {
+  return tournament.participants.some((p) => p.id === id && p.status === "active");
 }
 
 export function phaseMatches(tournament: Tournament, phaseId: string): Match[] {
@@ -51,8 +23,8 @@ export function sortedPhases(tournament: Tournament): Phase[] {
   return tournament.phases.toSorted((a, b) => a.position - b.position);
 }
 
-export function isLive(tournament: Tournament, phase: Phase): boolean {
-  return tournament.status !== "complete" && phase.status !== "complete";
+export function activePhase(tournament: Tournament): Phase | undefined {
+  return sortedPhases(tournament).findLast((p) => p.status !== "pending");
 }
 
 export function groupBy<K, T>(items: readonly T[], key: (item: T) => K): Map<K, T[]> {
@@ -62,4 +34,21 @@ export function groupBy<K, T>(items: readonly T[], key: (item: T) => K): Map<K, 
     groups.set(k, [...(groups.get(k) ?? []), item]);
   }
   return groups;
+}
+
+export function roundName(
+  format: PhaseFormat,
+  section: BracketSection | null,
+  round: number,
+  rounds: number,
+): string {
+  if (section === "grand_final") {
+    return round === 1 ? "Grand final" : "Grand final reset";
+  }
+  if (format === "single_elimination") {
+    const fromEnd = rounds - round;
+    return ["Final", "Semifinals", "Quarterfinals"].at(fromEnd) ?? `Round ${round}`;
+  }
+  const name = round === rounds ? "final" : `round ${round}`;
+  return `${section === "losers" ? "Losers" : "Winners"} ${name}`;
 }

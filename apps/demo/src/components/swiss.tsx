@@ -1,128 +1,85 @@
-import { Badge } from "@repo/design-system/components/badge";
-import { Button } from "@repo/design-system/components/button";
 import { cn } from "@repo/design-system/lib/utils";
+import { useState } from "react";
 import type { Match, Phase, Tournament } from "tournament-engine";
-import { reopenResult, reportResult, swissRankings } from "tournament-engine";
 
-import { groupBy, isLive, nameOf, phaseMatches } from "../lookup.ts";
-import { useSession } from "../session.tsx";
-import { FailureText } from "./fields.tsx";
+import { nameOf, phaseMatches } from "../lookup.ts";
+import { FailureText, FinishedMatch, matchScope, PlayerPick, slotTone } from "./match.tsx";
+import { Segmented } from "./segmented.tsx";
+import { SwissStandings } from "./standings.tsx";
 
-type PairingProps = {
-  live: boolean;
-  match: Match;
-  records: Map<string, string>;
-  tournament: Tournament;
-};
+const ROW = "grid grid-cols-[2.75rem_minmax(0,1fr)_1.5rem_minmax(0,1fr)] items-center gap-2 px-3";
 
-function Player({ id, live, match, records, tournament }: PairingProps & { id: string }) {
-  const session = useSession();
-  const body = (
-    <>
-      <span className="truncate">{nameOf(tournament, id)}</span>
-      <span className="shrink-0 font-code text-xs text-text-muted">{records.get(id) ?? ""}</span>
-    </>
-  );
-  const base = "flex min-w-0 items-center justify-between gap-2 rounded-md border px-2.5 py-1.5";
-  if (live && match.status === "open") {
+function Pairing({ match, tournament }: { match: Match; tournament: Tournament }) {
+  const number = <span className="font-code text-xs text-text-faint">M{match.matchNumber}</span>;
+  const vs = <span className="text-center text-xs text-text-faint">vs</span>;
+  const { player1Id: p1, player2Id: p2 } = match;
+
+  if (match.status === "open" && p1 !== null && p2 !== null) {
+    const pick = "rounded-md bg-bg-hover px-2.5 py-1.5";
     return (
-      <button
-        type="button"
-        className={cn(
-          base,
-          "cursor-pointer border-border-bright bg-bg text-left transition-colors hover:border-accent hover:bg-accent-bg",
-        )}
-        title={`Report ${nameOf(tournament, id)} as the winner`}
-        onClick={() =>
-          session.run(`match:${match.id}`, (t) =>
-            reportResult(t, { matchId: match.id, winnerId: id }),
-          )
-        }
-      >
-        {body}
-      </button>
+      <div className={cn(ROW, "py-2")}>
+        {number}
+        <PlayerPick className={pick} id={p1} match={match} tournament={tournament} />
+        {vs}
+        <PlayerPick className={pick} id={p2} match={match} tournament={tournament} />
+      </div>
     );
   }
-  const outcome = match.winnerId === null ? "" : match.winnerId === id ? "winner" : "loser";
-  return (
-    <div
-      className={cn(
-        base,
-        "border-transparent",
-        outcome === "winner" && "bg-success-bg font-medium",
-        outcome === "loser" && "text-text-faint line-through",
-      )}
-    >
-      {body}
-    </div>
-  );
-}
-
-function Pairing(props: PairingProps) {
-  const session = useSession();
-  const { live, match } = props;
-
-  return (
-    <li className="grid gap-1 px-3 py-2">
-      <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_4.25rem] items-center gap-2 text-sm">
-        {match.player1Id === null ? <span /> : <Player {...props} id={match.player1Id} />}
-        <span className="text-xs text-text-faint">vs</span>
-        {match.player2Id === null ? (
-          <span className="px-2.5 font-code text-xs text-text-faint">BYE</span>
-        ) : (
-          <Player {...props} id={match.player2Id} />
-        )}
-        <span className="flex justify-end">
-          {live && match.status === "complete" ? (
-            <Button
-              variant="ghost"
-              className="rounded-pill text-xs text-text-secondary"
-              onClick={() =>
-                session.run(`match:${match.id}`, (t) => reopenResult(t, { matchId: match.id }))
-              }
-            >
-              Reopen
-            </Button>
-          ) : null}
-        </span>
+  if (match.status === "bye") {
+    return (
+      <div className={cn(ROW, "py-3.5 text-text-secondary")}>
+        {number}
+        <span className="truncate">{nameOf(tournament, p1 ?? p2)}</span>
+        <span />
+        <span className="font-code text-xs text-text-faint">BYE</span>
       </div>
-      {match.forfeit ? (
-        <Badge tone="outline" className="w-fit">
-          forfeit
-        </Badge>
-      ) : null}
-      <FailureText scope={`match:${match.id}`} />
-    </li>
+    );
+  }
+  return (
+    <FinishedMatch className={cn(ROW, "w-full py-3.5")} match={match} tournament={tournament}>
+      {number}
+      <span className={cn("truncate", slotTone(match, p1))}>{nameOf(tournament, p1)}</span>
+      {vs}
+      <span className={cn("truncate", slotTone(match, p2))}>
+        {nameOf(tournament, p2)}
+        {match.forfeit ? <span className="ml-2 font-code text-xs">forfeit</span> : null}
+      </span>
+    </FinishedMatch>
   );
 }
 
-export function SwissRounds({ phase, tournament }: { phase: Phase; tournament: Tournament }) {
-  const live = isLive(tournament, phase);
-  const records = new Map(
-    swissRankings(tournament, phase.id).map((r) => [r.participantId, `${r.wins}-${r.losses}`]),
-  );
-  const rounds = groupBy(phaseMatches(tournament, phase.id), (m) => m.roundNumber);
+export function SwissView({ phase, tournament }: { phase: Phase; tournament: Tournament }) {
+  const current = phase.currentRound ?? 1;
+  const [picked, setPicked] = useState<{ current: number; round: number } | null>(null);
+  const round = picked?.current === current ? picked.round : current;
+  const rounds = Array.from({ length: phase.rounds ?? current }, (_, i) => i + 1);
+  const matches = phaseMatches(tournament, phase.id).filter((m) => m.roundNumber === round);
 
   return (
-    <div className="grid min-w-0 content-start gap-5">
-      {[...rounds]
-        .toSorted(([a], [b]) => b - a)
-        .map(([round, matches]) => (
-          <div key={round} className="grid gap-2">
-            <h3 className="text-sm font-medium">Round {round}</h3>
-            <ul className="divide-y divide-border rounded-md border bg-bg">
-              {matches.map((m) => (
-                <Pairing
-                  key={m.id}
-                  live={live}
-                  match={m}
-                  records={records}
-                  tournament={tournament}
-                />
-              ))}
-            </ul>
-          </div>
-        ))}
+    <div className="grid gap-x-10 gap-y-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]">
+      <section className="grid min-w-0 content-start gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="text-sm font-medium">Round {round} pairings</h2>
+          <Segmented
+            label="Round"
+            value={round}
+            onChange={(r) => setPicked({ current, round: r })}
+            options={rounds.map((r) => ({ value: r, label: `R${r}`, disabled: r > current }))}
+          />
+        </div>
+        <ul className="divide-y border-y">
+          {matches.map((m) => (
+            <li key={m.id}>
+              <Pairing match={m} tournament={tournament} />
+              <FailureText className="px-3 pb-2" scope={matchScope(m)} />
+            </li>
+          ))}
+        </ul>
+      </section>
+      <section className="grid min-w-0 content-start gap-3">
+        <h2 className="flex min-h-9 items-center text-sm font-medium">Standings</h2>
+        <SwissStandings phase={phase} tournament={tournament} />
+      </section>
     </div>
   );
 }
