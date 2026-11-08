@@ -12,7 +12,8 @@
 
 - Parse data into a domain type at the I/O boundary where it arrives. Never pass an open
   record, `unknown`, or a runtime type check downstream as a contract.
-- A module in `apps/tournament-engine` moves to `packages/` only when a second app imports it.
+- Tournament rules live only in `packages/engine`. `packages/db` only maps rows and persists.
+  Apps only parse, persist and print.
 - Run the gate in `CONTRIBUTING.md` before every push. A red step is fixed in the source.
   A lint override is scoped to a path and carries its reason in the lint config.
 - Commit subjects are lowercase conventional commits and they are the release notes.

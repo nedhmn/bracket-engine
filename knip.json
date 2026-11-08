@@ -9,8 +9,8 @@
       "entry": ["index.html"],
       "project": ["src/**/*.ts"]
     },
-    "apps/tournament-engine": {
-      "project": ["src/**/*.ts"]
+    "apps/cli": {
+      "project": ["src/**/*.ts", "test/**/*.ts"]
     }
   },
   "ignore": ["tools/oxlint/anti-slop/**"]

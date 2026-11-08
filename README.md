@@ -28,13 +28,14 @@ and final standings, driven by a CLI and tested against a real database in CI.
 | ------------------- | -------------------------------------------------------------------------------------------------------- |
 | `tournament-engine` | Seeding, single and double elimination, byes, advancement, reopening, Swiss pairing, standings           |
 | `@repo/blossom`     | Edmonds' blossom algorithm for maximum-weight matching. `tournament-engine` uses it to pair Swiss rounds |
+| `@repo/db`          | Drizzle schema, migrations and persistence of engine state on Postgres                                   |
 
 ## Apps
 
-| App                      | What it is                                                         |
-| ------------------------ | ------------------------------------------------------------------ |
-| `apps/web`               | The playground deployed at https://nedhmn.github.io/bracket-engine |
-| `apps/tournament-engine` | The packages running a tournament on Postgres, driven by a CLI     |
+| App        | What it is                                                         |
+| ---------- | ------------------------------------------------------------------ |
+| `apps/web` | The playground deployed at https://nedhmn.github.io/bracket-engine |
+| `apps/cli` | A CLI running a tournament on Postgres through `@repo/db`          |
 
 ## Quick start
 

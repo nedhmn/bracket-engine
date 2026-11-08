@@ -1,12 +1,14 @@
 {
-  "name": "cli",
+  "name": "@repo/db",
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
-    "cli": "node src/cli/index.ts",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "node src/db/migrate.ts",
+    "db:migrate": "node src/migrate.ts",
     "typecheck": "tsc",
     "test": "vitest run"
   },

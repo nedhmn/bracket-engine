@@ -14,7 +14,7 @@ pnpm dev
 ```sh
 cp .env.example .env
 docker compose up -d --wait
-pnpm --filter cli db:migrate
+pnpm --filter @repo/db db:migrate
 pnpm --filter cli cli --help
 ```
 
