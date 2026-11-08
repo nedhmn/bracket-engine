@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import blossom from "../index.ts";
+import blossom from "../src/index.ts";
 
 const assertMatchingInvariant = (edges: [number, number, number][], mate: number[]) => {
   for (let v = 0; v < mate.length; v++) {

@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 
-import { canonicalDeWiring, type DeWiring, ourDeWiring } from "../testing/de-wiring.ts";
 import n04 from "./fixtures/challonge-de/n04.json" with { type: "json" };
 import n05 from "./fixtures/challonge-de/n05.json" with { type: "json" };
 import n06 from "./fixtures/challonge-de/n06.json" with { type: "json" };
@@ -20,6 +19,7 @@ import n32 from "./fixtures/challonge-de/n32.json" with { type: "json" };
 import n33 from "./fixtures/challonge-de/n33.json" with { type: "json" };
 import n48 from "./fixtures/challonge-de/n48.json" with { type: "json" };
 import n64 from "./fixtures/challonge-de/n64.json" with { type: "json" };
+import { canonicalDeWiring, type DeWiring, ourDeWiring } from "./helpers/de-wiring.ts";
 
 const fixtures = [
   n04,

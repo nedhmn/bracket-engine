@@ -1,5 +1,5 @@
-import { generateDoubleElimination } from "../brackets/double-elimination.ts";
-import type { BracketMatch, MatchSlot } from "../types.ts";
+import { generateDoubleElimination } from "../../src/brackets/double-elimination.ts";
+import type { BracketMatch, MatchSlot } from "../../src/types.ts";
 
 export type DeWiringSlot = { seed: number } | { winnerOf: string } | { loserOf: string } | null;
 

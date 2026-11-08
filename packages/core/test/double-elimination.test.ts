@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { generateDoubleElimination } from "../brackets/double-elimination.ts";
+import { generateDoubleElimination } from "../src/brackets/double-elimination.ts";
 
 describe("generateDoubleElimination", () => {
   describe("match counts", () => {

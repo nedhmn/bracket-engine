@@ -1,5 +1,5 @@
-import { buildSwissStandings } from "../swiss/standings.ts";
-import type { MatchResult, Pairing, Standing } from "../types.ts";
+import { buildSwissStandings } from "../../src/swiss/standings.ts";
+import type { MatchResult, Pairing, Standing } from "../../src/types.ts";
 
 export type SwissOraclePair = [number, number];
 

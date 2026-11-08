@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { calculateRecommendedRounds, generateSwissRound } from "../swiss/pairing.ts";
-import { buildSwissStandings } from "../swiss/standings.ts";
-import type { MatchResult, Pairing, Standing } from "../types.ts";
+import { calculateRecommendedRounds, generateSwissRound } from "../src/swiss/pairing.ts";
+import { buildSwissStandings } from "../src/swiss/standings.ts";
+import type { MatchResult, Pairing, Standing } from "../src/types.ts";
 
 const makeRng = (seed: number) => {
   let s = (seed % 2_147_483_646) + 1;

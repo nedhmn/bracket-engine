@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { buildSwissStandings, calculateMantisRankings } from "../swiss/standings.ts";
-import type { MatchResult } from "../types.ts";
+import { buildSwissStandings, calculateMantisRankings } from "../src/swiss/standings.ts";
+import type { MatchResult } from "../src/types.ts";
 
 describe("buildSwissStandings", () => {
   it("builds wins, losses, opponents, and dropped flags from match results", () => {

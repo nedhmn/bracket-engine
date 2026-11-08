@@ -1,14 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { generateSwissRound } from "../swiss/pairing.ts";
-import {
-  floatHistory,
-  oraclePairs,
-  pairingMetrics,
-  pairingsToSeeds,
-  replayStandings,
-  type SwissOracleFixture,
-} from "../testing/swiss-oracle.ts";
+import { generateSwissRound } from "../src/swiss/pairing.ts";
 import n05 from "./fixtures/fide-swiss/n05.json" with { type: "json" };
 import n06 from "./fixtures/fide-swiss/n06.json" with { type: "json" };
 import n07 from "./fixtures/fide-swiss/n07.json" with { type: "json" };
@@ -27,6 +19,14 @@ import n32 from "./fixtures/fide-swiss/n32.json" with { type: "json" };
 import n33 from "./fixtures/fide-swiss/n33.json" with { type: "json" };
 import n48 from "./fixtures/fide-swiss/n48.json" with { type: "json" };
 import n64 from "./fixtures/fide-swiss/n64.json" with { type: "json" };
+import {
+  floatHistory,
+  oraclePairs,
+  pairingMetrics,
+  pairingsToSeeds,
+  replayStandings,
+  type SwissOracleFixture,
+} from "./helpers/swiss-oracle.ts";
 
 const fixtures = [
   n05,
