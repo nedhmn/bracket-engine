@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/nedhmn/tournament-engine/compare/v0.2.0...v0.2.1) (2026-11-09)
+
+
+### Dependencies
+
+* **deps:** update pnpm/action-setup action to v6.1.1 ([#64](https://github.com/nedhmn/tournament-engine/issues/64)) ([0d3e678](https://github.com/nedhmn/tournament-engine/commit/0d3e6789f2a2b446f34834dc7ebad656c5e8bbb8))
+
 ## [0.2.0](https://github.com/nedhmn/tournament-engine/compare/v0.1.1...v0.2.0) (2026-11-08)
 
 
